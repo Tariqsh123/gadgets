@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0">
+    <title>GadgetFlow | Premium Tech Store - Binance Theme</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Swiper JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Light & Dark Theme Variables - Binance Inspired */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fc;
+            --surface: #ffffff;
+            --surface-2: #f0f2f5;
+            --surface-3: #e8eaed;
+            --text-primary: #1e2329;
+            --text-secondary: #5e6673;
+            --text-muted: #8a919e;
+            --border-color: #eaecef;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+            --accent: #F0B90B;
+            --accent-glow: rgba(240, 185, 11, 0.15);
+            --accent-hover: #d9a607;
+            --success: #0ecb81;
+            --danger: #f6465d;
+            --navbar-bg: rgba(255,255,255,0.98);
+            --footer-bg: #f8f9fc;
+            --whatsapp: #25D366;
+        }
+
+        body.dark {
+            --bg-primary: #0B0E11;
+            --bg-secondary: #13161c;
+            --surface: #1E2329;
+            --surface-2: #2b3139;
+            --surface-3: #353d46;
+            --text-primary: #EAECEF;
+            --text-secondary: #a9aeb8;
+            --text-muted: #6c727c;
+            --border-color: #2b3139;
+            --card-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            --navbar-bg: rgba(11,14,17,0.98);
+            --footer-bg: #0B0E11;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.2s ease;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Premium Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.9rem 1.5rem;
+            background: var(--navbar-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .logo {
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+        .logo h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), #FCD34D);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .logo h2 i {
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+            color: var(--accent);
+        }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .customer-service {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--surface-2);
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid var(--border-color);
+        }
+        .customer-service:hover {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+        }
+        .customer-service i {
+            font-size: 0.9rem;
+        }
+        .account-icon {
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s;
+            background: var(--surface-2);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+        }
+        .account-icon:hover {
+            color: var(--accent);
+            background: var(--surface-3);
+            border-color: var(--accent);
+        }
+        .theme-toggle {
+            background: var(--surface-2);
+            border: 1px solid var(--border-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+        }
+
+        /* Hero Carousel - BIG & BEAUTIFUL */
+        .hero-section {
+            margin: 1rem 1rem 0.5rem;
+            padding: 0;
+        }
+        .swiper {
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+        .swiper-slide {
+            position: relative;
+        }
+        .swiper-slide img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+        }
+        @media (min-width: 768px) {
+            .swiper-slide img {
+                height: 480px;
+            }
+        }
+        @media (min-width: 1200px) {
+            .swiper-slide img {
+                height: 550px;
+            }
+        }
+        .swiper-button-next, .swiper-button-prev {
+            color: var(--accent);
+            width: 44px;
+            height: 44px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            backdrop-filter: blur(4px);
+        }
+        .swiper-button-next:after, .swiper-button-prev:after {
+            font-size: 1.2rem;
+        }
+        .swiper-pagination-bullet {
+            background: var(--text-secondary);
+        }
+        .swiper-pagination-bullet-active {
+            background: var(--accent);
+        }
+
+        /* Features Strip */
+        .features-strip {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: var(--surface);
+            margin: 1.5rem 1rem;
+            padding: 1.3rem;
+            border-radius: 28px;
+            border: 1px solid var(--border-color);
+        }
+        .feature-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            padding: 0.3rem;
+        }
+        .feature-item i {
+            font-size: 1.6rem;
+            color: var(--accent);
+        }
+        @media (max-width: 640px) {
+            .feature-item {
+                font-size: 0.7rem;
+                gap: 0.5rem;
+            }
+            .feature-item i {
+                font-size: 1.3rem;
+            }
+        }
+
+        /* Products Section - Card Width 330px, 3 per row */
+        .products-heading {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 1.8rem 1rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .products-heading i {
+            color: var(--accent);
+            font-size: 1.6rem;
+        }
+        .products-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1.8rem;
+            padding: 1rem;
+        }
+        .product-card {
+            width: 330px;
+            background: var(--surface);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            cursor: pointer;
+            box-shadow: var(--card-shadow);
+            flex-shrink: 0;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent);
+            box-shadow: 0 12px 28px rgba(240, 185, 11, 0.15);
+        }
+        .product-img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: var(--bg-secondary);
+        }
+        .product-info {
+            padding: 1.2rem;
+        }
+        .product-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 0.5rem 0;
+        }
+        .reward-badge {
+            background: rgba(240, 185, 11, 0.12);
+            color: var(--accent);
+            padding: 0.3rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        @media (max-width: 1100px) {
+            .products-grid {
+                gap: 1.2rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .product-card {
+                width: calc(50% - 0.8rem);
+                min-width: 200px;
+            }
+        }
+        @media (max-width: 550px) {
+            .product-card {
+                width: 100%;
+                max-width: 330px;
+            }
+        }
+
+        /* SEPARATE PRODUCT PAGE */
+        .product-page {
+            max-width: 1300px;
+            margin: 1rem auto;
+            padding: 0 1.5rem;
+            flex: 1;
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--surface-2);
+            padding: 0.7rem 1.2rem;
+            border-radius: 40px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1.8rem;
+            transition: 0.2s;
+            border: 1px solid var(--border-color);
+            font-size: 0.9rem;
+        }
+        .back-button:hover {
+            background: var(--accent);
+            color: #000;
+        }
+        .product-detail-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            background: var(--surface);
+            border-radius: 32px;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2.5rem;
+        }
+        @media (max-width: 768px) {
+            .product-detail-container {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 1.2rem;
+            }
+        }
+        .detail-left img {
+            width: 100%;
+            border-radius: 28px;
+            object-fit: cover;
+            box-shadow: var(--card-shadow);
+        }
+        .detail-right .detail-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .detail-price {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 0.8rem 0;
+        }
+        .reward-section {
+            background: var(--bg-secondary);
+            padding: 1.2rem;
+            border-radius: 24px;
+            margin: 1.2rem 0;
+            border-left: 4px solid var(--accent);
+        }
+        .reward-section h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.8rem;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+        .reward-text {
+            line-height: 1.7;
+            white-space: pre-line;
+            font-size: 0.95rem;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 1.2rem 0;
+        }
+        @media (max-width: 480px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+        .btn-buy-now, .btn-whatsapp {
+            flex: 1;
+            padding: 0.9rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+        }
+        .btn-buy-now {
+            background: var(--accent);
+            color: #000;
+        }
+        .btn-buy-now:hover {
+            background: #e0a800;
+            transform: translateY(-2px);
+        }
+        .btn-whatsapp {
+            background: var(--whatsapp);
+            color: white;
+        }
+        .btn-whatsapp:hover {
+            background: #1da851;
+            transform: translateY(-2px);
+        }
+        
+        /* Remaining Products Section - 3 Cards in One Row */
+        .remaining-products-section {
+            margin-top: 2rem;
+            background: var(--surface);
+            border-radius: 32px;
+            padding: 1.8rem;
+            border: 1px solid var(--border-color);
+        }
+        .remaining-products-section h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .remaining-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 1.5rem;
+        }
+        .remaining-card {
+            width: calc(33.333% - 1rem);
+            min-width: 220px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .remaining-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow);
+        }
+        .remaining-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+        .remaining-card h4 {
+            margin: 0.7rem 0 0.3rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        .remaining-card p {
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        .remaining-card .reward-icon {
+            color: var(--accent);
+            font-size: 0.7rem;
+            margin-top: 0.3rem;
+            display: inline-block;
+        }
+        @media (max-width: 900px) {
+            .remaining-card {
+                width: calc(50% - 0.8rem);
+            }
+        }
+        @media (max-width: 550px) {
+            .remaining-card {
+                width: 100%;
+            }
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--footer-bg);
+            margin-top: 3rem;
+            padding: 2rem 1.5rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.2rem;
+        }
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.2s;
+        }
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+        .social-icons i {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .social-icons i:hover {
+            color: var(--accent);
+        }
+
+        /* Mobile Bottom Navigation - App Style */
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-color);
+            padding: 0.7rem 1.5rem;
+            justify-content: space-around;
+            z-index: 1000;
+        }
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.7rem;
+        }
+        .bottom-nav-item i {
+            font-size: 1.3rem;
+        }
+        .bottom-nav-item.active, .bottom-nav-item:hover {
+            color: var(--accent);
+        }
+        @media (max-width: 768px) {
+            .mobile-bottom-nav {
+                display: flex;
+            }
+            .app-container {
+                padding-bottom: 70px;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <!-- Premium Navbar -->
+    <nav class="navbar">
+        <div class="logo" id="homeLogoLink">
+            <h2><i class="fas fa-bolt"></i> GadgetFlow</h2>
+        </div>
+        <div class="nav-actions">
+            <div class="customer-service" id="customerServiceBtn">
+                <i class="fas fa-headset"></i>
+                <span>+92 300 123 4567</span>
+            </div>
+            <div class="account-icon" id="accountIcon">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <button class="theme-toggle" id="themeToggleBtn">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="homePage">
+        <div class="hero-section">
+            <div class="swiper heroSwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide"><img src="https://picsum.photos/id/0/1600/600" alt="Premium Gadgets Sale"></div>
+                    <div class="swiper-slide"><img src="https://picsum.photos/id/1/1600/600" alt="Tech Deals"></div>
+                    <div class="swiper-slide"><img src="https://picsum.photos/id/15/1600/600" alt="Gaming Gear"></div>
+                    <div class="swiper-slide"><img src="https://picsum.photos/id/26/1600/600" alt="Smart Devices"></div>
+                    <div class="swiper-slide"><img src="https://picsum.photos/id/20/1600/600" alt="Premium Audio"></div>
+                    <div class="swiper-slide"><img src="https://picsum.photos/id/96/1600/600" alt="Wearable Tech"></div>
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </div>
+
+        <div class="features-strip">
+            <div class="feature-item"><i class="fas fa-shield-alt"></i> <span>100% Genuine Products</span></div>
+            <div class="feature-item"><i class="fas fa-tags"></i> <span>Discounts Every Day</span></div>
+            <div class="feature-item"><i class="fas fa-truck-fast"></i> <span>Free Shipping ≥ ₨4900</span></div>
+        </div>
+
+        <h2 class="products-heading"><i class="fas fa-microchip"></i> Hot Gadgets</h2>
+        <div class="products-grid" id="productsGrid"></div>
+    </div>
+
+    <!-- SEPARATE PRODUCT PAGE -->
+    <div id="productPage" style="display: none;"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#"><i class="fas fa-store"></i> About Us</a>
+            <a href="#"><i class="fas fa-headset"></i> Support</a>
+            <a href="#"><i class="fas fa-truck"></i> Track Order</a>
+            <a href="#"><i class="fas fa-undo-alt"></i> Returns</a>
+        </div>
+        <div class="social-icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-whatsapp"></i>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.75rem;">© 2025 GadgetFlow — Pakistan's Premium Tech Store</p>
+        <p style="font-size: 0.7rem; margin-top: 0.5rem;"><i class="fas fa-bolt"></i> Binance Style Theme | 24/7 Support</p>
+    </footer>
+
+    <!-- Mobile Bottom Navigation -->
+    <div class="mobile-bottom-nav">
+        <div class="bottom-nav-item" id="mobileHomeBtn">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </div>
+        <div class="bottom-nav-item" id="mobileShopBtn">
+            <i class="fas fa-compass"></i>
+            <span>Explore</span>
+        </div>
+        <div class="bottom-nav-item" id="mobileSupportBtn">
+            <i class="fas fa-headset"></i>
+            <span>Support</span>
+        </div>
+        <div class="bottom-nav-item" id="mobileAccountBtn">
+            <i class="fas fa-user"></i>
+            <span>Account</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    // PRODUCT DATA (6 products)
+    const products = [
+        { id: 1, name: "Mobile Holder", price: 500, reward: "🎁 Reward: PKR 50 Cashback\n👥 Referral Bonus: PKR 20\n⏱️ Withdrawal: 4-10 hours\n📱 Universal Fit | Carbon Fiber", img: "https://picsum.photos/id/1/500/400", category: "Accessory" },
+        { id: 2, name: "Powerbank", price: 1000, reward: "🔋 Reward: PKR 120 Cashback\n👥 Referral Bonus: PKR 40\n⏱️ Withdrawal: 24-48 hours\n⚡ 20000mAh | Fast Charging", img: "https://picsum.photos/id/0/500/400", category: "Power" },
+        { id: 3, name: "RGB Keyboard", price: 2500, reward: "🎮 Reward: PKR 350 Cashback\n👥 Referral Bonus: PKR 100\n⏱️ Withdrawal: 48-72 hours\n🌈 16.8M RGB | Mechanical", img: "https://picsum.photos/id/96/500/400", category: "Gaming" },
+        { id: 4, name: "Smart Watch", price: 5000, reward: "⌚ Reward: PKR 800 Cashback\n👥 Referral Bonus: PKR 250\n⏱️ Withdrawal: 16-24 hours\n❤️ Heart Rate | GPS | SpO2", img: "https://picsum.photos/id/20/500/400", category: "Wearable" },
+        { id: 5, name: "Bluetooth Headphones", price: 7000, reward: "🎧 Reward: PKR 1100 Cashback\n👥 Referral Bonus: PKR 350\n⏱️ Withdrawal: 24-48 hours\n🔊 ANC | 40H Battery", img: "https://picsum.photos/id/15/500/400", category: "Audio" },
+        { id: 6, name: "Tablet", price: 10000, reward: "📱 Reward: PKR 1400 Cashback\n👥 Referral Bonus: PKR 500\n⏱️ Withdrawal: 48-72 Hours\n💾 128GB | 10.5\" Display", img: "https://picsum.photos/id/26/500/400", category: "Tablet" }
+    ];
+
+    function formatPrice(price) {
+        return `₨ ${price.toLocaleString()}`;
+    }
+
+    function renderHomeProducts() {
+        const grid = document.getElementById('productsGrid');
+        if (!grid) return;
+        grid.innerHTML = '';
+        products.forEach(prod => {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img class="product-img" src="${prod.img}" alt="${prod.name}" loading="lazy">
+                <div class="product-info">
+                    <div class="product-name">${prod.name}</div>
+                    <div class="product-price">${formatPrice(prod.price)}</div>
+                    <span class="reward-badge"><i class="fas fa-gift"></i> Reward Included</span>
+                </div>
+            `;
+            card.addEventListener('click', () => navigateToProduct(prod.id));
+            grid.appendChild(card);
+        });
+    }
+
+    function navigateToProduct(productId) {
+        const product = products.find(p => p.id === productId);
+        if (!product) return;
+        const otherProducts = products.filter(p => p.id !== productId);
+        const rewardHtml = product.reward.replace(/\n/g, '<br>');
+        
+        const productPageDiv = document.getElementById('productPage');
+        const homePageDiv = document.getElementById('homePage');
+        
+        productPageDiv.innerHTML = `
+            <div class="product-page">
+                <a href="#" id="backToHomeBtn" class="back-button"><i class="fas fa-arrow-left"></i> Back to Store</a>
+                <div class="product-detail-container">
+                    <div class="detail-left">
+                        <img src="${product.img}" alt="${product.name}">
+                    </div>
+                    <div class="detail-right">
+                        <div class="detail-title">${product.name} <i class="fas fa-certificate" style="color:var(--accent); font-size:1.2rem;"></i></div>
+                        <div class="detail-price">${formatPrice(product.price)}</div>
+                        <div class="reward-section">
+                            <h3><i class="fas fa-award"></i> Reward Description</h3>
+                            <div class="reward-text">${rewardHtml}</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-buy-now" id="buyNowProductBtn"><i class="fas fa-bolt"></i> Buy Now</button>
+                            <button class="btn-whatsapp" id="whatsappProductBtn"><i class="fab fa-whatsapp"></i> Connect on WhatsApp</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="remaining-products-section">
+                    <h3><i class="fas fa-layer-group"></i> Other Amazing Products</h3>
+                    <div class="remaining-grid" id="remainingProductGrid"></div>
+                </div>
+            </div>
+        `;
+        
+        const remainingGrid = productPageDiv.querySelector('#remainingProductGrid');
+        remainingGrid.innerHTML = '';
+        otherProducts.forEach(prod => {
+            const remCard = document.createElement('div');
+            remCard.className = 'remaining-card';
+            remCard.innerHTML = `
+                <img src="${prod.img}" alt="${prod.name}">
+                <h4>${prod.name}</h4>
+                <p>${formatPrice(prod.price)}</p>
+                <span class="reward-icon"><i class="fas fa-gift"></i> Reward</span>
+            `;
+            remCard.addEventListener('click', () => navigateToProduct(prod.id));
+            remainingGrid.appendChild(remCard);
+        });
+        
+        document.getElementById('buyNowProductBtn')?.addEventListener('click', () => {
+            alert(`🛒 Checkout\n\nProduct: ${product.name}\nPrice: ${formatPrice(product.price)}\n\n${product.reward.split('\n')[0]}\n\nProceed to secure payment.`);
+        });
+        document.getElementById('whatsappProductBtn')?.addEventListener('click', () => {
+            const msg = encodeURIComponent(`Hi! I'm interested in purchasing ${product.name} (${formatPrice(product.price)}). Please share payment details & delivery information.`);
+            window.open(`https://wa.me/923001112222?text=${msg}`, '_blank');
+        });
+        document.getElementById('backToHomeBtn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            showHomePage();
+        });
+        
+        homePageDiv.style.display = 'none';
+        productPageDiv.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function showHomePage() {
+        document.getElementById('homePage').style.display = 'block';
+        document.getElementById('productPage').style.display = 'none';
+        if (window.heroSwiperInstance) window.heroSwiperInstance.update();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // PERFECT LIGHT/DARK THEME TOGGLE
+    function initTheme() {
+        const savedTheme = localStorage.getItem('gadgetTheme');
+        if (savedTheme === 'light') {
+            document.body.classList.remove('dark');
+            updateThemeIcon('light');
+        } else {
+            document.body.classList.add('dark');
+            updateThemeIcon('dark');
+        }
+    }
+    
+    function updateThemeIcon(theme) {
+        const themeBtn = document.getElementById('themeToggleBtn');
+        if (theme === 'dark') {
+            themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+    }
+    
+    function toggleTheme() {
+        if (document.body.classList.contains('dark')) {
+            document.body.classList.remove('dark');
+            localStorage.setItem('gadgetTheme', 'light');
+            updateThemeIcon('light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem('gadgetTheme', 'dark');
+            updateThemeIcon('dark');
+        }
+    }
+    
+    let heroSwiperInstance = null;
+    function initSwiper() {
+        if (heroSwiperInstance) heroSwiperInstance.destroy(true, true);
+        heroSwiperInstance = new Swiper('.heroSwiper', {
+            loop: true,
+            autoplay: { delay: 4500, disableOnInteraction: false },
+            pagination: { el: '.swiper-pagination', clickable: true },
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+            effect: 'slide',
+            speed: 700,
+        });
+    }
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        initTheme();
+        renderHomeProducts();
+        initSwiper();
+        
+        document.getElementById('homeLogoLink')?.addEventListener('click', showHomePage);
+        document.getElementById('accountIcon')?.addEventListener('click', () => alert("🔐 Account Dashboard\n\n• Reward Points Tracker\n• Order History\n• Referral Program\n\nLogin to access features."));
+        document.getElementById('customerServiceBtn')?.addEventListener('click', () => alert("📞 Customer Support\n\n📱 Phone: +92 300 123 4567\n💬 WhatsApp: +92 300 111 2222\n⏰ 24/7 Support Available\n✉️ Email: support@gadgetflow.pk"));
+        document.getElementById('themeToggleBtn')?.addEventListener('click', toggleTheme);
+        
+        // Mobile bottom nav
+        document.getElementById('mobileHomeBtn')?.addEventListener('click', showHomePage);
+        document.getElementById('mobileShopBtn')?.addEventListener('click', () => { showHomePage(); setTimeout(() => window.scrollTo({ top: 450, behavior: 'smooth' }), 100); });
+        document.getElementById('mobileSupportBtn')?.addEventListener('click', () => alert("📞 24/7 Support\n\nCall: +92 300 123 4567\nWhatsApp: +92 300 111 2222"));
+        document.getElementById('mobileAccountBtn')?.addEventListener('click', () => alert("👤 Account\n\nSign in to view:\n• Reward Points\n• Order Tracking\n• Referral Bonuses"));
+        
+        showHomePage();
+    });
+    
+    window.addEventListener('resize', () => {
+        if (heroSwiperInstance) heroSwiperInstance.update();
+    });
+</script>
+</body>
+</html>
