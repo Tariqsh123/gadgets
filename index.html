@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0">
-    <title>GadgetFlow | Premium Tech Store - Binance Theme</title>
+    <title>GadgetFlow | Premium Tech Store - ER Coin Theme</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <!-- Font Awesome 6 -->
@@ -19,7 +19,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Light & Dark Theme Variables - Binance Inspired */
+        /* Light & Dark Theme Variables - Binance Inspired with ER Coin accent */
         :root {
             --bg-primary: #ffffff;
             --bg-secondary: #f8f9fc;
@@ -39,6 +39,8 @@
             --navbar-bg: rgba(255,255,255,0.98);
             --footer-bg: #f8f9fc;
             --whatsapp: #25D366;
+            --er-gold: #F0B90B;
+            --overlay-bg: rgba(0,0,0,0.75);
         }
 
         body.dark {
@@ -151,11 +153,22 @@
             justify-content: center;
             border-radius: 50%;
             border: 1px solid var(--border-color);
+            position: relative;
         }
         .account-icon:hover {
             color: var(--accent);
             background: var(--surface-3);
             border-color: var(--accent);
+        }
+        .user-badge {
+            position: absolute;
+            bottom: -2px;
+            right: -2px;
+            background: var(--success);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid var(--surface);
         }
         .theme-toggle {
             background: var(--surface-2);
@@ -365,6 +378,7 @@
             transition: 0.2s;
             border: 1px solid var(--border-color);
             font-size: 0.9rem;
+            cursor: pointer;
         }
         .back-button:hover {
             background: var(--accent);
@@ -539,7 +553,7 @@
             }
         }
 
-        /* Footer */
+        /* Footer - Updated Links */
         .footer {
             background: var(--footer-bg);
             margin-top: 3rem;
@@ -559,6 +573,7 @@
             text-decoration: none;
             font-size: 0.85rem;
             transition: 0.2s;
+            cursor: pointer;
         }
         .footer-links a:hover {
             color: var(--accent);
@@ -621,6 +636,154 @@
         .hidden {
             display: none;
         }
+        .er-coin-badge {
+            background: linear-gradient(135deg, var(--er-gold), #f7b42c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+
+        /* ========== AUTH MODAL OVERLAY (Login/Register) ========== */
+        .auth-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--overlay-bg);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0.3s, opacity 0.3s ease;
+        }
+        .auth-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+        .auth-modal {
+            background: var(--surface);
+            border-radius: 32px;
+            width: 90%;
+            max-width: 460px;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            border: 1px solid var(--border-color);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+            position: relative;
+        }
+        .auth-overlay.active .auth-modal {
+            transform: scale(1);
+        }
+        .auth-close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            font-size: 1.3rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
+        .auth-close:hover {
+            color: var(--accent);
+        }
+        .auth-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 0.8rem 0;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: 0.2s;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+        .auth-tab.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        .auth-form {
+            display: none;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .auth-form.active-form {
+            display: flex;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .input-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.3px;
+        }
+        .input-group input {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 0.9rem 1.2rem;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            transition: 0.2s;
+            outline: none;
+        }
+        .input-group input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+        .auth-btn {
+            background: var(--accent);
+            border: none;
+            padding: 0.9rem;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            color: #000;
+            margin-top: 0.5rem;
+            transition: 0.2s;
+        }
+        .auth-btn:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+        .auth-message {
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            border-radius: 40px;
+        }
+        .auth-message.error {
+            background: rgba(246, 70, 93, 0.15);
+            color: var(--danger);
+        }
+        .auth-message.success {
+            background: rgba(14, 203, 129, 0.15);
+            color: var(--success);
+        }
+        .demo-hint {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--text-muted);
+        }
     </style>
 </head>
 <body>
@@ -637,6 +800,7 @@
             </div>
             <div class="account-icon" id="accountIcon">
                 <i class="fas fa-user-circle"></i>
+                <span class="user-badge" id="userBadge" style="display: none;"></span>
             </div>
             <button class="theme-toggle" id="themeToggleBtn">
                 <i class="fas fa-moon"></i>
@@ -675,13 +839,15 @@
     <!-- SEPARATE PRODUCT PAGE -->
     <div id="productPage" style="display: none;"></div>
 
-    <!-- Footer -->
+    <!-- Footer - Updated with new links -->
     <footer class="footer">
         <div class="footer-links">
-            <a href="#"><i class="fas fa-store"></i> About Us</a>
-            <a href="#"><i class="fas fa-headset"></i> Support</a>
-            <a href="#"><i class="fas fa-truck"></i> Track Order</a>
-            <a href="#"><i class="fas fa-undo-alt"></i> Returns</a>
+            <a href="#" id="footerAboutUs"><i class="fas fa-store"></i> About Us</a>
+            <a href="#" id="footerTerms"><i class="fas fa-file-contract"></i> Terms & Service</a>
+            <a href="#" id="footerPrivacy"><i class="fas fa-lock"></i> Privacy Policy</a>
+            <a href="#" id="footerSupport"><i class="fas fa-headset"></i> Customer Support</a>
+            <a href="#" id="footerErCoin"><i class="fas fa-coins"></i> ER Coin</a>
+            <a href="#" id="footerErWallet"><i class="fas fa-wallet"></i> ER Coin Wallet</a>
         </div>
         <div class="social-icons">
             <i class="fab fa-facebook-f"></i>
@@ -690,7 +856,7 @@
             <i class="fab fa-whatsapp"></i>
         </div>
         <p style="color: var(--text-muted); font-size: 0.75rem;">© 2025 GadgetFlow — Pakistan's Premium Tech Store</p>
-        <p style="font-size: 0.7rem; margin-top: 0.5rem;"><i class="fas fa-bolt"></i> Binance Style Theme | 24/7 Support</p>
+        <p style="font-size: 0.7rem; margin-top: 0.5rem;"><i class="fas fa-bolt"></i> Binance Style Theme | Earn ER Coins on Every Purchase</p>
     </footer>
 
     <!-- Mobile Bottom Navigation -->
@@ -714,21 +880,168 @@
     </div>
 </div>
 
+<!-- AUTH OVERLAY (Login/Register) -->
+<div id="authOverlay" class="auth-overlay">
+    <div class="auth-modal">
+        <div class="auth-close" id="closeAuthBtn"><i class="fas fa-times"></i></div>
+        <div class="auth-tabs">
+            <div class="auth-tab" data-tab="login">Login</div>
+            <div class="auth-tab" data-tab="register">Register</div>
+        </div>
+        <!-- Login Form -->
+        <div id="loginForm" class="auth-form">
+            <div class="input-group"><label>Email / Username</label><input type="text" id="loginEmail" placeholder="Enter email or username"></div>
+            <div class="input-group"><label>Password</label><input type="password" id="loginPassword" placeholder="Password"></div>
+            <button class="auth-btn" id="submitLoginBtn"><i class="fas fa-key"></i> Sign In</button>
+            <div id="loginMessage" class="auth-message"></div>
+            <div class="demo-hint">Demo: test@example.com / 123456</div>
+        </div>
+        <!-- Register Form -->
+        <div id="registerForm" class="auth-form">
+            <div class="input-group"><label>Full Name</label><input type="text" id="regName" placeholder="John Doe"></div>
+            <div class="input-group"><label>Email Address</label><input type="email" id="regEmail" placeholder="hello@gadgetflow.com"></div>
+            <div class="input-group"><label>Password</label><input type="password" id="regPassword" placeholder="Min 6 characters"></div>
+            <div class="input-group"><label>Confirm Password</label><input type="password" id="regConfirmPassword" placeholder="Confirm password"></div>
+            <button class="auth-btn" id="submitRegisterBtn"><i class="fas fa-user-plus"></i> Create Account</button>
+            <div id="registerMessage" class="auth-message"></div>
+            <div class="demo-hint">Register to unlock ER Coin rewards & dashboard</div>
+        </div>
+    </div>
+</div>
+
 <script>
-    // PRODUCT DATA (6 products)
+    // PRODUCT DATA (6 products) - Updated reward descriptions
     const products = [
-        { id: 1, name: "Mobile Holder", price: 500, reward: "🎁 Reward: PKR 50 Cashback\n👥 Referral Bonus: PKR 20\n⏱️ Withdrawal: 4-10 hours\n📱 Universal Fit | Carbon Fiber", img: "https://picsum.photos/id/1/500/400", category: "Accessory" },
-        { id: 2, name: "Powerbank", price: 1000, reward: "🔋 Reward: PKR 120 Cashback\n👥 Referral Bonus: PKR 40\n⏱️ Withdrawal: 24-48 hours\n⚡ 20000mAh | Fast Charging", img: "https://picsum.photos/id/0/500/400", category: "Power" },
-        { id: 3, name: "RGB Keyboard", price: 2500, reward: "🎮 Reward: PKR 350 Cashback\n👥 Referral Bonus: PKR 100\n⏱️ Withdrawal: 48-72 hours\n🌈 16.8M RGB | Mechanical", img: "https://picsum.photos/id/96/500/400", category: "Gaming" },
-        { id: 4, name: "Smart Watch", price: 5000, reward: "⌚ Reward: PKR 800 Cashback\n👥 Referral Bonus: PKR 250\n⏱️ Withdrawal: 16-24 hours\n❤️ Heart Rate | GPS | SpO2", img: "https://picsum.photos/id/20/500/400", category: "Wearable" },
-        { id: 5, name: "Bluetooth Headphones", price: 7000, reward: "🎧 Reward: PKR 1100 Cashback\n👥 Referral Bonus: PKR 350\n⏱️ Withdrawal: 24-48 hours\n🔊 ANC | 40H Battery", img: "https://picsum.photos/id/15/500/400", category: "Audio" },
-        { id: 6, name: "Tablet", price: 10000, reward: "📱 Reward: PKR 1400 Cashback\n👥 Referral Bonus: PKR 500\n⏱️ Withdrawal: 48-72 Hours\n💾 128GB | 10.5\" Display", img: "https://picsum.photos/id/26/500/400", category: "Tablet" }
+        { id: 1, name: "Mobile Holder", price: 500, reward: "🎁 Reward: PKR 50 Cashback\n👥 Referral Bonus: PKR 20\n⏱️ Withdrawal: 4-10 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://picsum.photos/id/1/500/400", category: "Accessory" },
+        { id: 2, name: "Powerbank", price: 1000, reward: "🔋 Reward: PKR 120 Cashback\n👥 Referral Bonus: PKR 40\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://picsum.photos/id/0/500/400", category: "Power" },
+        { id: 3, name: "RGB Keyboard", price: 2500, reward: "🎮 Reward: PKR 350 Cashback\n👥 Referral Bonus: PKR 100\n⏱️ Withdrawal: 48-72 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://picsum.photos/id/96/500/400", category: "Gaming" },
+        { id: 4, name: "Smart Watch", price: 5000, reward: "⌚ Reward: PKR 800 Cashback\n👥 Referral Bonus: PKR 250\n⏱️ Withdrawal: 16-24 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://picsum.photos/id/20/500/400", category: "Wearable" },
+        { id: 5, name: "Bluetooth Headphones", price: 7000, reward: "🎧 Reward: PKR 1100 Cashback\n👥 Referral Bonus: PKR 350\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://picsum.photos/id/15/500/400", category: "Audio" },
+        { id: 6, name: "Tablet", price: 10000, reward: "📱 Reward: PKR 1400 Cashback\n👥 Referral Bonus: PKR 500\n⏱️ Withdrawal: 48-72 Hours\n✨ ER Coin Reward Deduction: 10%", img: "https://picsum.photos/id/26/500/400", category: "Tablet" }
     ];
 
     function formatPrice(price) {
         return `₨ ${price.toLocaleString()}`;
     }
 
+    // ========== AUTH SYSTEM WITH LOCALSTORAGE ==========
+    const STORAGE_USERS = "gadgetflow_users";
+    const STORAGE_SESSION = "gadgetflow_session";
+
+    function initStorage() { if (!localStorage.getItem(STORAGE_USERS)) localStorage.setItem(STORAGE_USERS, JSON.stringify([])); }
+    function getUsers() { return JSON.parse(localStorage.getItem(STORAGE_USERS) || "[]"); }
+    function saveUsers(users) { localStorage.setItem(STORAGE_USERS, JSON.stringify(users)); }
+    function getSession() { return JSON.parse(localStorage.getItem(STORAGE_SESSION) || "null"); }
+    function setSession(user) { localStorage.setItem(STORAGE_SESSION, JSON.stringify(user)); }
+    function clearSession() { localStorage.removeItem(STORAGE_SESSION); }
+    function isLoggedIn() { return getSession() !== null; }
+    function getCurrentUser() { return getSession(); }
+
+    function updateAuthUI() {
+        const session = getSession();
+        const badge = document.getElementById('userBadge');
+        if (session && session.name) {
+            badge.style.display = 'block';
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+
+    function showAuthOverlay() { document.getElementById('authOverlay').classList.add('active'); }
+    function hideAuthOverlay() { document.getElementById('authOverlay').classList.remove('active'); clearAuthMessages(); }
+    function clearAuthMessages() {
+        document.getElementById('loginMessage').innerHTML = '';
+        document.getElementById('registerMessage').innerHTML = '';
+        document.getElementById('loginMessage').className = 'auth-message';
+        document.getElementById('registerMessage').className = 'auth-message';
+    }
+    function setMessage(element, text, isError = true) {
+        element.innerHTML = text;
+        element.className = `auth-message ${isError ? 'error' : 'success'}`;
+    }
+
+    function registerUser(name, email, password, confirm) {
+        if (!name || !email || !password) return { success: false, msg: "All fields required" };
+        if (password !== confirm) return { success: false, msg: "Passwords do not match" };
+        if (password.length < 6) return { success: false, msg: "Password must be at least 6 characters" };
+        const users = getUsers();
+        if (users.find(u => u.email === email)) return { success: false, msg: "Email already registered. Please login." };
+        const newUser = { id: Date.now(), name, email, password, erCoins: 250, joined: new Date().toISOString() };
+        users.push(newUser);
+        saveUsers(users);
+        return { success: true, user: { name: newUser.name, email: newUser.email, erCoins: newUser.erCoins } };
+    }
+
+    function loginUser(identifier, password) {
+        const users = getUsers();
+        const user = users.find(u => (u.email === identifier || u.name === identifier) && u.password === password);
+        if (user) {
+            return { success: true, user: { name: user.name, email: user.email, erCoins: user.erCoins, id: user.id } };
+        }
+        return { success: false, msg: "Invalid credentials. Try test@example.com / 123456" };
+    }
+
+    function performLogin(email, pass) {
+        const result = loginUser(email, pass);
+        if (result.success) {
+            setSession(result.user);
+            updateAuthUI();
+            hideAuthOverlay();
+            // Redirect to dashboard.html after successful login
+            window.location.href = "dashboard.html";
+        } else {
+            setMessage(document.getElementById('loginMessage'), result.msg, true);
+        }
+    }
+
+    function performRegister(name, email, pass, confirm) {
+        const regResult = registerUser(name, email, pass, confirm);
+        if (regResult.success) {
+            setMessage(document.getElementById('registerMessage'), "✅ Registration successful! Please login.", false);
+            setTimeout(() => {
+                document.querySelector('.auth-tab[data-tab="login"]').click();
+                document.getElementById('loginEmail').value = email;
+                document.getElementById('loginPassword').value = '';
+                clearAuthMessages();
+            }, 1200);
+        } else {
+            setMessage(document.getElementById('registerMessage'), regResult.msg, true);
+        }
+    }
+
+    function initAuthTabs() {
+        const tabs = document.querySelectorAll('.auth-tab');
+        const loginFormDiv = document.getElementById('loginForm');
+        const registerFormDiv = document.getElementById('registerForm');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                const target = tab.getAttribute('data-tab');
+                if (target === 'login') {
+                    loginFormDiv.classList.add('active-form');
+                    registerFormDiv.classList.remove('active-form');
+                } else {
+                    registerFormDiv.classList.add('active-form');
+                    loginFormDiv.classList.remove('active-form');
+                }
+                clearAuthMessages();
+            });
+        });
+        document.querySelector('.auth-tab[data-tab="login"]').classList.add('active');
+        loginFormDiv.classList.add('active-form');
+        registerFormDiv.classList.remove('active-form');
+    }
+
+    function seedDemoUser() {
+        const users = getUsers();
+        if (!users.find(u => u.email === "test@example.com")) {
+            users.push({ id: 999, name: "Test User", email: "test@example.com", password: "123456", erCoins: 500, joined: new Date().toISOString() });
+            saveUsers(users);
+        }
+    }
+
+    // ========== PRODUCT & UI FUNCTIONS (FULL PRESERVED) ==========
     function renderHomeProducts() {
         const grid = document.getElementById('productsGrid');
         if (!grid) return;
@@ -741,7 +1054,7 @@
                 <div class="product-info">
                     <div class="product-name">${prod.name}</div>
                     <div class="product-price">${formatPrice(prod.price)}</div>
-                    <span class="reward-badge"><i class="fas fa-gift"></i> Reward Included</span>
+                    <span class="reward-badge"><i class="fas fa-gift"></i> ER Coin Rewards</span>
                 </div>
             `;
             card.addEventListener('click', () => navigateToProduct(prod.id));
@@ -794,17 +1107,22 @@
                 <img src="${prod.img}" alt="${prod.name}">
                 <h4>${prod.name}</h4>
                 <p>${formatPrice(prod.price)}</p>
-                <span class="reward-icon"><i class="fas fa-gift"></i> Reward</span>
+                <span class="reward-icon"><i class="fas fa-gift"></i> ER Coin</span>
             `;
             remCard.addEventListener('click', () => navigateToProduct(prod.id));
             remainingGrid.appendChild(remCard);
         });
         
         document.getElementById('buyNowProductBtn')?.addEventListener('click', () => {
-            alert(`🛒 Checkout\n\nProduct: ${product.name}\nPrice: ${formatPrice(product.price)}\n\n${product.reward.split('\n')[0]}\n\nProceed to secure payment.`);
+            if (!isLoggedIn()) {
+                alert("🔐 Please login to purchase and earn ER Coins!");
+                showAuthOverlay();
+            } else {
+                alert(`🛒 Checkout\n\nProduct: ${product.name}\nPrice: ${formatPrice(product.price)}\n\n${product.reward.split('\n')[0]}\n\nEarn ER Coins with this purchase!`);
+            }
         });
         document.getElementById('whatsappProductBtn')?.addEventListener('click', () => {
-            const msg = encodeURIComponent(`Hi! I'm interested in purchasing ${product.name} (${formatPrice(product.price)}). Please share payment details & delivery information.`);
+            const msg = encodeURIComponent(`Hi! I'm interested in purchasing ${product.name} (${formatPrice(product.price)}). Please share payment details & ER Coin reward info.`);
             window.open(`https://wa.me/923001112222?text=${msg}`, '_blank');
         });
         document.getElementById('backToHomeBtn')?.addEventListener('click', (e) => {
@@ -824,7 +1142,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
-    // PERFECT LIGHT/DARK THEME TOGGLE
+    // THEME
     function initTheme() {
         const savedTheme = localStorage.getItem('gadgetTheme');
         if (savedTheme === 'light') {
@@ -870,21 +1188,81 @@
         });
     }
     
+    function setupFooterHandlers() {
+        const footerLinks = ['footerAboutUs', 'footerTerms', 'footerPrivacy', 'footerSupport', 'footerErCoin', 'footerErWallet'];
+        const messages = {
+            footerAboutUs: "📖 About Us: GadgetFlow is Pakistan's leading premium tech store, delivering authentic gadgets with ER Coin rewards.",
+            footerTerms: "📜 Terms & Service: Standard 7-day return policy, secure payments, and ER Coin loyalty program terms apply.",
+            footerPrivacy: "🔒 Privacy Policy: We protect your data and never share without consent. Read full policy on our site.",
+            footerSupport: "💬 Customer Support: 24/7 live chat, call +92 300 123 4567, or email support@gadgetflow.pk",
+            footerErCoin: "💰 ER Coin: Earn 10% back as ER Coins on every purchase! Redeem for discounts and exclusive rewards.",
+            footerErWallet: "💎 ER Coin Wallet: Track your ER Coins balance, transaction history, and withdraw rewards."
+        };
+        footerLinks.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    alert(messages[id] || `🔹 ${id.replace('footer', '')} section coming soon.`);
+                });
+            }
+        });
+    }
+    
+    // MAIN INIT
     document.addEventListener('DOMContentLoaded', () => {
+        initStorage();
+        seedDemoUser();
         initTheme();
         renderHomeProducts();
         initSwiper();
+        setupFooterHandlers();
+        updateAuthUI();
         
         document.getElementById('homeLogoLink')?.addEventListener('click', showHomePage);
-        document.getElementById('accountIcon')?.addEventListener('click', () => alert("🔐 Account Dashboard\n\n• Reward Points Tracker\n• Order History\n• Referral Program\n\nLogin to access features."));
+        document.getElementById('accountIcon')?.addEventListener('click', () => {
+            if (isLoggedIn()) {
+                window.location.href = "dashboard.html";
+            } else {
+                showAuthOverlay();
+            }
+        });
         document.getElementById('customerServiceBtn')?.addEventListener('click', () => alert("📞 Customer Support\n\n📱 Phone: +92 300 123 4567\n💬 WhatsApp: +92 300 111 2222\n⏰ 24/7 Support Available\n✉️ Email: support@gadgetflow.pk"));
         document.getElementById('themeToggleBtn')?.addEventListener('click', toggleTheme);
+        
+        // Auth handlers
+        document.getElementById('closeAuthBtn')?.addEventListener('click', hideAuthOverlay);
+        document.getElementById('submitLoginBtn')?.addEventListener('click', () => {
+            const email = document.getElementById('loginEmail').value;
+            const pass = document.getElementById('loginPassword').value;
+            performLogin(email, pass);
+        });
+        document.getElementById('submitRegisterBtn')?.addEventListener('click', () => {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const pass = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirmPassword').value;
+            performRegister(name, email, pass, confirm);
+        });
         
         // Mobile bottom nav
         document.getElementById('mobileHomeBtn')?.addEventListener('click', showHomePage);
         document.getElementById('mobileShopBtn')?.addEventListener('click', () => { showHomePage(); setTimeout(() => window.scrollTo({ top: 450, behavior: 'smooth' }), 100); });
-        document.getElementById('mobileSupportBtn')?.addEventListener('click', () => alert("📞 24/7 Support\n\nCall: +92 300 123 4567\nWhatsApp: +92 300 111 2222"));
-        document.getElementById('mobileAccountBtn')?.addEventListener('click', () => alert("👤 Account\n\nSign in to view:\n• Reward Points\n• Order Tracking\n• Referral Bonuses"));
+        document.getElementById('mobileSupportBtn')?.addEventListener('click', () => alert("📞 24/7 Support\n\nCall: +92 300 123 4567\nWhatsApp: +92 300 111 2222\nER Coin support available."));
+        document.getElementById('mobileAccountBtn')?.addEventListener('click', () => {
+            if (isLoggedIn()) {
+                window.location.href = "dashboard.html";
+            } else {
+                showAuthOverlay();
+            }
+        });
+        
+        initAuthTabs();
+        
+        // Overlay click outside close
+        document.getElementById('authOverlay')?.addEventListener('click', (e) => {
+            if (e.target === document.getElementById('authOverlay')) hideAuthOverlay();
+        });
         
         showHomePage();
     });
