@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0, initial-scale=1.0">
+    <title>Vendor Dashboard | GadgetFlow - ER Coin Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --bg-primary: #0B0E11;
+            --bg-secondary: #13161c;
+            --surface: #1E2329;
+            --surface-2: #2b3139;
+            --surface-3: #353d46;
+            --text-primary: #EAECEF;
+            --text-secondary: #a9aeb8;
+            --text-muted: #6c727c;
+            --border-color: #2b3139;
+            --card-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            --accent: #F0B90B;
+            --accent-hover: #d9a607;
+            --success: #0ecb81;
+            --danger: #f6465d;
+            --warning: #f39c12;
+            --sidebar-width: 280px;
+            --header-height: 64px;
+        }
+
+        body.light {
+            --bg-primary: #f8f9fc;
+            --bg-secondary: #ffffff;
+            --surface: #ffffff;
+            --surface-2: #f0f2f5;
+            --surface-3: #e8eaed;
+            --text-primary: #1e2329;
+            --text-secondary: #5e6673;
+            --text-muted: #8a919e;
+            --border-color: #eaecef;
+            --card-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* App Container - Mobile First */
+        .app-container {
+            min-height: 100vh;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        /* Header */
+        .app-header {
+            position: sticky;
+            top: 0;
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .logo h2 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent), #FCD34D);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.8rem;
+            align-items: center;
+        }
+
+        .theme-toggle, .menu-toggle {
+            background: var(--surface-2);
+            border: 1px solid var(--border-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--accent);
+            transition: all 0.2s;
+        }
+
+        /* Sidebar Menu - Slide-out for Mobile, Fixed for Desktop */
+        .sidebar-menu {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100vh;
+            background: var(--surface);
+            border-right: 1px solid var(--border-color);
+            z-index: 200;
+            transition: left 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-menu.open {
+            left: 0;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 150;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+
+        .sidebar-overlay.open {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .vendor-info {
+            padding: 1rem;
+            background: var(--bg-secondary);
+            margin: 1rem;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .vendor-name {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--accent);
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 0.5rem 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1.5rem;
+            margin: 0.2rem 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--text-secondary);
+            border-left: 3px solid transparent;
+        }
+
+        .nav-item i {
+            width: 24px;
+            font-size: 1.2rem;
+        }
+
+        .nav-item.active, .nav-item:hover {
+            background: var(--surface-2);
+            color: var(--accent);
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-footer {
+            padding: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .logout-btn {
+            background: var(--accent);
+            border: none;
+            padding: 0.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 1rem;
+            min-height: calc(100vh - 120px);
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding: 0 0.2rem;
+        }
+
+        /* Cards */
+        .dashboard-card {
+            background: var(--surface);
+            border-radius: 24px;
+            padding: 1.2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 1rem;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .card-header i {
+            font-size: 1.3rem;
+            color: var(--accent);
+        }
+
+        /* Stats Grid - Mobile Optimized */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .stat-title {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        /* Tables - Scrollable */
+        .table-container {
+            overflow-x: auto;
+            max-height: 450px;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        th, td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.85rem;
+        }
+
+        th {
+            color: var(--accent);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            background: var(--surface);
+            z-index: 10;
+        }
+
+        /* Status Badges */
+        .status-pending, .status-processing, .status-completed {
+            padding: 0.2rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+        .status-pending { background: rgba(246, 70, 93, 0.15); color: var(--danger); }
+        .status-processing { background: rgba(243, 156, 18, 0.15); color: var(--warning); }
+        .status-completed { background: rgba(14, 203, 129, 0.15); color: var(--success); }
+
+        /* Alphabet Filter - A to Z Full */
+        .alphabet-filter {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.2rem;
+            padding: 0.8rem;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            justify-content: center;
+        }
+
+        .alpha-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--surface-2);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .alpha-btn:hover, .alpha-btn.active {
+            background: var(--accent);
+            color: #000;
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        /* Buttons */
+        .btn-sm {
+            background: var(--accent);
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            color: #000;
+            font-size: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+
+        /* Bottom Navigation - Mobile Only */
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-color);
+            padding: 0.6rem 1rem;
+            justify-content: space-around;
+            z-index: 100;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.7rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 40px;
+            transition: all 0.2s;
+            flex: 1;
+            text-align: center;
+        }
+
+        .bottom-nav-item i {
+            font-size: 1.3rem;
+        }
+
+        .bottom-nav-item.active {
+            color: var(--accent);
+            background: var(--surface-2);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+            z-index: 300;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            visibility: hidden;
+            opacity: 0;
+            transition: 0.2s;
+        }
+
+        .modal-overlay.active {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .modal-container {
+            background: var(--surface);
+            border-radius: 28px;
+            width: 90%;
+            max-width: 380px;
+            padding: 1.5rem;
+        }
+
+        .modal-container select {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            margin: 0.8rem 0;
+            color: var(--text-primary);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        /* Desktop Styles */
+        @media (min-width: 769px) {
+            .menu-toggle {
+                display: none;
+            }
+            
+            .sidebar-menu {
+                position: fixed;
+                left: 0;
+                width: var(--sidebar-width);
+                transform: none;
+                z-index: 50;
+            }
+            
+            .sidebar-overlay {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: var(--sidebar-width);
+                padding: 1.5rem;
+            }
+            
+            .bottom-nav {
+                display: none !important;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .alpha-btn {
+                width: 42px;
+                height: 42px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .bottom-nav {
+                display: flex;
+            }
+            
+            .main-content {
+                padding-bottom: 70px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .alpha-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--surface-2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dashboard-card {
+            animation: fadeInUp 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <!-- Header -->
+    <div class="app-header">
+        <div class="logo">
+            <h2><i class="fas fa-bolt"></i> GadgetFlow</h2>
+        </div>
+        <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="sidebar-menu" id="sidebarMenu">
+        <div class="sidebar-header">
+            <div class="logo">
+                <h2><i class="fas fa-store"></i> Vendor Panel</h2>
+            </div>
+        </div>
+        <div class="vendor-info" id="vendorInfo">
+            <div class="vendor-name" id="vendorNameDisplay">Loading...</div>
+            <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 0.3rem;">Vendor Dashboard</div>
+        </div>
+        <div class="sidebar-nav">
+            <div class="nav-item active" data-tab="overview">
+                <i class="fas fa-chart-line"></i> <span>Overview</span>
+            </div>
+            <div class="nav-item" data-tab="payments">
+                <i class="fas fa-credit-card"></i> <span>Payments</span>
+            </div>
+            <div class="nav-item" data-tab="users">
+                <i class="fas fa-users"></i> <span>All Users</span>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <h1 class="page-title" id="pageTitle">Overview</h1>
+        <div id="contentArea"></div>
+    </div>
+
+    <!-- Bottom Navigation (Mobile Only) -->
+    <div class="bottom-nav">
+        <div class="bottom-nav-item active" data-tab="overview">
+            <i class="fas fa-chart-line"></i>
+            <span>Overview</span>
+        </div>
+        <div class="bottom-nav-item" data-tab="payments">
+            <i class="fas fa-credit-card"></i>
+            <span>Payments</span>
+        </div>
+        <div class="bottom-nav-item" data-tab="users">
+            <i class="fas fa-users"></i>
+            <span>Users</span>
+        </div>
+    </div>
+</div>
+
+<!-- Payment Modal -->
+<div id="paymentModal" class="modal-overlay">
+    <div class="modal-container">
+        <h3 style="margin-bottom: 1rem;"><i class="fas fa-edit"></i> Update Payment Status</h3>
+        <select id="paymentStatusSelect">
+            <option value="pending">Pending</option>
+            <option value="processing">Processing</option>
+            <option value="completed">Completed</option>
+        </select>
+        <div class="modal-buttons">
+            <button id="confirmPaymentBtn" style="background: var(--accent); flex:1; padding:0.8rem; border-radius:40px; border:none; font-weight:bold; cursor:pointer;">Update</button>
+            <button id="cancelPaymentBtn" style="background: var(--surface-2); flex:1; padding:0.8rem; border-radius:40px; border:none; cursor:pointer;">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Storage Keys
+    const STORAGE_USERS = "gadgetflow_users_final";
+    const STORAGE_ORDERS = "gadgetflow_orders";
+    const STORAGE_VENDOR_SESSION = "gadgetflow_vendor_session";
+
+    function getVendorSession() {
+        return JSON.parse(localStorage.getItem(STORAGE_VENDOR_SESSION) || "null");
+    }
+
+    function getUsers() {
+        return JSON.parse(localStorage.getItem(STORAGE_USERS) || "[]");
+    }
+
+    function getOrders() {
+        return JSON.parse(localStorage.getItem(STORAGE_ORDERS) || "[]");
+    }
+
+    function saveOrders(orders) {
+        localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
+    }
+
+    // Seed Orders Data
+    function seedOrders() {
+        let orders = getOrders();
+        if (orders.length === 0) {
+            const users = getUsers();
+            const sampleOrders = [
+                { id: 1001, customerName: "Ahmed Khan", customerEmail: "ahmed@example.com", productName: "Mobile Holder", amount: 500, status: "pending", date: "2025-03-20" },
+                { id: 1002, customerName: "Bilal Ahmed", customerEmail: "bilal@example.com", productName: "Powerbank", amount: 1000, status: "processing", date: "2025-03-21" },
+                { id: 1003, customerName: "Zara Khan", customerEmail: "zara@example.com", productName: "RGB Keyboard", amount: 2500, status: "completed", date: "2025-03-19" },
+                { id: 1004, customerName: "Danish Ali", customerEmail: "danish@example.com", productName: "Smart Watch", amount: 5000, status: "pending", date: "2025-03-22" },
+                { id: 1005, customerName: "Fatima Ali", customerEmail: "fatima@example.com", productName: "Headphone", amount: 7000, status: "pending", date: "2025-03-22" },
+                { id: 1006, customerName: "Hamza Raza", customerEmail: "hamza@example.com", productName: "Tablet", amount: 10000, status: "processing", date: "2025-03-21" },
+                { id: 1007, customerName: "Ayesha Siddiqui", customerEmail: "ayesha@example.com", productName: "Powerbank", amount: 1000, status: "completed", date: "2025-03-18" },
+                { id: 1008, customerName: "Usman Chaudhry", customerEmail: "usman@example.com", productName: "Mobile Holder", amount: 500, status: "pending", date: "2025-03-23" },
+                { id: 1009, customerName: "Nadia Hassan", customerEmail: "nadia@example.com", productName: "Smart Watch", amount: 5000, status: "processing", date: "2025-03-20" },
+                { id: 1010, customerName: "Omar Farooq", customerEmail: "omar@example.com", productName: "Bluetooth Speaker", amount: 3000, status: "pending", date: "2025-03-23" },
+                { id: 1011, customerName: "Test User", customerEmail: "test@example.com", productName: "Mobile Holder", amount: 500, status: "completed", date: "2025-03-17" },
+                { id: 1012, customerName: "Alex Johnson", customerEmail: "demo@gadgetflow.com", productName: "Powerbank", amount: 1000, status: "pending", date: "2025-03-22" }
+            ];
+            
+            users.forEach(user => {
+                if (!sampleOrders.some(o => o.customerEmail === user.email)) {
+                    sampleOrders.push({
+                        id: 2000 + user.id,
+                        customerName: user.name,
+                        customerEmail: user.email,
+                        productName: "Sample Product",
+                        amount: Math.floor(Math.random() * 5000) + 500,
+                        status: "pending",
+                        date: new Date().toISOString().split('T')[0]
+                    });
+                }
+            });
+            saveOrders(sampleOrders);
+        }
+    }
+
+    function getAllUsersWithStats() {
+        const users = getUsers();
+        const orders = getOrders();
+        return users.map(user => {
+            const userOrders = orders.filter(o => o.customerEmail === user.email);
+            const totalSpent = userOrders.reduce((sum, o) => sum + o.amount, 0);
+            return {
+                ...user,
+                totalSpent,
+                orderCount: userOrders.length,
+                pendingOrders: userOrders.filter(o => o.status === "pending").length
+            };
+        }).sort((a, b) => a.name.localeCompare(b.name));
+    }
+
+    function getPaymentStats() {
+        const orders = getOrders();
+        const pendingAmount = orders.filter(o => o.status === "pending").reduce((s, o) => s + o.amount, 0);
+        const processingAmount = orders.filter(o => o.status === "processing").reduce((s, o) => s + o.amount, 0);
+        const completedAmount = orders.filter(o => o.status === "completed").reduce((s, o) => s + o.amount, 0);
+        return {
+            totalOrders: orders.length,
+            pendingAmount, processingAmount, completedAmount,
+            totalAmount: pendingAmount + processingAmount + completedAmount,
+            pendingCount: orders.filter(o => o.status === "pending").length,
+            processingCount: orders.filter(o => o.status === "processing").length,
+            completedCount: orders.filter(o => o.status === "completed").length
+        };
+    }
+
+    // Render Functions
+    let currentFilter = 'ALL';
+
+    function renderOverview() {
+        const stats = getPaymentStats();
+        const orders = getOrders();
+        return `
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-title">Total Orders</div><div class="stat-value">${stats.totalOrders}</div></div>
+                <div class="stat-card"><div class="stat-title">Pending</div><div class="stat-value">₨ ${stats.pendingAmount.toLocaleString()}</div><div style="font-size:0.6rem;">${stats.pendingCount} orders</div></div>
+                <div class="stat-card"><div class="stat-title">Processing</div><div class="stat-value">₨ ${stats.processingAmount.toLocaleString()}</div><div style="font-size:0.6rem;">${stats.processingCount} orders</div></div>
+                <div class="stat-card"><div class="stat-title">Completed</div><div class="stat-value">₨ ${stats.completedAmount.toLocaleString()}</div><div style="font-size:0.6rem;">${stats.completedCount} orders</div></div>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-header"><i class="fas fa-chart-simple"></i><h3>Revenue Summary</h3></div>
+                <div style="text-align:center; padding:0.5rem;">
+                    <div style="font-size:2rem; font-weight:800; color:var(--accent);">₨ ${stats.totalAmount.toLocaleString()}</div>
+                    <div style="margin-top:0.8rem; display:flex; justify-content:center; gap:0.8rem; flex-wrap:wrap;">
+                        <span style="color:var(--danger);">● Pending: ₨ ${stats.pendingAmount.toLocaleString()}</span>
+                        <span style="color:var(--warning);">● Processing: ₨ ${stats.processingAmount.toLocaleString()}</span>
+                        <span style="color:var(--success);">● Completed: ₨ ${stats.completedAmount.toLocaleString()}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="dashboard-card">
+                <div class="card-header"><i class="fas fa-clock"></i><h3>Recent Orders</h3></div>
+                <div class="table-container">
+                    <table><thead><tr><th>ID</th><th>Customer</th><th>Product</th><th>Amount</th><th>Status</th></tr></thead><tbody>
+                        ${orders.slice(0, 5).map(o => `<tr><td>#${o.id}</td><td>${escapeHtml(o.customerName)}</td><td>${escapeHtml(o.productName)}</td><td>₨ ${o.amount.toLocaleString()}</td><td><span class="status-${o.status}">${o.status}</span></td></tr>`).join('')}
+                        ${orders.length === 0 ? '<tr><td colspan="5" class="empty-message">No orders</td></tr>' : ''}
+                    </tbody></table>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderPayments() {
+        const orders = getOrders();
+        return `
+            <div class="dashboard-card">
+                <div class="card-header"><i class="fas fa-credit-card"></i><h3>All Payments</h3></div>
+                <div class="table-container">
+                    <table><thead><tr><th>ID</th><th>Customer</th><th>Product</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody>
+                        ${orders.map(o => `<tr><td>#${o.id}</td><td>${escapeHtml(o.customerName)}<br><small>${escapeHtml(o.customerEmail)}</small></td><td>${escapeHtml(o.productName)}</td><td>₨ ${o.amount.toLocaleString()}</td><td><span class="status-${o.status}">${o.status}</span></td><td><button class="btn-sm" onclick="openPaymentModal(${o.id})">Update</button></td></tr>`).join('')}
+                        ${orders.length === 0 ? '<tr><td colspan="6" class="empty-message">No payments</td></tr>' : ''}
+                    </tbody></table>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderUsers() {
+        const allUsers = getAllUsersWithStats();
+        const filteredUsers = currentFilter === 'ALL' 
+            ? allUsers 
+            : allUsers.filter(u => u.name.charAt(0).toUpperCase() === currentFilter);
+        
+        // Full A-Z alphabet
+        const alphabet = ['ALL', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+        
+        return `
+            <div class="dashboard-card">
+                <div class="card-header"><i class="fas fa-users"></i><h3>All Customers</h3></div>
+                <div class="alphabet-filter">
+                    ${alphabet.map(letter => `<button class="alpha-btn ${currentFilter === letter ? 'active' : ''}" onclick="filterUsers('${letter}')">${letter}</button>`).join('')}
+                </div>
+                <div class="table-container">
+                    <table><thead><tr><th>Name</th><th>Email</th><th>ER Coins</th><th>Orders</th><th>Spent</th></tr></thead><tbody>
+                        ${filteredUsers.map(u => `<tr><td><strong>${escapeHtml(u.name)}</strong></td><td>${escapeHtml(u.email)}</td><td>${u.erCoins || 0} ERC</td><td>${u.orderCount || 0}</td><td>₨ ${(u.totalSpent || 0).toLocaleString()}</td></tr>`).join('')}
+                        ${filteredUsers.length === 0 ? '<tr><td colspan="5" class="empty-message">No users found</td></tr>' : ''}
+                    </tbody></table>
+                </div>
+            </div>
+        `;
+    }
+
+    let currentPaymentId = null;
+
+    window.openPaymentModal = function(orderId) {
+        currentPaymentId = orderId;
+        const order = getOrders().find(o => o.id === orderId);
+        if (order) {
+            document.getElementById('paymentStatusSelect').value = order.status;
+            document.getElementById('paymentModal').classList.add('active');
+        }
+    };
+
+    window.filterUsers = function(letter) {
+        currentFilter = letter;
+        renderUsersContent();
+        // Update active class on alphabet buttons
+        document.querySelectorAll('.alpha-btn').forEach(btn => {
+            if (btn.innerText === letter) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+    };
+
+    function updatePaymentStatus() {
+        const newStatus = document.getElementById('paymentStatusSelect').value;
+        const orders = getOrders();
+        const index = orders.findIndex(o => o.id === currentPaymentId);
+        if (index !== -1) {
+            orders[index].status = newStatus;
+            saveOrders(orders);
+            document.getElementById('paymentModal').classList.remove('active');
+            // Refresh current tab
+            const activeTab = document.querySelector('.nav-item.active, .bottom-nav-item.active')?.getAttribute('data-tab');
+            if (activeTab === 'payments') renderPaymentsContent();
+            if (activeTab === 'overview') renderOverviewContent();
+        }
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+    }
+
+    let currentTab = 'overview';
+
+    function renderOverviewContent() {
+        document.getElementById('contentArea').innerHTML = renderOverview();
+        document.getElementById('pageTitle').innerHTML = 'Overview Dashboard';
+    }
+
+    function renderPaymentsContent() {
+        document.getElementById('contentArea').innerHTML = renderPayments();
+        document.getElementById('pageTitle').innerHTML = 'Payments Management';
+    }
+
+    function renderUsersContent() {
+        document.getElementById('contentArea').innerHTML = renderUsers();
+        document.getElementById('pageTitle').innerHTML = 'Customer Management';
+    }
+
+    function loadTab(tab) {
+        currentTab = tab;
+        if (tab === 'overview') renderOverviewContent();
+        else if (tab === 'payments') renderPaymentsContent();
+        else if (tab === 'users') renderUsersContent();
+        
+        // Update active states for both sidebar and bottom nav
+        document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(item => {
+            if (item.getAttribute('data-tab') === tab) item.classList.add('active');
+            else item.classList.remove('active');
+        });
+        
+        // Close sidebar on mobile after selection
+        if (window.innerWidth <= 768) {
+            closeSidebar();
+        }
+    }
+
+    // Sidebar Functions
+    function openSidebar() {
+        document.getElementById('sidebarMenu').classList.add('open');
+        document.getElementById('sidebarOverlay').classList.add('open');
+    }
+
+    function closeSidebar() {
+        document.getElementById('sidebarMenu').classList.remove('open');
+        document.getElementById('sidebarOverlay').classList.remove('open');
+    }
+
+    // Theme
+    function initTheme() {
+        const saved = localStorage.getItem('gadgetTheme');
+        if (saved === 'light') document.body.classList.add('light');
+        updateThemeIcon();
+    }
+
+    function updateThemeIcon() {
+        const isLight = document.body.classList.contains('light');
+        const icon = isLight ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        const themeBtn = document.getElementById('themeToggle');
+        if (themeBtn) themeBtn.innerHTML = icon;
+    }
+
+    function toggleTheme() {
+        document.body.classList.toggle('light');
+        localStorage.setItem('gadgetTheme', document.body.classList.contains('light') ? 'light' : 'dark');
+        updateThemeIcon();
+    }
+
+    // Auth Check
+    function checkAuth() {
+        const vendor = getVendorSession();
+        if (!vendor) {
+            window.location.href = "index.html";
+            return false;
+        }
+        document.getElementById('vendorNameDisplay').innerHTML = vendor.displayName || vendor.username;
+        return true;
+    }
+
+    function logout() {
+        localStorage.removeItem(STORAGE_VENDOR_SESSION);
+        window.location.href = "index.html";
+    }
+
+    // Handle responsive behavior on resize
+    function handleResize() {
+        if (window.innerWidth > 768) {
+            closeSidebar();
+        }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        seedOrders();
+        if (!checkAuth()) return;
+        
+        initTheme();
+        
+        // Navigation
+        document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const tab = item.getAttribute('data-tab');
+                if (tab) loadTab(tab);
+            });
+        });
+        
+        // Sidebar
+        const menuToggle = document.getElementById('menuToggle');
+        if (menuToggle) menuToggle.addEventListener('click', openSidebar);
+        document.getElementById('sidebarOverlay')?.addEventListener('click', closeSidebar);
+        
+        // Modal
+        document.getElementById('confirmPaymentBtn')?.addEventListener('click', updatePaymentStatus);
+        document.getElementById('cancelPaymentBtn')?.addEventListener('click', () => {
+            document.getElementById('paymentModal').classList.remove('active');
+        });
+        document.getElementById('paymentModal')?.addEventListener('click', (e) => {
+            if (e.target === document.getElementById('paymentModal')) {
+                document.getElementById('paymentModal').classList.remove('active');
+            }
+        });
+        
+        document.getElementById('logoutBtn')?.addEventListener('click', logout);
+        document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+        
+        window.addEventListener('resize', handleResize);
+        
+        // Load default tab
+        loadTab('overview');
+    });
+</script>
+</body>
+</html>
