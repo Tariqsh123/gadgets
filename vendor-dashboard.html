@@ -494,7 +494,7 @@
                 <h2><i class="fas fa-store"></i> Vendor Panel</h2>
             </div>
         </div>
-        <div class="vendor-info" id="vendorInfo">
+        <div class="vendor-info">
             <div class="vendor-name" id="vendorNameDisplay">Demo Vendor</div>
             <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 0.3rem;">Vendor Dashboard</div>
         </div>
@@ -508,7 +508,7 @@
         </div>
     </div>
 
-    <div class="main-content" id="mainContent">
+    <div class="main-content">
         <h1 class="page-title" id="pageTitle">Overview Dashboard</h1>
         <div id="contentArea"></div>
     </div>
@@ -536,79 +536,51 @@
 </div>
 
 <script>
-    // Storage Keys
-    const STORAGE_USERS = "gadgetflow_users_final";
-    const STORAGE_ORDERS = "gadgetflow_orders";
-    const STORAGE_VENDOR_SESSION = "gadgetflow_vendor_session";
+    // Data initialization - Direct data without localStorage dependency
+    const defaultUsers = [
+        { id: 1, name: "Ahmed Khan", email: "ahmed@example.com", erCoins: 1250, referralCode: "GFAHMED123", joined: "2025-01-15" },
+        { id: 2, name: "Bilal Ahmed", email: "bilal@example.com", erCoins: 800, referralCode: "GFBILAL456", joined: "2025-01-20" },
+        { id: 3, name: "Fatima Ali", email: "fatima@example.com", erCoins: 2000, referralCode: "GFFATIMA789", joined: "2025-02-01" },
+        { id: 4, name: "Zara Khan", email: "zara@example.com", erCoins: 500, referralCode: "GFZARA111", joined: "2025-02-10" },
+        { id: 5, name: "Usman Chaudhry", email: "usman@example.com", erCoins: 3200, referralCode: "GFUSMAN222", joined: "2025-02-15" },
+        { id: 6, name: "Ayesha Siddiqui", email: "ayesha@example.com", erCoins: 950, referralCode: "GFAYESHA333", joined: "2025-02-20" },
+        { id: 7, name: "Test User", email: "test@example.com", erCoins: 500, referralCode: "GFTEST123", joined: "2025-03-01" },
+        { id: 8, name: "Sarah Khan", email: "sarah@example.com", erCoins: 1500, referralCode: "GFSARAH444", joined: "2025-03-05" },
+        { id: 9, name: "Ali Raza", email: "ali@example.com", erCoins: 750, referralCode: "GFALI555", joined: "2025-03-10" },
+        { id: 10, name: "Nadia Hassan", email: "nadia@example.com", erCoins: 2100, referralCode: "GFNADIA666", joined: "2025-03-12" }
+    ];
 
-    // Create Demo Vendor Session if not exists
-    function createDemoVendorSession() {
-        let vendorSession = localStorage.getItem(STORAGE_VENDOR_SESSION);
-        if (!vendorSession) {
-            const demoVendor = {
-                id: 1,
-                username: "demo_vendor",
-                displayName: "Demo Vendor",
-                email: "vendor@example.com",
-                status: "active"
-            };
-            localStorage.setItem(STORAGE_VENDOR_SESSION, JSON.stringify(demoVendor));
-        }
-    }
+    const defaultOrders = [
+        { id: 1001, customerName: "Ahmed Khan", customerEmail: "ahmed@example.com", productName: "Mobile Holder", amount: 500, status: "pending", date: "2025-03-20" },
+        { id: 1002, customerName: "Bilal Ahmed", customerEmail: "bilal@example.com", productName: "Powerbank", amount: 1000, status: "completed", date: "2025-03-21" },
+        { id: 1003, customerName: "Fatima Ali", customerEmail: "fatima@example.com", productName: "RGB Keyboard", amount: 2500, status: "processing", date: "2025-03-19" },
+        { id: 1004, customerName: "Zara Khan", customerEmail: "zara@example.com", productName: "Smart Watch", amount: 5000, status: "pending", date: "2025-03-22" },
+        { id: 1005, customerName: "Usman Chaudhry", customerEmail: "usman@example.com", productName: "Headphone", amount: 7000, status: "pending", date: "2025-03-22" },
+        { id: 1006, customerName: "Ayesha Siddiqui", customerEmail: "ayesha@example.com", productName: "Tablet", amount: 10000, status: "completed", date: "2025-03-21" },
+        { id: 1007, customerName: "Test User", customerEmail: "test@example.com", productName: "Mobile Holder", amount: 500, status: "completed", date: "2025-03-18" },
+        { id: 1008, customerName: "Sarah Khan", customerEmail: "sarah@example.com", productName: "Powerbank", amount: 1000, status: "processing", date: "2025-03-23" },
+        { id: 1009, customerName: "Ali Raza", customerEmail: "ali@example.com", productName: "Smart Watch", amount: 5000, status: "pending", date: "2025-03-23" },
+        { id: 1010, customerName: "Nadia Hassan", customerEmail: "nadia@example.com", productName: "Bluetooth Speaker", amount: 3000, status: "pending", date: "2025-03-24" }
+    ];
 
-    function getVendorSession() {
-        createDemoVendorSession();
-        return JSON.parse(localStorage.getItem(STORAGE_VENDOR_SESSION) || "null");
-    }
+    let usersData = [...defaultUsers];
+    let ordersData = [...defaultOrders];
 
     function getUsers() {
-        let users = JSON.parse(localStorage.getItem(STORAGE_USERS) || "[]");
-        if (users.length === 0) {
-            users = [
-                { id: 1, name: "Ahmed Khan", email: "ahmed@example.com", erCoins: 1250, referralCode: "GFAHMED123", joined: "2025-01-15" },
-                { id: 2, name: "Bilal Ahmed", email: "bilal@example.com", erCoins: 800, referralCode: "GFBILAL456", joined: "2025-01-20" },
-                { id: 3, name: "Fatima Ali", email: "fatima@example.com", erCoins: 2000, referralCode: "GFFATIMA789", joined: "2025-02-01" },
-                { id: 4, name: "Zara Khan", email: "zara@example.com", erCoins: 500, referralCode: "GFZARA111", joined: "2025-02-10" },
-                { id: 5, name: "Usman Chaudhry", email: "usman@example.com", erCoins: 3200, referralCode: "GFUSMAN222", joined: "2025-02-15" },
-                { id: 6, name: "Ayesha Siddiqui", email: "ayesha@example.com", erCoins: 950, referralCode: "GFAYESHA333", joined: "2025-02-20" },
-                { id: 7, name: "Test User", email: "test@example.com", erCoins: 500, referralCode: "GFTEST123", joined: "2025-03-01" },
-                { id: 8, name: "Sarah Khan", email: "sarah@example.com", erCoins: 1500, referralCode: "GFSARAH444", joined: "2025-03-05" },
-                { id: 9, name: "Ali Raza", email: "ali@example.com", erCoins: 750, referralCode: "GFALI555", joined: "2025-03-10" },
-                { id: 10, name: "Nadia Hassan", email: "nadia@example.com", erCoins: 2100, referralCode: "GFNADIA666", joined: "2025-03-12" }
-            ];
-            localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
-        }
-        return JSON.parse(localStorage.getItem(STORAGE_USERS) || "[]");
+        return usersData;
     }
 
     function getOrders() {
-        let orders = JSON.parse(localStorage.getItem(STORAGE_ORDERS) || "[]");
-        if (orders.length === 0) {
-            orders = [
-                { id: 1001, customerName: "Ahmed Khan", customerEmail: "ahmed@example.com", productName: "Mobile Holder", amount: 500, status: "pending", date: "2025-03-20" },
-                { id: 1002, customerName: "Bilal Ahmed", customerEmail: "bilal@example.com", productName: "Powerbank", amount: 1000, status: "completed", date: "2025-03-21" },
-                { id: 1003, customerName: "Fatima Ali", customerEmail: "fatima@example.com", productName: "RGB Keyboard", amount: 2500, status: "processing", date: "2025-03-19" },
-                { id: 1004, customerName: "Zara Khan", customerEmail: "zara@example.com", productName: "Smart Watch", amount: 5000, status: "pending", date: "2025-03-22" },
-                { id: 1005, customerName: "Usman Chaudhry", customerEmail: "usman@example.com", productName: "Headphone", amount: 7000, status: "pending", date: "2025-03-22" },
-                { id: 1006, customerName: "Ayesha Siddiqui", customerEmail: "ayesha@example.com", productName: "Tablet", amount: 10000, status: "completed", date: "2025-03-21" },
-                { id: 1007, customerName: "Test User", customerEmail: "test@example.com", productName: "Mobile Holder", amount: 500, status: "completed", date: "2025-03-18" },
-                { id: 1008, customerName: "Sarah Khan", customerEmail: "sarah@example.com", productName: "Powerbank", amount: 1000, status: "processing", date: "2025-03-23" },
-                { id: 1009, customerName: "Ali Raza", customerEmail: "ali@example.com", productName: "Smart Watch", amount: 5000, status: "pending", date: "2025-03-23" },
-                { id: 1010, customerName: "Nadia Hassan", customerEmail: "nadia@example.com", productName: "Bluetooth Speaker", amount: 3000, status: "pending", date: "2025-03-24" }
-            ];
-            localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
-        }
-        return JSON.parse(localStorage.getItem(STORAGE_ORDERS) || "[]");
+        return ordersData;
     }
 
     function saveOrders(orders) {
-        localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
+        ordersData = orders;
     }
 
     function getAllUsersWithStats() {
-        const users = getUsers();
         const orders = getOrders();
-        return users.map(user => {
+        return usersData.map(user => {
             const userOrders = orders.filter(o => o.customerEmail === user.email);
             const totalSpent = userOrders.reduce((sum, o) => sum + o.amount, 0);
             return {
@@ -809,7 +781,6 @@
     }
 
     function logout() {
-        localStorage.removeItem(STORAGE_VENDOR_SESSION);
         window.location.href = "index.html";
     }
 
@@ -819,11 +790,7 @@
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
-        createDemoVendorSession();
-        const vendor = getVendorSession();
-        if (vendor) {
-            document.getElementById('vendorNameDisplay').innerHTML = vendor.displayName || vendor.username;
-        }
+        document.getElementById('vendorNameDisplay').innerHTML = "Demo Vendor";
         
         initTheme();
         
