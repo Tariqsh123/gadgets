@@ -31,7 +31,6 @@
             --danger: #f6465d;
             --warning: #f39c12;
             --sidebar-width: 280px;
-            --header-height: 64px;
         }
 
         body.light {
@@ -55,14 +54,12 @@
             overflow-x: hidden;
         }
 
-        /* App Container - Mobile First */
         .app-container {
             min-height: 100vh;
             background: var(--bg-primary);
             position: relative;
         }
 
-        /* Header */
         .app-header {
             position: sticky;
             top: 0;
@@ -108,7 +105,6 @@
             transition: all 0.2s;
         }
 
-        /* Sidebar Menu - Slide-out for Mobile, Fixed for Desktop */
         .sidebar-menu {
             position: fixed;
             top: 0;
@@ -213,7 +209,6 @@
             gap: 0.5rem;
         }
 
-        /* Main Content */
         .main-content {
             padding: 1rem;
             min-height: calc(100vh - 120px);
@@ -226,7 +221,6 @@
             padding: 0 0.2rem;
         }
 
-        /* Cards */
         .dashboard-card {
             background: var(--surface);
             border-radius: 24px;
@@ -250,7 +244,6 @@
             color: var(--accent);
         }
 
-        /* Stats Grid - Mobile Optimized */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -278,7 +271,6 @@
             color: var(--accent);
         }
 
-        /* Tables - Scrollable */
         .table-container {
             overflow-x: auto;
             max-height: 450px;
@@ -308,7 +300,6 @@
             z-index: 10;
         }
 
-        /* Status Badges */
         .status-pending, .status-processing, .status-completed {
             padding: 0.2rem 0.6rem;
             border-radius: 20px;
@@ -320,7 +311,6 @@
         .status-processing { background: rgba(243, 156, 18, 0.15); color: var(--warning); }
         .status-completed { background: rgba(14, 203, 129, 0.15); color: var(--success); }
 
-        /* Alphabet Filter - A to Z Full */
         .alphabet-filter {
             display: flex;
             flex-wrap: wrap;
@@ -355,7 +345,6 @@
             transform: scale(1.05);
         }
 
-        /* Buttons */
         .btn-sm {
             background: var(--accent);
             border: none;
@@ -374,7 +363,6 @@
             color: var(--text-muted);
         }
 
-        /* Bottom Navigation - Mobile Only */
         .bottom-nav {
             display: none;
             position: fixed;
@@ -413,7 +401,6 @@
             background: var(--surface-2);
         }
 
-        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -460,92 +447,36 @@
             margin-top: 1rem;
         }
 
-        /* Desktop Styles */
         @media (min-width: 769px) {
-            .menu-toggle {
-                display: none;
-            }
-            
-            .sidebar-menu {
-                position: fixed;
-                left: 0;
-                width: var(--sidebar-width);
-                transform: none;
-                z-index: 50;
-            }
-            
-            .sidebar-overlay {
-                display: none;
-            }
-            
-            .main-content {
-                margin-left: var(--sidebar-width);
-                padding: 1.5rem;
-            }
-            
-            .bottom-nav {
-                display: none !important;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-            
-            .alpha-btn {
-                width: 42px;
-                height: 42px;
-                font-size: 0.9rem;
-            }
+            .menu-toggle { display: none; }
+            .sidebar-menu { position: fixed; left: 0; width: var(--sidebar-width); transform: none; z-index: 50; }
+            .sidebar-overlay { display: none; }
+            .main-content { margin-left: var(--sidebar-width); padding: 1.5rem; }
+            .bottom-nav { display: none !important; }
+            .stats-grid { grid-template-columns: repeat(4, 1fr); }
+            .alpha-btn { width: 42px; height: 42px; font-size: 0.9rem; }
         }
 
-        /* Mobile Styles */
         @media (max-width: 768px) {
-            .bottom-nav {
-                display: flex;
-            }
-            
-            .main-content {
-                padding-bottom: 70px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .alpha-btn {
-                width: 34px;
-                height: 34px;
-                font-size: 0.75rem;
-            }
+            .bottom-nav { display: flex; }
+            .main-content { padding-bottom: 70px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .alpha-btn { width: 34px; height: 34px; font-size: 0.75rem; }
         }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 4px;
-            height: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--surface-2);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 10px;
-        }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: var(--surface-2); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
 
-        /* Animations */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .dashboard-card {
-            animation: fadeInUp 0.3s ease;
-        }
+        .dashboard-card { animation: fadeInUp 0.3s ease; }
     </style>
 </head>
 <body>
 <div class="app-container">
-    <!-- Header -->
     <div class="app-header">
         <div class="logo">
             <h2><i class="fas fa-bolt"></i> GadgetFlow</h2>
@@ -556,7 +487,6 @@
         </div>
     </div>
 
-    <!-- Sidebar Menu -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="sidebar-menu" id="sidebarMenu">
         <div class="sidebar-header">
@@ -565,49 +495,31 @@
             </div>
         </div>
         <div class="vendor-info" id="vendorInfo">
-            <div class="vendor-name" id="vendorNameDisplay">Loading...</div>
+            <div class="vendor-name" id="vendorNameDisplay">Demo Vendor</div>
             <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 0.3rem;">Vendor Dashboard</div>
         </div>
         <div class="sidebar-nav">
-            <div class="nav-item active" data-tab="overview">
-                <i class="fas fa-chart-line"></i> <span>Overview</span>
-            </div>
-            <div class="nav-item" data-tab="payments">
-                <i class="fas fa-credit-card"></i> <span>Payments</span>
-            </div>
-            <div class="nav-item" data-tab="users">
-                <i class="fas fa-users"></i> <span>All Users</span>
-            </div>
+            <div class="nav-item active" data-tab="overview"><i class="fas fa-chart-line"></i> <span>Overview</span></div>
+            <div class="nav-item" data-tab="payments"><i class="fas fa-credit-card"></i> <span>Payments</span></div>
+            <div class="nav-item" data-tab="users"><i class="fas fa-users"></i> <span>All Users</span></div>
         </div>
         <div class="sidebar-footer">
             <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
         </div>
     </div>
 
-    <!-- Main Content -->
     <div class="main-content" id="mainContent">
-        <h1 class="page-title" id="pageTitle">Overview</h1>
+        <h1 class="page-title" id="pageTitle">Overview Dashboard</h1>
         <div id="contentArea"></div>
     </div>
 
-    <!-- Bottom Navigation (Mobile Only) -->
     <div class="bottom-nav">
-        <div class="bottom-nav-item active" data-tab="overview">
-            <i class="fas fa-chart-line"></i>
-            <span>Overview</span>
-        </div>
-        <div class="bottom-nav-item" data-tab="payments">
-            <i class="fas fa-credit-card"></i>
-            <span>Payments</span>
-        </div>
-        <div class="bottom-nav-item" data-tab="users">
-            <i class="fas fa-users"></i>
-            <span>Users</span>
-        </div>
+        <div class="bottom-nav-item active" data-tab="overview"><i class="fas fa-chart-line"></i><span>Overview</span></div>
+        <div class="bottom-nav-item" data-tab="payments"><i class="fas fa-credit-card"></i><span>Payments</span></div>
+        <div class="bottom-nav-item" data-tab="users"><i class="fas fa-users"></i><span>Users</span></div>
     </div>
 </div>
 
-<!-- Payment Modal -->
 <div id="paymentModal" class="modal-overlay">
     <div class="modal-container">
         <h3 style="margin-bottom: 1rem;"><i class="fas fa-edit"></i> Update Payment Status</h3>
@@ -629,57 +541,68 @@
     const STORAGE_ORDERS = "gadgetflow_orders";
     const STORAGE_VENDOR_SESSION = "gadgetflow_vendor_session";
 
+    // Create Demo Vendor Session if not exists
+    function createDemoVendorSession() {
+        let vendorSession = localStorage.getItem(STORAGE_VENDOR_SESSION);
+        if (!vendorSession) {
+            const demoVendor = {
+                id: 1,
+                username: "demo_vendor",
+                displayName: "Demo Vendor",
+                email: "vendor@example.com",
+                status: "active"
+            };
+            localStorage.setItem(STORAGE_VENDOR_SESSION, JSON.stringify(demoVendor));
+        }
+    }
+
     function getVendorSession() {
+        createDemoVendorSession();
         return JSON.parse(localStorage.getItem(STORAGE_VENDOR_SESSION) || "null");
     }
 
     function getUsers() {
+        let users = JSON.parse(localStorage.getItem(STORAGE_USERS) || "[]");
+        if (users.length === 0) {
+            users = [
+                { id: 1, name: "Ahmed Khan", email: "ahmed@example.com", erCoins: 1250, referralCode: "GFAHMED123", joined: "2025-01-15" },
+                { id: 2, name: "Bilal Ahmed", email: "bilal@example.com", erCoins: 800, referralCode: "GFBILAL456", joined: "2025-01-20" },
+                { id: 3, name: "Fatima Ali", email: "fatima@example.com", erCoins: 2000, referralCode: "GFFATIMA789", joined: "2025-02-01" },
+                { id: 4, name: "Zara Khan", email: "zara@example.com", erCoins: 500, referralCode: "GFZARA111", joined: "2025-02-10" },
+                { id: 5, name: "Usman Chaudhry", email: "usman@example.com", erCoins: 3200, referralCode: "GFUSMAN222", joined: "2025-02-15" },
+                { id: 6, name: "Ayesha Siddiqui", email: "ayesha@example.com", erCoins: 950, referralCode: "GFAYESHA333", joined: "2025-02-20" },
+                { id: 7, name: "Test User", email: "test@example.com", erCoins: 500, referralCode: "GFTEST123", joined: "2025-03-01" },
+                { id: 8, name: "Sarah Khan", email: "sarah@example.com", erCoins: 1500, referralCode: "GFSARAH444", joined: "2025-03-05" },
+                { id: 9, name: "Ali Raza", email: "ali@example.com", erCoins: 750, referralCode: "GFALI555", joined: "2025-03-10" },
+                { id: 10, name: "Nadia Hassan", email: "nadia@example.com", erCoins: 2100, referralCode: "GFNADIA666", joined: "2025-03-12" }
+            ];
+            localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+        }
         return JSON.parse(localStorage.getItem(STORAGE_USERS) || "[]");
     }
 
     function getOrders() {
+        let orders = JSON.parse(localStorage.getItem(STORAGE_ORDERS) || "[]");
+        if (orders.length === 0) {
+            orders = [
+                { id: 1001, customerName: "Ahmed Khan", customerEmail: "ahmed@example.com", productName: "Mobile Holder", amount: 500, status: "pending", date: "2025-03-20" },
+                { id: 1002, customerName: "Bilal Ahmed", customerEmail: "bilal@example.com", productName: "Powerbank", amount: 1000, status: "completed", date: "2025-03-21" },
+                { id: 1003, customerName: "Fatima Ali", customerEmail: "fatima@example.com", productName: "RGB Keyboard", amount: 2500, status: "processing", date: "2025-03-19" },
+                { id: 1004, customerName: "Zara Khan", customerEmail: "zara@example.com", productName: "Smart Watch", amount: 5000, status: "pending", date: "2025-03-22" },
+                { id: 1005, customerName: "Usman Chaudhry", customerEmail: "usman@example.com", productName: "Headphone", amount: 7000, status: "pending", date: "2025-03-22" },
+                { id: 1006, customerName: "Ayesha Siddiqui", customerEmail: "ayesha@example.com", productName: "Tablet", amount: 10000, status: "completed", date: "2025-03-21" },
+                { id: 1007, customerName: "Test User", customerEmail: "test@example.com", productName: "Mobile Holder", amount: 500, status: "completed", date: "2025-03-18" },
+                { id: 1008, customerName: "Sarah Khan", customerEmail: "sarah@example.com", productName: "Powerbank", amount: 1000, status: "processing", date: "2025-03-23" },
+                { id: 1009, customerName: "Ali Raza", customerEmail: "ali@example.com", productName: "Smart Watch", amount: 5000, status: "pending", date: "2025-03-23" },
+                { id: 1010, customerName: "Nadia Hassan", customerEmail: "nadia@example.com", productName: "Bluetooth Speaker", amount: 3000, status: "pending", date: "2025-03-24" }
+            ];
+            localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
+        }
         return JSON.parse(localStorage.getItem(STORAGE_ORDERS) || "[]");
     }
 
     function saveOrders(orders) {
         localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
-    }
-
-    // Seed Orders Data
-    function seedOrders() {
-        let orders = getOrders();
-        if (orders.length === 0) {
-            const users = getUsers();
-            const sampleOrders = [
-                { id: 1001, customerName: "Ahmed Khan", customerEmail: "ahmed@example.com", productName: "Mobile Holder", amount: 500, status: "pending", date: "2025-03-20" },
-                { id: 1002, customerName: "Bilal Ahmed", customerEmail: "bilal@example.com", productName: "Powerbank", amount: 1000, status: "processing", date: "2025-03-21" },
-                { id: 1003, customerName: "Zara Khan", customerEmail: "zara@example.com", productName: "RGB Keyboard", amount: 2500, status: "completed", date: "2025-03-19" },
-                { id: 1004, customerName: "Danish Ali", customerEmail: "danish@example.com", productName: "Smart Watch", amount: 5000, status: "pending", date: "2025-03-22" },
-                { id: 1005, customerName: "Fatima Ali", customerEmail: "fatima@example.com", productName: "Headphone", amount: 7000, status: "pending", date: "2025-03-22" },
-                { id: 1006, customerName: "Hamza Raza", customerEmail: "hamza@example.com", productName: "Tablet", amount: 10000, status: "processing", date: "2025-03-21" },
-                { id: 1007, customerName: "Ayesha Siddiqui", customerEmail: "ayesha@example.com", productName: "Powerbank", amount: 1000, status: "completed", date: "2025-03-18" },
-                { id: 1008, customerName: "Usman Chaudhry", customerEmail: "usman@example.com", productName: "Mobile Holder", amount: 500, status: "pending", date: "2025-03-23" },
-                { id: 1009, customerName: "Nadia Hassan", customerEmail: "nadia@example.com", productName: "Smart Watch", amount: 5000, status: "processing", date: "2025-03-20" },
-                { id: 1010, customerName: "Omar Farooq", customerEmail: "omar@example.com", productName: "Bluetooth Speaker", amount: 3000, status: "pending", date: "2025-03-23" },
-                { id: 1011, customerName: "Test User", customerEmail: "test@example.com", productName: "Mobile Holder", amount: 500, status: "completed", date: "2025-03-17" },
-                { id: 1012, customerName: "Alex Johnson", customerEmail: "demo@gadgetflow.com", productName: "Powerbank", amount: 1000, status: "pending", date: "2025-03-22" }
-            ];
-            
-            users.forEach(user => {
-                if (!sampleOrders.some(o => o.customerEmail === user.email)) {
-                    sampleOrders.push({
-                        id: 2000 + user.id,
-                        customerName: user.name,
-                        customerEmail: user.email,
-                        productName: "Sample Product",
-                        amount: Math.floor(Math.random() * 5000) + 500,
-                        status: "pending",
-                        date: new Date().toISOString().split('T')[0]
-                    });
-                }
-            });
-            saveOrders(sampleOrders);
-        }
     }
 
     function getAllUsersWithStats() {
@@ -712,7 +635,6 @@
         };
     }
 
-    // Render Functions
     let currentFilter = 'ALL';
 
     function renderOverview() {
@@ -769,17 +691,16 @@
             ? allUsers 
             : allUsers.filter(u => u.name.charAt(0).toUpperCase() === currentFilter);
         
-        // Full A-Z alphabet
         const alphabet = ['ALL', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
         
         return `
             <div class="dashboard-card">
-                <div class="card-header"><i class="fas fa-users"></i><h3>All Customers</h3></div>
+                <div class="card-header"><i class="fas fa-users"></i><h3>All Customers (${filteredUsers.length})</h3></div>
                 <div class="alphabet-filter">
                     ${alphabet.map(letter => `<button class="alpha-btn ${currentFilter === letter ? 'active' : ''}" onclick="filterUsers('${letter}')">${letter}</button>`).join('')}
                 </div>
                 <div class="table-container">
-                    <table><thead><tr><th>Name</th><th>Email</th><th>ER Coins</th><th>Orders</th><th>Spent</th></tr></thead><tbody>
+                    <table><thead><tr><th>Name</th><th>Email</th><th>ER Coins</th><th>Orders</th><th>Total Spent</th></tr></thead><tbody>
                         ${filteredUsers.map(u => `<tr><td><strong>${escapeHtml(u.name)}</strong></td><td>${escapeHtml(u.email)}</td><td>${u.erCoins || 0} ERC</td><td>${u.orderCount || 0}</td><td>₨ ${(u.totalSpent || 0).toLocaleString()}</td></tr>`).join('')}
                         ${filteredUsers.length === 0 ? '<tr><td colspan="5" class="empty-message">No users found</td></tr>' : ''}
                     </tbody></table>
@@ -802,7 +723,6 @@
     window.filterUsers = function(letter) {
         currentFilter = letter;
         renderUsersContent();
-        // Update active class on alphabet buttons
         document.querySelectorAll('.alpha-btn').forEach(btn => {
             if (btn.innerText === letter) btn.classList.add('active');
             else btn.classList.remove('active');
@@ -817,7 +737,6 @@
             orders[index].status = newStatus;
             saveOrders(orders);
             document.getElementById('paymentModal').classList.remove('active');
-            // Refresh current tab
             const activeTab = document.querySelector('.nav-item.active, .bottom-nav-item.active')?.getAttribute('data-tab');
             if (activeTab === 'payments') renderPaymentsContent();
             if (activeTab === 'overview') renderOverviewContent();
@@ -833,17 +752,17 @@
 
     function renderOverviewContent() {
         document.getElementById('contentArea').innerHTML = renderOverview();
-        document.getElementById('pageTitle').innerHTML = 'Overview Dashboard';
+        document.getElementById('pageTitle').innerHTML = '📊 Overview Dashboard';
     }
 
     function renderPaymentsContent() {
         document.getElementById('contentArea').innerHTML = renderPayments();
-        document.getElementById('pageTitle').innerHTML = 'Payments Management';
+        document.getElementById('pageTitle').innerHTML = '💳 Payments Management';
     }
 
     function renderUsersContent() {
         document.getElementById('contentArea').innerHTML = renderUsers();
-        document.getElementById('pageTitle').innerHTML = 'Customer Management';
+        document.getElementById('pageTitle').innerHTML = '👥 Customer Management';
     }
 
     function loadTab(tab) {
@@ -852,19 +771,14 @@
         else if (tab === 'payments') renderPaymentsContent();
         else if (tab === 'users') renderUsersContent();
         
-        // Update active states for both sidebar and bottom nav
         document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(item => {
             if (item.getAttribute('data-tab') === tab) item.classList.add('active');
             else item.classList.remove('active');
         });
         
-        // Close sidebar on mobile after selection
-        if (window.innerWidth <= 768) {
-            closeSidebar();
-        }
+        if (window.innerWidth <= 768) closeSidebar();
     }
 
-    // Sidebar Functions
     function openSidebar() {
         document.getElementById('sidebarMenu').classList.add('open');
         document.getElementById('sidebarOverlay').classList.add('open');
@@ -875,7 +789,6 @@
         document.getElementById('sidebarOverlay').classList.remove('open');
     }
 
-    // Theme
     function initTheme() {
         const saved = localStorage.getItem('gadgetTheme');
         if (saved === 'light') document.body.classList.add('light');
@@ -895,37 +808,25 @@
         updateThemeIcon();
     }
 
-    // Auth Check
-    function checkAuth() {
-        const vendor = getVendorSession();
-        if (!vendor) {
-            window.location.href = "index.html";
-            return false;
-        }
-        document.getElementById('vendorNameDisplay').innerHTML = vendor.displayName || vendor.username;
-        return true;
-    }
-
     function logout() {
         localStorage.removeItem(STORAGE_VENDOR_SESSION);
         window.location.href = "index.html";
     }
 
-    // Handle responsive behavior on resize
     function handleResize() {
-        if (window.innerWidth > 768) {
-            closeSidebar();
-        }
+        if (window.innerWidth > 768) closeSidebar();
     }
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
-        seedOrders();
-        if (!checkAuth()) return;
+        createDemoVendorSession();
+        const vendor = getVendorSession();
+        if (vendor) {
+            document.getElementById('vendorNameDisplay').innerHTML = vendor.displayName || vendor.username;
+        }
         
         initTheme();
         
-        // Navigation
         document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(item => {
             item.addEventListener('click', () => {
                 const tab = item.getAttribute('data-tab');
@@ -933,12 +834,10 @@
             });
         });
         
-        // Sidebar
         const menuToggle = document.getElementById('menuToggle');
         if (menuToggle) menuToggle.addEventListener('click', openSidebar);
         document.getElementById('sidebarOverlay')?.addEventListener('click', closeSidebar);
         
-        // Modal
         document.getElementById('confirmPaymentBtn')?.addEventListener('click', updatePaymentStatus);
         document.getElementById('cancelPaymentBtn')?.addEventListener('click', () => {
             document.getElementById('paymentModal').classList.remove('active');
@@ -954,7 +853,6 @@
         
         window.addEventListener('resize', handleResize);
         
-        // Load default tab
         loadTab('overview');
     });
 </script>
