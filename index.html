@@ -216,11 +216,19 @@
             .swiper-slide img {
                 height: 480px;
             }
+            
         }
         @media (min-width: 1200px) {
             .swiper-slide img {
                 height: 550px;
             }
+        }
+        @media(max-width:600px){
+            .swiper-slide img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
         }
         .swiper-button-next, .swiper-button-prev {
             color: var(--accent);
@@ -1296,12 +1304,45 @@
         currentProductForPayment = null;
     }
     
-    function sendOrderToWhatsApp(product, customerName, customerPhone, hasScreenshot) {
-        const user = getCurrentUser();
-        const userName = user ? user.name : customerName || "Customer";
-        const orderMessage = `🛍️ *NEW ORDER FROM GADGETFLOW*%0A%0A👤 *Customer Name:* ${customerName || userName}%0A📞 *Phone Number:* ${customerPhone || "Not provided"}%0A📦 *Product:* ${product.name}%0A💰 *Price:* ${formatPrice(product.price)}%0A🏦 *Payment Method:* Easypaisa (Anwar Khan - 03123456789)%0A📸 *Screenshot:* ${hasScreenshot ? "✅ Attached" : "⚠️ Missing"}%0A✨ *ER Coins:* Eligible for 10%% reward%0A📧 *Email:* ${user?.email || "Not provided"}%0A%0A_Order submitted via GadgetFlow Store_`;
-        window.open(`https://wa.me/923123456789?text=${orderMessage}`, '_blank');
-    }
+    function sendOrder(product, customerName, customerPhone, hasScreenshot) {
+    const user = getCurrentUser();
+    const userName = user ? user.name : customerName || "Customer";
+
+    const orderData = {
+        name: customerName || userName,
+        phone: customerPhone || "Not provided",
+        product: product.name,
+        price: formatPrice(product.price),
+        payment: "Easypaisa (Anwar Khan - 03123456789)",
+        screenshot: hasScreenshot ? "Attached" : "Missing",
+        email: user?.email || "Not provided"
+    };
+
+    console.log("Order Submitted:", orderData);
+
+    // Success message
+    showSuccessMessage();
+}
+function showSuccessMessage() {
+    const msg = document.createElement("div");
+    msg.innerText = "✅ Order successfully submitted!";
+    msg.style.position = "fixed";
+    msg.style.bottom = "20px";
+    msg.style.right = "20px";
+    msg.style.background = "#28a745";
+    msg.style.color = "#fff";
+    msg.style.padding = "12px 18px";
+    msg.style.borderRadius = "6px";
+    msg.style.fontSize = "14px";
+    msg.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
+    msg.style.zIndex = "1000";
+
+    document.body.appendChild(msg);
+
+    setTimeout(() => {
+        msg.remove();
+    }, 3000);
+}
     
     function handleBuyNowForLoggedIn(product) {
         showPaymentModal(product);
@@ -1485,51 +1526,59 @@
         const cancelBtn = document.getElementById('cancelPaymentBtn');
         
         submitBtn?.addEventListener('click', () => {
-            const fullName = document.getElementById('customerFullName').value.trim();
-            const phoneNumber = document.getElementById('customerPhone').value.trim();
-            const fileInput = document.getElementById('paymentScreenshot');
-            const file = fileInput.files[0];
-            const msgDiv = document.getElementById('paymentMessage');
-            
-            if (!currentProductForPayment) {
-                msgDiv.innerHTML = '❌ Error: No product selected.';
-                msgDiv.style.color = 'var(--danger)';
-                return;
-            }
-            
-            if (!fullName) {
-                msgDiv.innerHTML = '⚠️ Please enter your full name.';
-                msgDiv.style.color = 'var(--danger)';
-                return;
-            }
-            
-            if (!phoneNumber) {
-                msgDiv.innerHTML = '⚠️ Please enter your phone number.';
-                msgDiv.style.color = 'var(--danger)';
-                return;
-            }
-            
-            if (!file) {
-                msgDiv.innerHTML = '⚠️ Please attach a screenshot of your payment (Easypaisa transfer).';
-                msgDiv.style.color = 'var(--danger)';
-                return;
-            }
-            
-            if (!file.type.startsWith('image/')) {
-                msgDiv.innerHTML = '❌ Please upload an image file (JPG, PNG, etc.).';
-                msgDiv.style.color = 'var(--danger)';
-                return;
-            }
-            
-            sendOrderToWhatsApp(currentProductForPayment, fullName, phoneNumber, true);
-            msgDiv.innerHTML = '✅ Order submitted! Redirecting to WhatsApp to complete order confirmation...';
-            msgDiv.style.color = 'var(--success)';
-            
-            setTimeout(() => {
-                closePaymentModal();
-                msgDiv.innerHTML = '';
-            }, 2000);
-        });
+    const fullName = document.getElementById('customerFullName').value.trim();
+    const phoneNumber = document.getElementById('customerPhone').value.trim();
+    const fileInput = document.getElementById('paymentScreenshot');
+    const file = fileInput.files[0];
+    const msgDiv = document.getElementById('paymentMessage');
+    
+    if (!currentProductForPayment) {
+        msgDiv.innerHTML = '❌ Error: No product selected.';
+        msgDiv.style.color = 'var(--danger)';
+        return;
+    }
+    
+    if (!fullName) {
+        msgDiv.innerHTML = '⚠️ Please enter your full name.';
+        msgDiv.style.color = 'var(--danger)';
+        return;
+    }
+    
+    if (!phoneNumber) {
+        msgDiv.innerHTML = '⚠️ Please enter your phone number.';
+        msgDiv.style.color = 'var(--danger)';
+        return;
+    }
+    
+    if (!file) {
+        msgDiv.innerHTML = '⚠️ Please attach a screenshot of your payment (Easypaisa transfer).';
+        msgDiv.style.color = 'var(--danger)';
+        return;
+    }
+    
+    if (!file.type.startsWith('image/')) {
+        msgDiv.innerHTML = '❌ Please upload an image file (JPG, PNG, etc.).';
+        msgDiv.style.color = 'var(--danger)';
+        return;
+    }
+
+    // ✅ Replace WhatsApp with local order handling
+    sendOrder(currentProductForPayment, fullName, phoneNumber, true);
+
+    // ✅ Success message (updated)
+    msgDiv.innerHTML = '✅ Order submitted successfully!';
+    msgDiv.style.color = 'var(--success)';
+    
+    // Optional: reset form
+    document.getElementById('customerFullName').value = '';
+    document.getElementById('customerPhone').value = '';
+    fileInput.value = '';
+
+    setTimeout(() => {
+        closePaymentModal();
+        msgDiv.innerHTML = '';
+    }, 2000);
+});
         
         cancelBtn?.addEventListener('click', () => {
             closePaymentModal();
@@ -1580,7 +1629,7 @@
         
         document.getElementById('mobileHomeBtn')?.addEventListener('click', showHomePage);
         document.getElementById('mobileShopBtn')?.addEventListener('click', () => { showHomePage(); setTimeout(() => window.scrollTo({ top: 450, behavior: 'smooth' }), 100); });
-        document.getElementById('mobileSupportBtn')?.addEventListener('click', () => alert("📞 24/7 Support\n\nCall: +92 300 123 4567\nWhatsApp: +92 300 111 2222\nER Coin support available."));
+        document.getElementById('mobileSupportBtn')?.addEventListener('click', () => alert("📞 24/7 Support\n\nCall: +92 123 457 89\nWhatsApp: +92 300 111 2222\nER Coin support available."));
         document.getElementById('mobileAccountBtn')?.addEventListener('click', () => {
             if (isLoggedIn()) {
                 window.location.href = "dashboard.html";
