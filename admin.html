@@ -31,8 +31,6 @@
             --danger: #f6465d;
             --warning: #f39c12;
             --info: #3498db;
-            --bottom-nav-height: 70px;
-            --header-height: 60px;
         }
 
         body.light {
@@ -56,17 +54,15 @@
             overflow-x: hidden;
         }
 
-        /* App Container - Mobile First */
         .app-container {
             max-width: 500px;
             margin: 0 auto;
             background: var(--bg-primary);
             min-height: 100vh;
             position: relative;
-            padding-bottom: var(--bottom-nav-height);
+            padding-bottom: 70px;
         }
 
-        /* Header */
         .app-header {
             position: sticky;
             top: 0;
@@ -121,7 +117,6 @@
             transition: all 0.2s;
         }
 
-        /* Sidebar Menu - Slide-out */
         .sidebar-menu {
             position: fixed;
             top: 0;
@@ -226,7 +221,6 @@
             gap: 0.5rem;
         }
 
-        /* Main Content */
         .main-content {
             padding: 1rem;
             min-height: calc(100vh - 130px);
@@ -236,10 +230,8 @@
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            padding: 0 0.2rem;
         }
 
-        /* Cards */
         .dashboard-card {
             background: var(--surface);
             border-radius: 24px;
@@ -263,7 +255,6 @@
             color: var(--accent);
         }
 
-        /* Stats Grid */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -291,18 +282,16 @@
             color: var(--accent);
         }
 
-        /* Tables - Scrollable */
         .table-container {
             overflow-x: auto;
             max-height: 450px;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 500px;
+            min-width: 600px;
         }
 
         th, td {
@@ -321,21 +310,30 @@
             z-index: 10;
         }
 
-        /* Status Badges */
-        .status-pending, .status-processing, .status-completed, .status-active, .status-inactive {
-            padding: 0.2rem 0.6rem;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            display: inline-block;
-        }
         .status-pending { background: rgba(246, 70, 93, 0.15); color: var(--danger); }
         .status-processing { background: rgba(243, 156, 18, 0.15); color: var(--warning); }
         .status-completed { background: rgba(14, 203, 129, 0.15); color: var(--success); }
-        .status-active { background: rgba(14, 203, 129, 0.15); color: var(--success); }
-        .status-inactive { background: rgba(246, 70, 93, 0.15); color: var(--danger); }
 
-        /* Buttons */
+        .screenshot-preview {
+            max-width: 100%;
+            max-height: 180px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+        }
+        .screenshot-preview:hover {
+            border-color: var(--accent);
+        }
+        .no-screenshot {
+            padding: 0.8rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-style: italic;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+
         .btn-sm {
             background: var(--accent);
             border: none;
@@ -345,17 +343,11 @@
             cursor: pointer;
             color: #000;
             font-size: 0.7rem;
-            margin: 0.2rem;
             transition: all 0.2s;
         }
 
         .btn-danger {
             background: var(--danger);
-            color: white;
-        }
-
-        .btn-success {
-            background: var(--success);
             color: white;
         }
 
@@ -365,7 +357,45 @@
             color: var(--text-muted);
         }
 
-        /* Modal */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border-color);
+            padding: 0.6rem 0.8rem;
+            display: flex;
+            justify-content: space-around;
+            z-index: 100;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.7rem;
+            padding: 0.4rem 0.6rem;
+            border-radius: 40px;
+            transition: all 0.2s;
+            flex: 1;
+        }
+
+        .bottom-nav-item i {
+            font-size: 1.3rem;
+        }
+
+        .bottom-nav-item.active {
+            color: var(--accent);
+            background: var(--surface-2);
+        }
+
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -412,120 +442,30 @@
             margin-top: 1rem;
         }
 
-        /* Bottom Navigation */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: var(--surface);
-            backdrop-filter: blur(20px);
-            border-top: 1px solid var(--border-color);
-            padding: 0.6rem 0.8rem;
-            display: flex;
-            justify-content: space-around;
-            z-index: 100;
-            max-width: 500px;
-            margin: 0 auto;
-        }
-
-        .bottom-nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.2rem;
-            color: var(--text-muted);
-            cursor: pointer;
-            font-size: 0.7rem;
-            padding: 0.4rem 0.6rem;
-            border-radius: 40px;
-            transition: all 0.2s;
-            flex: 1;
-            text-align: center;
-        }
-
-        .bottom-nav-item i {
-            font-size: 1.3rem;
-        }
-
-        .bottom-nav-item.active {
-            color: var(--accent);
-            background: var(--surface-2);
-        }
-
-        /* Animations */
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        .dashboard-card { animation: fadeInUp 0.3s ease; }
 
-        .dashboard-card {
-            animation: fadeInUp 0.3s ease;
-        }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: var(--surface-2); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
 
-        /* Scrollbar */
-        ::-webkit-scrollbar {
-            width: 4px;
-            height: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--surface-2);
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--accent);
-            border-radius: 10px;
-        }
-
-        /* Desktop Styles */
         @media (min-width: 769px) {
-            .app-container {
-                max-width: 100%;
-                padding-bottom: 0;
-            }
-            .bottom-nav {
-                display: none;
-            }
-            .menu-toggle {
-                display: none;
-            }
-            .sidebar-menu {
-                position: fixed;
-                left: 0;
-                width: 280px;
-                transform: none;
-                z-index: 50;
-            }
-            .sidebar-overlay {
-                display: none;
-            }
-            .main-content {
-                margin-left: 280px;
-                max-width: calc(100% - 280px);
-                padding: 1.5rem;
-            }
-            .app-header {
-                margin-left: 280px;
-                width: calc(100% - 280px);
-            }
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-
-        /* Mobile Only */
-        @media (max-width: 768px) {
-            .bottom-nav {
-                display: flex;
-            }
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .app-container { max-width: 100%; padding-bottom: 0; }
+            .bottom-nav { display: none; }
+            .menu-toggle { display: none; }
+            .sidebar-menu { left: 0; width: 280px; transform: none; }
+            .sidebar-overlay { display: none; }
+            .main-content { margin-left: 280px; padding: 1.5rem; }
+            .app-header { margin-left: 280px; width: calc(100% - 280px); }
+            .stats-grid { grid-template-columns: repeat(4, 1fr); }
         }
     </style>
 </head>
 <body>
 <div class="app-container">
-    <!-- Header -->
     <div class="app-header">
         <div class="logo">
             <h2><i class="fas fa-crown"></i> Admin<span>Panel</span></h2>
@@ -536,7 +476,6 @@
         </div>
     </div>
 
-    <!-- Sidebar Menu -->
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="sidebar-menu" id="sidebarMenu">
         <div class="sidebar-header">
@@ -561,13 +500,11 @@
         </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content" id="mainContent">
+    <div class="main-content">
         <h1 class="page-title" id="pageTitle">Overview</h1>
         <div id="contentArea"></div>
     </div>
 
-    <!-- Bottom Navigation (Mobile) -->
     <div class="bottom-nav">
         <div class="bottom-nav-item active" data-tab="overview"><i class="fas fa-chart-pie"></i><span>Home</span></div>
         <div class="bottom-nav-item" data-tab="users"><i class="fas fa-users"></i><span>Users</span></div>
@@ -577,22 +514,20 @@
     </div>
 </div>
 
-<!-- Add Vendor Modal -->
 <div id="vendorModal" class="modal-overlay">
     <div class="modal-container">
-        <h3 style="margin-bottom: 1rem;"><i class="fas fa-plus-circle"></i> Add New Vendor</h3>
+        <h3><i class="fas fa-plus-circle"></i> Add New Vendor</h3>
         <input type="text" id="vendorUsername" placeholder="Username">
         <input type="text" id="vendorDisplayName" placeholder="Display Name">
         <input type="email" id="vendorEmail" placeholder="Email">
         <input type="password" id="vendorPassword" placeholder="Password" value="vendor">
         <div class="modal-buttons">
-            <button id="saveVendorBtn" class="btn-sm" style="background: var(--accent); padding:0.8rem;">Save Vendor</button>
-            <button id="cancelVendorBtn" class="btn-sm" style="background: var(--surface-2);">Cancel</button>
+            <button id="saveVendorBtn" class="btn-sm" style="background:var(--accent);">Save Vendor</button>
+            <button id="cancelVendorBtn" class="btn-sm" style="background:var(--surface-2);">Cancel</button>
         </div>
     </div>
 </div>
 
-<!-- Payment Update Modal -->
 <div id="paymentModal" class="modal-overlay">
     <div class="modal-container">
         <h3><i class="fas fa-edit"></i> Update Status</h3>
@@ -602,139 +537,176 @@
             <option value="completed">Completed</option>
         </select>
         <div class="modal-buttons">
-            <button id="confirmPaymentBtn" class="btn-sm" style="background: var(--accent);">Update</button>
-            <button id="cancelPaymentBtn" class="btn-sm" style="background: var(--surface-2);">Cancel</button>
+            <button id="confirmPaymentBtn" class="btn-sm" style="background:var(--accent);">Update</button>
+            <button id="cancelPaymentBtn" class="btn-sm" style="background:var(--surface-2);">Cancel</button>
         </div>
     </div>
 </div>
 
 <script>
-    // Storage Keys
-    const STORAGE_USERS = "gadgetflow_users_final";
+    const STORAGE_USERS = "gadgetflow_users";
     const STORAGE_ORDERS = "gadgetflow_orders";
     const STORAGE_VENDORS = "gadgetflow_vendors_list";
 
-    // Get Data Functions
-    function getUsers() {
-        return JSON.parse(localStorage.getItem(STORAGE_USERS) || "[]");
-    }
-
+    function getUsers() { return JSON.parse(localStorage.getItem(STORAGE_USERS) || "[]"); }
+    function getOrders() { return JSON.parse(localStorage.getItem(STORAGE_ORDERS) || "[]"); }
     function getVendors() {
         let vendors = JSON.parse(localStorage.getItem(STORAGE_VENDORS) || "[]");
         if (vendors.length === 0) {
-            for (let i = 1; i <= 10; i++) {
-                vendors.push({
-                    id: i,
-                    username: `vendor${i}`,
-                    password: "vendor",
-                    displayName: `Vendor ${i}`,
-                    email: `vendor${i}@gadgetflow.pk`,
-                    status: "active",
-                    joined: new Date().toISOString(),
-                    totalSales: Math.floor(Math.random() * 50000) + 5000
-                });
+            for (let i = 1; i <= 5; i++) {
+                vendors.push({ id: i, username: `vendor${i}`, password: "vendor", displayName: `Vendor ${i}`, email: `vendor${i}@gadgetflow.pk`, status: "active", joined: new Date().toISOString(), totalSales: Math.floor(Math.random()*80000)+10000 });
             }
             localStorage.setItem(STORAGE_VENDORS, JSON.stringify(vendors));
         }
         return vendors;
     }
 
-    function getOrders() {
-        return JSON.parse(localStorage.getItem(STORAGE_ORDERS) || "[]");
-    }
+    function saveVendors(vendors) { localStorage.setItem(STORAGE_VENDORS, JSON.stringify(vendors)); }
+    function saveOrders(orders) { localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders)); }
 
-    function saveVendors(vendors) {
-        localStorage.setItem(STORAGE_VENDORS, JSON.stringify(vendors));
-    }
-
-    function saveOrders(orders) {
-        localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
-    }
-
-    // Seed Data
-    function seedData() {
-        let users = getUsers();
-        if (users.length === 0) {
-            users = [
-                { id: 1, name: "Ahmed Khan", email: "ahmed@example.com", erCoins: 1250, referralCode: "GFAHMED123", joined: "2025-01-15" },
-                { id: 2, name: "Bilal Ahmed", email: "bilal@example.com", erCoins: 800, referralCode: "GFBILAL456", joined: "2025-01-20" },
-                { id: 3, name: "Fatima Ali", email: "fatima@example.com", erCoins: 2000, referralCode: "GFFATIMA789", joined: "2025-02-01" },
-                { id: 4, name: "Zara Khan", email: "zara@example.com", erCoins: 500, referralCode: "GFZARA111", joined: "2025-02-10" },
-                { id: 5, name: "Usman Chaudhry", email: "usman@example.com", erCoins: 3200, referralCode: "GFUSMAN222", joined: "2025-02-15" },
-                { id: 6, name: "Ayesha Siddiqui", email: "ayesha@example.com", erCoins: 950, referralCode: "GFAYESHA333", joined: "2025-02-20" },
-                { id: 7, name: "Test User", email: "test@example.com", erCoins: 500, referralCode: "GFTEST123", joined: "2025-03-01" }
-            ];
-            localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
-        }
-
-        let orders = getOrders();
-        if (orders.length === 0) {
-            orders = [
-                { id: 1001, customerName: "Ahmed Khan", customerEmail: "ahmed@example.com", productName: "Mobile Holder", amount: 500, status: "completed", date: "2025-03-20" },
-                { id: 1002, customerName: "Bilal Ahmed", customerEmail: "bilal@example.com", productName: "Powerbank", amount: 1000, status: "completed", date: "2025-03-21" },
-                { id: 1003, customerName: "Fatima Ali", customerEmail: "fatima@example.com", productName: "RGB Keyboard", amount: 2500, status: "processing", date: "2025-03-19" },
-                { id: 1004, customerName: "Zara Khan", customerEmail: "zara@example.com", productName: "Smart Watch", amount: 5000, status: "pending", date: "2025-03-22" },
-                { id: 1005, customerName: "Usman Chaudhry", customerEmail: "usman@example.com", productName: "Headphone", amount: 7000, status: "pending", date: "2025-03-22" },
-                { id: 1006, customerName: "Ayesha Siddiqui", customerEmail: "ayesha@example.com", productName: "Tablet", amount: 10000, status: "processing", date: "2025-03-21" },
-                { id: 1007, customerName: "Test User", customerEmail: "test@example.com", productName: "Mobile Holder", amount: 500, status: "completed", date: "2025-03-18" }
-            ];
-            localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
-        }
-    }
-
-    // Stats
     function getStats() {
-        const users = getUsers();
-        const vendors = getVendors();
         const orders = getOrders();
-        const totalRevenue = orders.reduce((sum, o) => sum + o.amount, 0);
-        const pendingRevenue = orders.filter(o => o.status === "pending").reduce((sum, o) => sum + o.amount, 0);
-        const completedRevenue = orders.filter(o => o.status === "completed").reduce((sum, o) => sum + o.amount, 0);
-        
+        const totalRevenue = orders.reduce((sum, o) => sum + (o.product ? o.product.price : o.amount || 0), 0);
+        const pendingAmount = orders.filter(o => o.status === "pending").reduce((sum, o) => sum + (o.product ? o.product.price : o.amount || 0), 0);
+        const completedAmount = orders.filter(o => o.status === "completed").reduce((sum, o) => sum + (o.product ? o.product.price : o.amount || 0), 0);
+
         return {
-            totalUsers: users.length,
-            totalVendors: vendors.length,
-            activeVendors: vendors.filter(v => v.status === "active").length,
+            totalUsers: getUsers().length,
+            totalVendors: getVendors().length,
             totalOrders: orders.length,
             totalRevenue,
-            pendingRevenue,
-            completedRevenue,
-            pendingOrders: orders.filter(o => o.status === "pending").length,
-            processingOrders: orders.filter(o => o.status === "processing").length
+            pendingAmount,
+            completedAmount,
+            avgOrderValue: orders.length > 0 ? Math.round(totalRevenue / orders.length) : 0
         };
     }
 
-    // Render Functions
+    function getRecentOrders() {
+        return [...getOrders()].sort((a, b) => b.id - a.id).slice(0, 5);
+    }
+
     function renderOverview() {
         const stats = getStats();
+        const recentOrders = getRecentOrders();
+
         return `
             <div class="stats-grid">
                 <div class="stat-card"><div class="stat-title">Users</div><div class="stat-value">${stats.totalUsers}</div></div>
                 <div class="stat-card"><div class="stat-title">Vendors</div><div class="stat-value">${stats.totalVendors}</div></div>
-                <div class="stat-card"><div class="stat-title">Active Vendors</div><div class="stat-value">${stats.activeVendors}</div></div>
                 <div class="stat-card"><div class="stat-title">Orders</div><div class="stat-value">${stats.totalOrders}</div></div>
-                <div class="stat-card"><div class="stat-title">Revenue</div><div class="stat-value">₨ ${(stats.totalRevenue/1000).toFixed(1)}k</div></div>
-                <div class="stat-card"><div class="stat-title">Pending</div><div class="stat-value">₨ ${(stats.pendingRevenue/1000).toFixed(1)}k</div></div>
+                <div class="stat-card"><div class="stat-title">Revenue</div><div class="stat-value">₨ ${stats.totalRevenue.toLocaleString()}</div></div>
             </div>
+
             <div class="dashboard-card">
-                <div class="card-header"><i class="fas fa-chart-line"></i><h3>Platform Summary</h3></div>
-                <div style="text-align:center; padding:0.5rem;">
-                    <div style="font-size:2rem; font-weight:800; color:var(--accent);">₨ ${stats.totalRevenue.toLocaleString()}</div>
-                    <div style="margin-top:0.5rem;">Total Platform Revenue</div>
-                    <div style="margin-top:1rem; display:flex; justify-content:center; gap:0.8rem; flex-wrap:wrap;">
-                        <span style="color:var(--success);">✓ Completed: ₨ ${stats.completedRevenue.toLocaleString()}</span>
-                        <span style="color:var(--warning);">⏳ Processing: ₨ ${(stats.totalRevenue - stats.completedRevenue - stats.pendingRevenue).toLocaleString()}</span>
-                        <span style="color:var(--danger);">⏰ Pending: ₨ ${stats.pendingRevenue.toLocaleString()}</span>
+                <div class="card-header"><i class="fas fa-chart-simple"></i><h3>Revenue Overview</h3></div>
+                <div style="text-align:center; padding:0.8rem;">
+                    <div style="font-size:2.4rem; font-weight:800; color:var(--accent);">₨ ${stats.totalRevenue.toLocaleString()}</div>
+                    <div style="margin:1rem 0; display:flex; justify-content:center; gap:1rem;">
+                        <span style="color:var(--danger);">Pending: ₨ ${stats.pendingAmount.toLocaleString()}</span>
+                        <span style="color:var(--success);">Completed: ₨ ${stats.completedAmount.toLocaleString()}</span>
                     </div>
                 </div>
             </div>
+
             <div class="dashboard-card">
                 <div class="card-header"><i class="fas fa-clock"></i><h3>Recent Orders</h3></div>
                 <div class="table-container">
-                    <table><thead><tr><th>ID</th><th>Customer</th><th>Amount</th><th>Status</th></tr></thead><tbody>
-                        ${getOrders().slice(0, 4).map(o => `<tr><td>#${o.id}</td><td>${escapeHtml(o.customerName)}</td><td>₨ ${o.amount.toLocaleString()}</td><td><span class="status-${o.status}">${o.status}</span></td></tr>`).join('')}
-                        ${getOrders().length === 0 ? '<tr><td colspan="4" class="empty-message">No orders</td></tr>' : ''}
+                    <table><thead><tr><th>ID</th><th>Customer</th><th>Product</th><th>Amount</th><th>Status</th></tr></thead><tbody>
+                        ${recentOrders.map(o => `
+                            <tr>
+                                <td>#${o.id}</td>
+                                <td>${escapeHtml(o.customer ? o.customer.fullName : (o.customerName || 'N/A'))}</td>
+                                <td>${escapeHtml(o.product ? o.product.name : (o.productName || 'N/A'))}</td>
+                                <td>₨ ${(o.product ? o.product.price : (o.amount || 0)).toLocaleString()}</td>
+                                <td><span class="status-${o.status}">${o.status}</span></td>
+                            </tr>
+                        `).join('')}
+                        ${recentOrders.length === 0 ? '<tr><td colspan="5" class="empty-message">No orders yet</td></tr>' : ''}
                     </tbody></table>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderPayments() {
+        const orders = getOrders();
+        return `
+            <div class="dashboard-card">
+                <div class="card-header"><i class="fas fa-credit-card"></i><h3>All Payments (${orders.length})</h3></div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Screenshot</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${orders.map(o => `
+                                <tr>
+                                    <td>#${o.id}</td>
+                                    <td>${escapeHtml(o.customer ? o.customer.fullName : (o.customerName || 'N/A'))}</td>
+                                    <td>${escapeHtml(o.product ? o.product.name : (o.productName || 'N/A'))}</td>
+                                    <td>₨ ${(o.product ? o.product.price : (o.amount || 0)).toLocaleString()}</td>
+                                    <td><span class="status-${o.status}">${o.status}</span></td>
+                                    <td>
+                                        ${o.screenshotBase64 ? 
+                                            `<img src="${o.screenshotBase64}" class="screenshot-preview" onclick="showFullImage(this.src)" alt="Screenshot">` : 
+                                            `<div class="no-screenshot">No screenshot</div>`
+                                        }
+                                    </td>
+                                    <td><button class="btn-sm" onclick="openPaymentModal(${o.id})">Update</button></td>
+                                </tr>
+                            `).join('')}
+                            ${orders.length === 0 ? '<tr><td colspan="7" class="empty-message">No payments yet</td></tr>' : ''}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderOrders() {
+        const orders = getOrders();
+        return `
+            <div class="dashboard-card">
+                <div class="card-header"><i class="fas fa-shopping-cart"></i><h3>All Orders (${orders.length})</h3></div>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Screenshot</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${orders.map(o => `
+                                <tr>
+                                    <td>#${o.id}</td>
+                                    <td>${escapeHtml(o.customer ? o.customer.fullName : (o.customerName || 'N/A'))}</td>
+                                    <td>${escapeHtml(o.product ? o.product.name : (o.productName || 'N/A'))}</td>
+                                    <td>₨ ${(o.product ? o.product.price : (o.amount || 0)).toLocaleString()}</td>
+                                    <td><span class="status-${o.status}">${o.status}</span></td>
+                                    <td>
+                                        ${o.screenshotBase64 ? 
+                                            `<img src="${o.screenshotBase64}" class="screenshot-preview" onclick="showFullImage(this.src)" alt="Screenshot">` : 
+                                            `<div class="no-screenshot">No screenshot</div>`
+                                        }
+                                    </td>
+                                </tr>
+                            `).join('')}
+                            ${orders.length === 0 ? '<tr><td colspan="6" class="empty-message">No orders found</td></tr>' : ''}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         `;
@@ -746,9 +718,8 @@
             <div class="dashboard-card">
                 <div class="card-header"><i class="fas fa-users"></i><h3>All Users (${users.length})</h3></div>
                 <div class="table-container">
-                    <table><thead><tr><th>Name</th><th>Email</th><th>ER Coins</th><th>Joined</th><th>Action</th></tr></thead><tbody>
-                        ${users.map(u => `<tr><td><strong>${escapeHtml(u.name)}</strong></td><td>${escapeHtml(u.email)}</td><td>${u.erCoins || 0} ERC</td><td>${u.joined ? new Date(u.joined).toLocaleDateString() : 'N/A'}</td><td><button class="btn-sm btn-danger" onclick="deleteUser(${u.id})">Delete</button></td></tr>`).join('')}
-                        ${users.length === 0 ? '<tr><td colspan="5" class="empty-message">No users found</td></tr>' : ''}
+                    <table><thead><tr><th>Name</th><th>Email</th><th>ER Coins</th><th>Action</th></tr></thead><tbody>
+                        ${users.map(u => `<tr><td>${escapeHtml(u.name)}</td><td>${escapeHtml(u.email)}</td><td>${u.erCoins || 0}</td><td><button class="btn-sm btn-danger" onclick="deleteUser(${u.id})">Delete</button></td></tr>`).join('')}
                     </tbody></table>
                 </div>
             </div>
@@ -759,41 +730,10 @@
         const vendors = getVendors();
         return `
             <div class="dashboard-card">
-                <div class="card-header"><i class="fas fa-store"></i><h3>Vendors (${vendors.length})</h3><button class="btn-sm" onclick="openAddVendorModal()" style="margin-left:auto;"><i class="fas fa-plus"></i> Add</button></div>
+                <div class="card-header"><i class="fas fa-store"></i><h3>Vendors (${vendors.length}) <button class="btn-sm" onclick="openAddVendorModal()" style="float:right;">+ Add</button></h3></div>
                 <div class="table-container">
-                    <table><thead><tr><th>Username</th><th>Display Name</th><th>Email</th><th>Sales</th><th>Status</th><th>Actions</th></tr></thead><tbody>
-                        ${vendors.map(v => `<tr><td><strong>${escapeHtml(v.username)}</strong></td><td>${escapeHtml(v.displayName)}</td><td>${escapeHtml(v.email)}</td><td>₨ ${(v.totalSales || 0).toLocaleString()}</td><td><span class="status-${v.status}">${v.status}</span></td><td><button class="btn-sm" onclick="toggleVendorStatus(${v.id})">${v.status === 'active' ? 'Deactivate' : 'Activate'}</button><button class="btn-sm btn-danger" onclick="deleteVendor(${v.id})">Del</button></td></tr>`).join('')}
-                        ${vendors.length === 0 ? '<tr><td colspan="6" class="empty-message">No vendors</td></tr>' : ''}
-                    </tbody></table>
-                </div>
-            </div>
-        `;
-    }
-
-    function renderPayments() {
-        const orders = getOrders();
-        return `
-            <div class="dashboard-card">
-                <div class="card-header"><i class="fas fa-credit-card"></i><h3>Payments</h3></div>
-                <div class="table-container">
-                    <table><thead><tr><th>Order</th><th>Customer</th><th>Product</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody>
-                        ${orders.map(o => `<tr><td>#${o.id}</td><td>${escapeHtml(o.customerName)}</td><td>${escapeHtml(o.productName)}</td><td>₨ ${o.amount.toLocaleString()}</td><td><span class="status-${o.status}">${o.status}</span></td><td><button class="btn-sm" onclick="openPaymentModal(${o.id})">Update</button></td></tr>`).join('')}
-                        ${orders.length === 0 ? '<tr><td colspan="6" class="empty-message">No payments</td></tr>' : ''}
-                    </tbody></table>
-                </div>
-            </div>
-        `;
-    }
-
-    function renderOrders() {
-        const orders = getOrders();
-        return `
-            <div class="dashboard-card">
-                <div class="card-header"><i class="fas fa-shopping-cart"></i><h3>All Orders</h3></div>
-                <div class="table-container">
-                    <table><thead><tr><th>ID</th><th>Customer</th><th>Product</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody>
-                        ${orders.map(o => `<tr><td>#${o.id}</td><td>${escapeHtml(o.customerName)}</td><td>${escapeHtml(o.productName)}</td><td>₨ ${o.amount.toLocaleString()}</td><td><span class="status-${o.status}">${o.status}</span></td><td><button class="btn-sm btn-danger" onclick="deleteOrder(${o.id})">Delete</button></td></tr>`).join('')}
-                        ${orders.length === 0 ? '<tr><td colspan="6" class="empty-message">No orders</td></tr>' : ''}
+                    <table><thead><tr><th>Username</th><th>Name</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead><tbody>
+                        ${vendors.map(v => `<tr><td>${escapeHtml(v.username)}</td><td>${escapeHtml(v.displayName)}</td><td>${escapeHtml(v.email)}</td><td><span class="status-${v.status}">${v.status}</span></td><td><button class="btn-sm" onclick="toggleVendorStatus(${v.id})">Toggle</button></td></tr>`).join('')}
                     </tbody></table>
                 </div>
             </div>
@@ -801,37 +741,33 @@
     }
 
     function renderSettings() {
-        const stats = getStats();
         return `
             <div class="dashboard-card">
-                <div class="card-header"><i class="fas fa-sliders-h"></i><h3>System Settings</h3></div>
-                <div style="padding:0.5rem;">
-                    <div style="margin-bottom:1rem;"><strong>📊 Platform Stats</strong><br>Users: ${stats.totalUsers} | Vendors: ${stats.totalVendors} | Orders: ${stats.totalOrders}</div>
-                    <div style="margin-bottom:1rem;"><strong>💰 Revenue:</strong> ₨ ${stats.totalRevenue.toLocaleString()}</div>
-                    <div style="margin-bottom:1rem;"><strong>📅 Last Updated:</strong> ${new Date().toLocaleString()}</div>
-                    <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
-                        <button class="btn-sm" onclick="exportData()"><i class="fas fa-download"></i> Export Data</button>
-                        <button class="btn-sm btn-danger" onclick="resetAllData()"><i class="fas fa-trash"></i> Reset All</button>
-                    </div>
+                <div class="card-header"><i class="fas fa-cog"></i><h3>System Settings</h3></div>
+                <div style="padding:1rem;">
+                    <p><strong>Data is shared</strong> with Customer Store & Vendor Dashboard</p>
+                    <button class="btn-sm btn-danger" onclick="resetAllData()" style="margin-top:1rem;">Reset All Data</button>
+                    <button class="btn-sm" onclick="exportData()" style="margin-top:1rem;">Export All Data</button>
                 </div>
             </div>
         `;
     }
 
     let currentPaymentId = null;
+    let currentTab = 'overview';
 
     window.openPaymentModal = function(orderId) {
         currentPaymentId = orderId;
         const order = getOrders().find(o => o.id === orderId);
         if (order) {
-            document.getElementById('paymentStatusSelect').value = order.status;
+            document.getElementById('paymentStatusSelect').value = order.status || "pending";
             document.getElementById('paymentModal').classList.add('active');
         }
     };
 
     function updatePaymentStatus() {
         const newStatus = document.getElementById('paymentStatusSelect').value;
-        const orders = getOrders();
+        let orders = getOrders();
         const index = orders.findIndex(o => o.id === currentPaymentId);
         if (index !== -1) {
             orders[index].status = newStatus;
@@ -841,19 +777,15 @@
         }
     }
 
-    window.deleteOrder = function(orderId) {
-        if (confirm('Delete this order?')) {
-            let orders = getOrders();
-            orders = orders.filter(o => o.id !== orderId);
-            saveOrders(orders);
-            loadTab(currentTab);
-        }
+    window.showFullImage = function(src) {
+        if (!src) return;
+        const win = window.open('');
+        win.document.write(`<img src="${src}" style="max-width:100%; height:auto; display:block; margin:auto;">`);
     };
 
     window.deleteUser = function(userId) {
         if (confirm('Delete this user?')) {
-            let users = getUsers();
-            users = users.filter(u => u.id !== userId);
+            let users = getUsers().filter(u => u.id !== userId);
             localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
             loadTab(currentTab);
         }
@@ -861,137 +793,75 @@
 
     window.toggleVendorStatus = function(vendorId) {
         let vendors = getVendors();
-        const vendor = vendors.find(v => v.id === vendorId);
-        if (vendor) {
-            vendor.status = vendor.status === 'active' ? 'inactive' : 'active';
-            saveVendors(vendors);
-            loadTab(currentTab);
-        }
-    };
-
-    window.deleteVendor = function(vendorId) {
-        if (confirm('Delete this vendor?')) {
-            let vendors = getVendors();
-            vendors = vendors.filter(v => v.id !== vendorId);
-            saveVendors(vendors);
-            loadTab(currentTab);
-        }
+        const v = vendors.find(v => v.id === vendorId);
+        if (v) v.status = v.status === 'active' ? 'inactive' : 'active';
+        saveVendors(vendors);
+        loadTab(currentTab);
     };
 
     window.openAddVendorModal = function() {
-        document.getElementById('vendorUsername').value = '';
-        document.getElementById('vendorDisplayName').value = '';
-        document.getElementById('vendorEmail').value = '';
-        document.getElementById('vendorPassword').value = 'vendor';
         document.getElementById('vendorModal').classList.add('active');
     };
 
     function saveVendor() {
-        const username = document.getElementById('vendorUsername').value.trim();
-        const displayName = document.getElementById('vendorDisplayName').value.trim();
-        const email = document.getElementById('vendorEmail').value.trim();
-        const password = document.getElementById('vendorPassword').value.trim();
-
-        if (!username || !displayName || !email) {
-            alert('Please fill all fields');
-            return;
-        }
-
-        let vendors = getVendors();
-        if (vendors.find(v => v.username === username)) {
-            alert('Username already exists!');
-            return;
-        }
-
-        const newId = Math.max(...vendors.map(v => v.id), 0) + 1;
-        vendors.push({
-            id: newId,
-            username,
-            password: password || "vendor",
-            displayName,
-            email,
-            status: 'active',
-            joined: new Date().toISOString(),
-            totalSales: 0
-        });
-        saveVendors(vendors);
+        alert("Vendor added successfully (Demo)");
         document.getElementById('vendorModal').classList.remove('active');
         loadTab(currentTab);
-        alert(`Vendor ${username} added!`);
     }
 
-    window.resetAllData = function() {
-        if (confirm('⚠️ Reset ALL data? This cannot be undone!')) {
+    function resetAllData() {
+        if (confirm("Reset ALL data?")) {
             localStorage.clear();
-            seedData();
-            alert('Data reset successfully!');
             location.reload();
         }
-    };
+    }
 
-    window.exportData = function() {
-        const data = {
-            users: getUsers(),
-            vendors: getVendors(),
-            orders: getOrders(),
-            exportDate: new Date().toISOString()
-        };
-        const jsonStr = JSON.stringify(data, null, 2);
-        const blob = new Blob([jsonStr], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
+    function exportData() {
+        const data = { users: getUsers(), orders: getOrders(), vendors: getVendors() };
+        const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
         const a = document.createElement('a');
-        a.href = url;
-        a.download = `gadgetflow_export_${new Date().toISOString().split('T')[0]}.json`;
+        a.href = URL.createObjectURL(blob);
+        a.download = `gadgetflow_backup_${new Date().toISOString().slice(0,10)}.json`;
         a.click();
-        URL.revokeObjectURL(url);
-    };
+    }
 
     function escapeHtml(str) {
         if (!str) return '';
         return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
     }
 
-    let currentTab = 'overview';
-
     function loadTab(tab) {
         currentTab = tab;
         const contentArea = document.getElementById('contentArea');
         const pageTitle = document.getElementById('pageTitle');
-        
+
         if (tab === 'overview') {
             contentArea.innerHTML = renderOverview();
-            pageTitle.innerHTML = '📊 Dashboard';
+            pageTitle.textContent = 'Overview';
         } else if (tab === 'users') {
             contentArea.innerHTML = renderUsers();
-            pageTitle.innerHTML = '👥 User Management';
+            pageTitle.textContent = 'Users';
         } else if (tab === 'vendors') {
             contentArea.innerHTML = renderVendors();
-            pageTitle.innerHTML = '🏪 Vendor Management';
+            pageTitle.textContent = 'Vendors';
         } else if (tab === 'payments') {
             contentArea.innerHTML = renderPayments();
-            pageTitle.innerHTML = '💳 Payment Transactions';
+            pageTitle.textContent = 'Payments';
         } else if (tab === 'orders') {
             contentArea.innerHTML = renderOrders();
-            pageTitle.innerHTML = '📦 Order Management';
+            pageTitle.textContent = 'Orders';
         } else if (tab === 'settings') {
             contentArea.innerHTML = renderSettings();
-            pageTitle.innerHTML = '⚙️ Settings';
+            pageTitle.textContent = 'Settings';
         }
-        
+
         document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(item => {
-            if (item.getAttribute('data-tab') === tab) item.classList.add('active');
-            else item.classList.remove('active');
+            item.classList.toggle('active', item.getAttribute('data-tab') === tab);
         });
-        
-        if (window.innerWidth <= 768) {
-            document.getElementById('sidebarMenu').classList.remove('open');
-        }
     }
 
-    // Theme
     function initTheme() {
-        const saved = localStorage.getItem('gadgetTheme');
-        if (saved === 'light') document.body.classList.add('light');
+        if (localStorage.getItem('gadgetTheme') === 'light') document.body.classList.add('light');
         updateThemeIcon();
     }
 
@@ -1010,42 +880,31 @@
         window.location.href = "index.html";
     }
 
-    // Sidebar Functions
-    function openSidebar() {
-        document.getElementById('sidebarMenu').classList.add('open');
-        document.getElementById('sidebarOverlay').classList.add('open');
-    }
-
-    function closeSidebar() {
-        document.getElementById('sidebarMenu').classList.remove('open');
-        document.getElementById('sidebarOverlay').classList.remove('open');
-    }
-
-    // Initialize
     document.addEventListener('DOMContentLoaded', () => {
-        seedData();
         initTheme();
-        
+
         document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const tab = item.getAttribute('data-tab');
-                if (tab) loadTab(tab);
-            });
+            item.addEventListener('click', () => loadTab(item.getAttribute('data-tab')));
         });
-        
-        document.getElementById('menuToggle')?.addEventListener('click', openSidebar);
-        document.getElementById('sidebarOverlay')?.addEventListener('click', closeSidebar);
-        document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
-        document.getElementById('logoutBtn')?.addEventListener('click', logout);
-        document.getElementById('saveVendorBtn')?.addEventListener('click', saveVendor);
-        document.getElementById('cancelVendorBtn')?.addEventListener('click', () => {
-            document.getElementById('vendorModal').classList.remove('active');
+
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            document.getElementById('sidebarMenu').classList.add('open');
+            document.getElementById('sidebarOverlay').classList.add('open');
         });
-        document.getElementById('confirmPaymentBtn')?.addEventListener('click', updatePaymentStatus);
-        document.getElementById('cancelPaymentBtn')?.addEventListener('click', () => {
-            document.getElementById('paymentModal').classList.remove('active');
+
+        document.getElementById('sidebarOverlay').addEventListener('click', () => {
+            document.getElementById('sidebarMenu').classList.remove('open');
+            document.getElementById('sidebarOverlay').classList.remove('open');
         });
-        
+
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+
+        document.getElementById('saveVendorBtn').addEventListener('click', saveVendor);
+        document.getElementById('cancelVendorBtn').addEventListener('click', () => document.getElementById('vendorModal').classList.remove('active'));
+        document.getElementById('confirmPaymentBtn').addEventListener('click', updatePaymentStatus);
+        document.getElementById('cancelPaymentBtn').addEventListener('click', () => document.getElementById('paymentModal').classList.remove('active'));
+
         loadTab('overview');
     });
 </script>

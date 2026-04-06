@@ -584,6 +584,30 @@
             color: var(--text-muted);
         }
 
+        /* Verification Form Styling */
+        .verification-form input, .verification-form textarea {
+            width: 100%;
+            padding: 0.9rem;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .verification-form button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--accent);
+            border: none;
+            border-radius: 60px;
+            font-weight: 700;
+            color: #000;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
         /* Mobile Optimized */
         .mobile-view {
             display: none;
@@ -824,6 +848,7 @@
             <div class="nav-item-sidebar" data-tab="withdraw"><i class="fas fa-clock"></i> <span>Withdrawals</span></div>
             <div class="nav-item-sidebar" data-tab="history"><i class="fas fa-history"></i> <span>History</span></div>
             <div class="nav-item-sidebar" data-tab="referrals"><i class="fas fa-users"></i> <span>Referrals</span></div>
+            <div class="nav-item-sidebar" data-tab="verification"><i class="fas fa-id-card"></i> <span>Verification</span></div>
         </div>
         <div class="sidebar-footer">
             <button class="logout-btn-pc w-100" id="logoutDesktop"><i class="fas fa-sign-out-alt"></i> Logout</button>
@@ -847,6 +872,7 @@
         <div class="mobile-nav-item" data-tab="withdraw"><i class="fas fa-clock"></i><span>Withdraw</span></div>
         <div class="mobile-nav-item" data-tab="history"><i class="fas fa-list"></i><span>History</span></div>
         <div class="mobile-nav-item" data-tab="referrals"><i class="fas fa-users"></i><span>Refer</span></div>
+        <div class="mobile-nav-item" data-tab="verification"><i class="fas fa-id-card"></i><span>Verify</span></div>
     </div>
 </div>
 
@@ -869,7 +895,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 <script>
-    // Storage & Core Logic (same robust system)
+    // Storage & Core Logic (your original code - unchanged)
     const STORAGE_USERS = "gadgetflow_users_final";
     const STORAGE_SESSION = "gadgetflow_session_final";
     const STORAGE_REFERRALS = "gadgetflow_referrals_data";
@@ -926,24 +952,124 @@
     window.copyInviteLink = function() { const user = getCurrentUser(); if(user?.referralCode) { const link = `${window.location.origin}/signup?ref=${user.referralCode}`; navigator.clipboard.writeText(link); alert('Invite link copied!'); } };
     function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
     
-    // Render Functions (compact but full)
+    // Render Functions (your original code)
     function renderReferralsPage(user) { const refs = getReferralsForUser(user); const stats = getReferralStats(user); const link = `${window.location.origin}/signup?ref=${user.referralCode}`; return `<div class="referral-stats-grid"><div class="referral-stat-card"><div class="referral-stat-number">${stats.totalReferrals}</div><div>Total Referrals</div></div><div class="referral-stat-card"><div class="referral-stat-number">${stats.totalBonusEarned} ERC</div><div>Bonus Earned</div></div></div><div class="share-link"><input type="text" readonly value="${link}" id="inviteLinkInput"><button class="copy-code-btn" onclick="copyInviteLink()">Copy Link</button></div><div class="referral-box"><div>Your Referral Code</div><div class="referral-code-text">${user.referralCode}</div><button class="copy-code-btn" onclick="copyReferral()">Copy Code</button></div><div style="margin-top:1rem;"><h4 style="margin-bottom:0.8rem;">Referred Friends</h4><div class="referral-list">${refs.length === 0 ? '<div class="empty-message">No referrals yet. Share your code!</div>' : refs.map(r => `<div class="referral-entry"><div><i class="fas fa-user-friends"></i> ${escapeHtml(r.name)}<br><small>${new Date(r.date).toLocaleDateString()}</small></div><div class="referral-bonus-badge">+30 ERC</div></div>`).join('')}</div></div><div class="info-note mt-2"><i class="fas fa-gift"></i> Earn 30 ER Coins per referral!</div>`; }
     function renderWalletPage(user) { const er = getERCoinBalance(user); const reward = getRewardBalance(user.email); const pendingReward = getPendingWithdrawalAmount(user.email, 'reward'); const availReward = reward - pendingReward; const total = er + reward; const availTotal = total - getPendingWithdrawalAmount(user.email); return `<div class="wallet-boxes"><div class="wallet-item erc-wallet"><div class="wallet-title erc"><i class="fas fa-coins"></i><h4>ER Coin Balance</h4></div><div class="wallet-amount erc-amount">${er.toLocaleString()} ERC</div><div class="wallet-info"><span>Available</span><span>${er.toLocaleString()} ERC</span></div></div><div class="wallet-item reward-wallet"><div class="wallet-title reward"><i class="fas fa-star"></i><h4>Reward</h4></div><div class="wallet-amount reward-amount">${reward.toLocaleString()} ERC</div><div class="wallet-info"><span>Available: ${availReward.toLocaleString()} ERC</span>${pendingReward > 0 ? `<span class="pending-tag">Pending: ${pendingReward.toLocaleString()}</span>` : ''}</div></div></div><div class="total-section"><div class="total-label">Total Portfolio</div><div class="total-value">${total.toLocaleString()} ERC</div><div class="total-label">Available: ${availTotal.toLocaleString()} ERC</div></div><div class="withdraw-actions"><div class="withdraw-btn-group"><button class="withdraw-action-btn" id="withdrawRewardBtn" ${availReward < 100 ? 'disabled' : ''}>Withdraw Reward<small>Min 100 ERC</small></button><button class="withdraw-action-btn outline" id="withdrawTotalBtn" ${availTotal < 100 ? 'disabled' : ''}>Withdraw Total<small>Reward + ER Coin</small></button></div><div class="info-note"><i class="fas fa-hourglass-half"></i> 34-48h processing • Collect when ready</div></div>`; }
     function renderPendingWithdrawals(user) { const wds = getUserWithdrawals(user.email).filter(w => w.status === 'pending'); if(!wds.length) return '<div class="empty-message">No pending withdrawals</div>'; return wds.map(w => { const ready = Date.now() >= w.availableAt; const hours = Math.ceil((w.availableAt - Date.now()) / 3600000); return `<div class="pending-entry"><div><h5>${w.amount.toLocaleString()} ERC</h5><small>${w.type === 'reward' ? 'Reward' : 'Total'} Withdrawal</small><div style="font-size:0.7rem;">${ready ? '✓ Ready' : `⏰ ~${hours}h`}</div></div>${ready ? `<button class="collect-action" onclick="collectWithdrawalNow(${w.id}, ${w.amount})">Collect</button>` : '<i class="fas fa-hourglass-half"></i>'}</div>`; }).join(''); }
     function renderProfile(user, txs) { const earned = txs.filter(t => t.type === "credit").reduce((s, t) => s + t.amount, 0); const er = getERCoinBalance(user); return `<div class="profile-header"><div class="avatar"><i class="fas fa-user"></i></div><div><h3>${escapeHtml(user.name)}</h3><p>${escapeHtml(user.email)}</p></div></div><div class="info-line"><i class="fas fa-calendar"></i><span>Member since: ${new Date(user.joined).toLocaleDateString()}</span></div><div class="stats-grid"><div class="stat-item"><div class="stat-number">${earned.toLocaleString()}</div><div>Reward Earned</div></div><div class="stat-item"><div class="stat-number">${er.toLocaleString()}</div><div>ER Coin</div></div><div class="stat-item"><div class="stat-number">${(earned+er).toLocaleString()}</div><div>Total</div></div></div>`; }
     function renderTransactions(txs) { if(!txs.length) return '<div class="empty-message">No transactions</div>'; return txs.map(tx => `<div class="transaction-row"><div class="transaction-left"><div class="transaction-icon"><i class="fas ${tx.type === 'credit' ? 'fa-arrow-down' : 'fa-arrow-up'}"></i></div><div><div>${escapeHtml(tx.productName)}</div><div style="font-size:0.7rem;">${tx.date}</div></div></div><div class="transaction-amount ${tx.type === 'credit' ? 'positive' : 'negative'}">${tx.type === 'credit' ? '+' : '-'}${tx.amount.toLocaleString()} ERC</div></div>`).join(''); }
     
-    function renderDesktop() { const user = getCurrentUser(); if(!user) return; const tab = document.querySelector('.nav-item-sidebar.active')?.getAttribute('data-tab') || 'profile'; const txs = getUserTransactions(user.email); let content = ''; if(tab === 'profile') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-user"></i><h3>Profile</h3></div>${renderProfile(user, txs)}</div>`; else if(tab === 'wallet') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-wallet"></i><h3>Wallet</h3></div>${renderWalletPage(user)}</div>`; else if(tab === 'withdraw') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-clock"></i><h3>Pending Withdrawals</h3></div>${renderPendingWithdrawals(user)}<div class="info-note mt-2">Funds available after 34-48h</div></div>`; else if(tab === 'history') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-history"></i><h3>Transaction History</h3></div><div class="transactions-container">${renderTransactions(txs)}</div></div>`; else if(tab === 'referrals') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-users"></i><h3>Referral Program</h3></div>${renderReferralsPage(user)}</div>`; document.getElementById('desktopContent').innerHTML = `<div class="top-bar"><h1 class="page-title">${tab.charAt(0).toUpperCase()+tab.slice(1)}</h1><div class="header-actions-pc"><button class="icon-btn" id="themeToggleDesktop"><i class="fas fa-moon"></i></button></div></div>${content}`; document.getElementById('withdrawRewardBtn')?.addEventListener('click', () => showWithdrawModal('reward')); document.getElementById('withdrawTotalBtn')?.addEventListener('click', () => showWithdrawModal('total')); document.getElementById('themeToggleDesktop')?.addEventListener('click', toggleTheme); }
-    function renderMobile() { const user = getCurrentUser(); if(!user) return; const tab = document.querySelector('.mobile-nav-item.active')?.getAttribute('data-tab') || 'profile'; const txs = getUserTransactions(user.email); let content = ''; if(tab === 'profile') content = `<div class="mobile-card">${renderProfile(user, txs)}</div>`; else if(tab === 'wallet') content = `<div class="mobile-card">${renderWalletPage(user)}</div>`; else if(tab === 'withdraw') content = `<div class="mobile-card"><h3 style="margin-bottom:1rem;">Pending Withdrawals</h3>${renderPendingWithdrawals(user)}</div>`; else if(tab === 'history') content = `<div class="mobile-card"><h3>Transaction History</h3>${renderTransactions(txs)}</div>`; else if(tab === 'referrals') content = `<div class="mobile-card">${renderReferralsPage(user)}</div>`; document.getElementById('mobileContent').innerHTML = content; document.getElementById('withdrawRewardBtn')?.addEventListener('click', () => showWithdrawModal('reward')); document.getElementById('withdrawTotalBtn')?.addEventListener('click', () => showWithdrawModal('total')); }
+    // ================== NEW: Verification Tab with Form ==================
+    function renderVerification() {
+        return `
+            <div class="dashboard-card">
+                <div class="card-header"><i class="fas fa-id-card"></i><h3>Account Verification</h3></div>
+                <div class="verification-form">
+                    <input type="text" id="cnic" placeholder="CNIC Number (e.g. 12345-1234567-1)">
+                    <input type="tel" id="phone" placeholder="Phone Number">
+                    <input type="text" id="address" placeholder="Full Address">
+                    <textarea id="notes" rows="3" placeholder="Additional Notes (Optional)"></textarea>
+                    <button onclick="submitVerification()">Submit for Verification</button>
+                </div>
+                <div style="margin-top:1rem; font-size:0.8rem; color:var(--text-muted); text-align:center;">
+                    Your documents will be reviewed within 24-48 hours.
+                </div>
+            </div>
+        `;
+    }
+
+    function submitVerification() {
+        const cnic = document.getElementById('cnic').value.trim();
+        if (!cnic) {
+            alert("Please enter your CNIC number.");
+            return;
+        }
+        alert("✅ Verification request submitted successfully!\nWe will notify you once your account is verified.");
+    }
+
+    // Render Desktop with Verification Tab
+    function renderDesktop() { 
+        const user = getCurrentUser(); 
+        if(!user) return; 
+        const tab = document.querySelector('.nav-item-sidebar.active')?.getAttribute('data-tab') || 'profile'; 
+        const txs = getUserTransactions(user.email); 
+        let content = ''; 
+        if(tab === 'profile') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-user"></i><h3>Profile</h3></div>${renderProfile(user, txs)}</div>`; 
+        else if(tab === 'wallet') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-wallet"></i><h3>Wallet</h3></div>${renderWalletPage(user)}</div>`; 
+        else if(tab === 'withdraw') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-clock"></i><h3>Pending Withdrawals</h3></div>${renderPendingWithdrawals(user)}<div class="info-note mt-2">Funds available after 34-48h</div></div>`; 
+        else if(tab === 'history') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-history"></i><h3>Transaction History</h3></div><div class="transactions-container">${renderTransactions(txs)}</div></div>`; 
+        else if(tab === 'referrals') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-users"></i><h3>Referral Program</h3></div>${renderReferralsPage(user)}</div>`; 
+        else if(tab === 'verification') content = renderVerification(); 
+        document.getElementById('desktopContent').innerHTML = `<div class="top-bar"><h1 class="page-title">${tab.charAt(0).toUpperCase()+tab.slice(1)}</h1><div class="header-actions-pc"><button class="icon-btn" id="themeToggleDesktop"><i class="fas fa-moon"></i></button></div></div>${content}`; 
+        document.getElementById('withdrawRewardBtn')?.addEventListener('click', () => showWithdrawModal('reward')); 
+        document.getElementById('withdrawTotalBtn')?.addEventListener('click', () => showWithdrawModal('total')); 
+        document.getElementById('themeToggleDesktop')?.addEventListener('click', toggleTheme); 
+    }
+
+    function renderMobile() { 
+        const user = getCurrentUser(); 
+        if(!user) return; 
+        const tab = document.querySelector('.mobile-nav-item.active')?.getAttribute('data-tab') || 'profile'; 
+        const txs = getUserTransactions(user.email); 
+        let content = ''; 
+        if(tab === 'profile') content = `<div class="mobile-card">${renderProfile(user, txs)}</div>`; 
+        else if(tab === 'wallet') content = `<div class="mobile-card">${renderWalletPage(user)}</div>`; 
+        else if(tab === 'withdraw') content = `<div class="mobile-card"><h3 style="margin-bottom:1rem;">Pending Withdrawals</h3>${renderPendingWithdrawals(user)}</div>`; 
+        else if(tab === 'history') content = `<div class="mobile-card"><h3>Transaction History</h3>${renderTransactions(txs)}</div>`; 
+        else if(tab === 'referrals') content = `<div class="mobile-card">${renderReferralsPage(user)}</div>`; 
+        else if(tab === 'verification') content = renderVerification(); 
+        document.getElementById('mobileContent').innerHTML = content; 
+        document.getElementById('withdrawRewardBtn')?.addEventListener('click', () => showWithdrawModal('reward')); 
+        document.getElementById('withdrawTotalBtn')?.addEventListener('click', () => showWithdrawModal('total')); 
+    }
     
     function initTheme() { const saved = localStorage.getItem('gadgetTheme'); if(saved === 'light') document.body.classList.add('light'); updateThemeIcons(); }
     function updateThemeIcons() { const isLight = document.body.classList.contains('light'); const icon = isLight ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>'; if(document.getElementById('themeToggleDesktop')) document.getElementById('themeToggleDesktop').innerHTML = icon; if(document.getElementById('themeToggleMobile')) document.getElementById('themeToggleMobile').innerHTML = icon; }
     function toggleTheme() { document.body.classList.toggle('light'); localStorage.setItem('gadgetTheme', document.body.classList.contains('light') ? 'light' : 'dark'); updateThemeIcons(); }
     function logout() { clearSession(); window.location.href = "index.html"; }
     function goToStore() { window.location.href = "index.html"; }
-    function setupTabs() { document.querySelectorAll('.nav-item-sidebar').forEach(t => t.addEventListener('click', () => { document.querySelectorAll('.nav-item-sidebar').forEach(n => n.classList.remove('active')); t.classList.add('active'); renderDesktop(); })); document.querySelectorAll('.mobile-nav-item').forEach(t => t.addEventListener('click', () => { document.querySelectorAll('.mobile-nav-item').forEach(n => n.classList.remove('active')); t.classList.add('active'); renderMobile(); })); }
+    function setupTabs() { 
+        document.querySelectorAll('.nav-item-sidebar').forEach(t => t.addEventListener('click', () => { 
+            document.querySelectorAll('.nav-item-sidebar').forEach(n => n.classList.remove('active')); 
+            t.classList.add('active'); 
+            renderDesktop(); 
+        })); 
+        document.querySelectorAll('.mobile-nav-item').forEach(t => t.addEventListener('click', () => { 
+            document.querySelectorAll('.mobile-nav-item').forEach(n => n.classList.remove('active')); 
+            t.classList.add('active'); 
+            renderMobile(); 
+        })); 
+    }
     
-    document.addEventListener('DOMContentLoaded', () => { seedDemoUser(); initTheme(); if(!checkAuth()) return; setupTabs(); renderDesktop(); renderMobile(); document.getElementById('logoutDesktop')?.addEventListener('click', logout); document.getElementById('logoutMobile')?.addEventListener('click', logout); document.getElementById('backToStoreDesktop')?.addEventListener('click', goToStore); document.getElementById('backToStoreMobile')?.addEventListener('click', goToStore); document.getElementById('themeToggleMobile')?.addEventListener('click', toggleTheme); document.getElementById('confirmWithdrawBtn')?.addEventListener('click', confirmWithdrawalAction); document.getElementById('cancelWithdrawBtn')?.addEventListener('click', () => document.getElementById('withdrawModal').classList.remove('active')); document.querySelectorAll('#withdrawTypeSelector button').forEach(btn => btn.addEventListener('click', () => { if(document.getElementById('withdrawModal').classList.contains('active')) { const type = btn.getAttribute('data-type'); currentWithdrawType = type; const user = getCurrentUser(); if(user) { const avail = type === 'reward' ? getAvailableRewardBalance(user.email) : getAvailableTotalBalance(user); document.getElementById('withdrawInfoText').innerHTML = `${type === 'reward' ? 'Reward' : 'Total'}: ${avail.toLocaleString()} ERC available`; document.getElementById('withdrawAmountInput').max = avail; } btn.classList.add('active'); document.querySelectorAll('#withdrawTypeSelector button').forEach(b => { if(b !== btn) b.classList.remove('active'); }); } })); });
+    document.addEventListener('DOMContentLoaded', () => { 
+        seedDemoUser(); 
+        initTheme(); 
+        if(!checkAuth()) return; 
+        setupTabs(); 
+        renderDesktop(); 
+        renderMobile(); 
+        document.getElementById('logoutDesktop')?.addEventListener('click', logout); 
+        document.getElementById('logoutMobile')?.addEventListener('click', logout); 
+        document.getElementById('backToStoreDesktop')?.addEventListener('click', goToStore); 
+        document.getElementById('backToStoreMobile')?.addEventListener('click', goToStore); 
+        document.getElementById('themeToggleMobile')?.addEventListener('click', toggleTheme); 
+        document.getElementById('confirmWithdrawBtn')?.addEventListener('click', confirmWithdrawalAction); 
+        document.getElementById('cancelWithdrawBtn')?.addEventListener('click', () => document.getElementById('withdrawModal').classList.remove('active')); 
+        document.querySelectorAll('#withdrawTypeSelector button').forEach(btn => btn.addEventListener('click', () => { 
+            if(document.getElementById('withdrawModal').classList.contains('active')) { 
+                const type = btn.getAttribute('data-type'); 
+                currentWithdrawType = type; 
+                const user = getCurrentUser(); 
+                if(user) { 
+                    const avail = type === 'reward' ? getAvailableRewardBalance(user.email) : getAvailableTotalBalance(user); 
+                    document.getElementById('withdrawInfoText').innerHTML = `${type === 'reward' ? 'Reward' : 'Total'}: ${avail.toLocaleString()} ERC available`; 
+                    document.getElementById('withdrawAmountInput').max = avail; 
+                } 
+                btn.classList.add('active'); 
+                document.querySelectorAll('#withdrawTypeSelector button').forEach(b => { if(b !== btn) b.classList.remove('active'); }); 
+            } 
+        })); 
+    });
 </script>
 </body>
 </html>

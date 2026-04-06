@@ -447,6 +447,28 @@
             margin-top: 1rem;
         }
 
+        .screenshot-preview {
+            max-width: 100%;
+            max-height: 280px;
+            border-radius: 16px;
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            margin-top: 0.5rem;
+            display: block;
+        }
+        .screenshot-preview:hover {
+            border-color: var(--accent);
+        }
+        .no-screenshot {
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            color: var(--text-muted);
+            font-style: italic;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
         @media (min-width: 769px) {
             .menu-toggle { display: none; }
             .sidebar-menu { position: fixed; left: 0; width: var(--sidebar-width); transform: none; z-index: 50; }
@@ -536,7 +558,7 @@
 </div>
 
 <script>
-    // Data initialization - Direct data without localStorage dependency
+    // Data initialization
     const defaultUsers = [
         { id: 1, name: "Ahmed Khan", email: "ahmed@example.com", erCoins: 1250, referralCode: "GFAHMED123", joined: "2025-01-15" },
         { id: 2, name: "Bilal Ahmed", email: "bilal@example.com", erCoins: 800, referralCode: "GFBILAL456", joined: "2025-01-20" },
@@ -550,39 +572,24 @@
         { id: 10, name: "Nadia Hassan", email: "nadia@example.com", erCoins: 2100, referralCode: "GFNADIA666", joined: "2025-03-12" }
     ];
 
-    const defaultOrders = [
-        { id: 1001, customerName: "Ahmed Khan", customerEmail: "ahmed@example.com", productName: "Mobile Holder", amount: 500, status: "pending", date: "2025-03-20" },
-        { id: 1002, customerName: "Bilal Ahmed", customerEmail: "bilal@example.com", productName: "Powerbank", amount: 1000, status: "completed", date: "2025-03-21" },
-        { id: 1003, customerName: "Fatima Ali", customerEmail: "fatima@example.com", productName: "RGB Keyboard", amount: 2500, status: "processing", date: "2025-03-19" },
-        { id: 1004, customerName: "Zara Khan", customerEmail: "zara@example.com", productName: "Smart Watch", amount: 5000, status: "pending", date: "2025-03-22" },
-        { id: 1005, customerName: "Usman Chaudhry", customerEmail: "usman@example.com", productName: "Headphone", amount: 7000, status: "pending", date: "2025-03-22" },
-        { id: 1006, customerName: "Ayesha Siddiqui", customerEmail: "ayesha@example.com", productName: "Tablet", amount: 10000, status: "completed", date: "2025-03-21" },
-        { id: 1007, customerName: "Test User", customerEmail: "test@example.com", productName: "Mobile Holder", amount: 500, status: "completed", date: "2025-03-18" },
-        { id: 1008, customerName: "Sarah Khan", customerEmail: "sarah@example.com", productName: "Powerbank", amount: 1000, status: "processing", date: "2025-03-23" },
-        { id: 1009, customerName: "Ali Raza", customerEmail: "ali@example.com", productName: "Smart Watch", amount: 5000, status: "pending", date: "2025-03-23" },
-        { id: 1010, customerName: "Nadia Hassan", customerEmail: "nadia@example.com", productName: "Bluetooth Speaker", amount: 3000, status: "pending", date: "2025-03-24" }
-    ];
-
     let usersData = [...defaultUsers];
-    let ordersData = [...defaultOrders];
 
-    function getUsers() {
-        return usersData;
-    }
+    const STORAGE_ORDERS = "gadgetflow_orders";
 
     function getOrders() {
-        return ordersData;
+        const saved = localStorage.getItem(STORAGE_ORDERS);
+        return saved ? JSON.parse(saved) : [];
     }
 
     function saveOrders(orders) {
-        ordersData = orders;
+        localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
     }
 
     function getAllUsersWithStats() {
         const orders = getOrders();
         return usersData.map(user => {
-            const userOrders = orders.filter(o => o.customerEmail === user.email);
-            const totalSpent = userOrders.reduce((sum, o) => sum + o.amount, 0);
+            const userOrders = orders.filter(o => o.customer && o.customer.email === user.email);
+            const totalSpent = userOrders.reduce((sum, o) => sum + (o.product ? o.product.price : 0), 0);
             return {
                 ...user,
                 totalSpent,
@@ -594,17 +601,39 @@
 
     function getPaymentStats() {
         const orders = getOrders();
-        const pendingAmount = orders.filter(o => o.status === "pending").reduce((s, o) => s + o.amount, 0);
-        const processingAmount = orders.filter(o => o.status === "processing").reduce((s, o) => s + o.amount, 0);
-        const completedAmount = orders.filter(o => o.status === "completed").reduce((s, o) => s + o.amount, 0);
+        const pendingAmount = orders.filter(o => o.status === "pending").reduce((s, o) => s + (o.product ? o.product.price : 0), 0);
+        const processingAmount = orders.filter(o => o.status === "processing").reduce((s, o) => s + (o.product ? o.product.price : 0), 0);
+        const completedAmount = orders.filter(o => o.status === "completed").reduce((s, o) => s + (o.product ? o.product.price : 0), 0);
+        
+        const totalAmount = pendingAmount + processingAmount + completedAmount;
+        const avgOrderValue = orders.length > 0 ? Math.round(totalAmount / orders.length) : 0;
+
         return {
             totalOrders: orders.length,
             pendingAmount, processingAmount, completedAmount,
-            totalAmount: pendingAmount + processingAmount + completedAmount,
+            totalAmount,
+            avgOrderValue,
             pendingCount: orders.filter(o => o.status === "pending").length,
             processingCount: orders.filter(o => o.status === "processing").length,
             completedCount: orders.filter(o => o.status === "completed").length
         };
+    }
+
+    function getTopProducts() {
+        const orders = getOrders();
+        const productCount = {};
+        
+        orders.forEach(order => {
+            if (order.product && order.product.name) {
+                const name = order.product.name;
+                productCount[name] = (productCount[name] || 0) + 1;
+            }
+        });
+
+        return Object.entries(productCount)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(([name, count]) => ({ name, count }));
     }
 
     let currentFilter = 'ALL';
@@ -612,31 +641,84 @@
     function renderOverview() {
         const stats = getPaymentStats();
         const orders = getOrders();
+        const topProducts = getTopProducts();
+
+        // Sort orders by newest first (using id or timestamp)
+        const recentOrders = [...orders].sort((a, b) => b.id - a.id).slice(0, 5);
+
         return `
             <div class="stats-grid">
-                <div class="stat-card"><div class="stat-title">Total Orders</div><div class="stat-value">${stats.totalOrders}</div></div>
-                <div class="stat-card"><div class="stat-title">Pending</div><div class="stat-value">₨ ${stats.pendingAmount.toLocaleString()}</div><div style="font-size:0.6rem;">${stats.pendingCount} orders</div></div>
-                <div class="stat-card"><div class="stat-title">Processing</div><div class="stat-value">₨ ${stats.processingAmount.toLocaleString()}</div><div style="font-size:0.6rem;">${stats.processingCount} orders</div></div>
-                <div class="stat-card"><div class="stat-title">Completed</div><div class="stat-value">₨ ${stats.completedAmount.toLocaleString()}</div><div style="font-size:0.6rem;">${stats.completedCount} orders</div></div>
+                <div class="stat-card">
+                    <div class="stat-title">Total Orders</div>
+                    <div class="stat-value">${stats.totalOrders}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Total Revenue</div>
+                    <div class="stat-value">₨ ${stats.totalAmount.toLocaleString()}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Avg Order Value</div>
+                    <div class="stat-value">₨ ${stats.avgOrderValue.toLocaleString()}</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-title">Completion Rate</div>
+                    <div class="stat-value">${stats.totalOrders > 0 ? Math.round((stats.completedCount / stats.totalOrders) * 100) : 0}%</div>
+                </div>
             </div>
+
             <div class="dashboard-card">
-                <div class="card-header"><i class="fas fa-chart-simple"></i><h3>Revenue Summary</h3></div>
+                <div class="card-header"><i class="fas fa-chart-simple"></i><h3>Revenue Breakdown</h3></div>
                 <div style="text-align:center; padding:0.5rem;">
-                    <div style="font-size:2rem; font-weight:800; color:var(--accent);">₨ ${stats.totalAmount.toLocaleString()}</div>
-                    <div style="margin-top:0.8rem; display:flex; justify-content:center; gap:0.8rem; flex-wrap:wrap;">
-                        <span style="color:var(--danger);">● Pending: ₨ ${stats.pendingAmount.toLocaleString()}</span>
-                        <span style="color:var(--warning);">● Processing: ₨ ${stats.processingAmount.toLocaleString()}</span>
-                        <span style="color:var(--success);">● Completed: ₨ ${stats.completedAmount.toLocaleString()}</span>
+                    <div style="font-size:2.2rem; font-weight:800; color:var(--accent);">₨ ${stats.totalAmount.toLocaleString()}</div>
+                    <div style="margin-top:1rem; display:flex; justify-content:center; gap:1.2rem; flex-wrap:wrap; font-size:0.9rem;">
+                        <span style="color:var(--danger);">● Pending: ₨ ${stats.pendingAmount.toLocaleString()} (${stats.pendingCount})</span>
+                        <span style="color:var(--warning);">● Processing: ₨ ${stats.processingAmount.toLocaleString()} (${stats.processingCount})</span>
+                        <span style="color:var(--success);">● Completed: ₨ ${stats.completedAmount.toLocaleString()} (${stats.completedCount})</span>
                     </div>
                 </div>
             </div>
+
             <div class="dashboard-card">
-                <div class="card-header"><i class="fas fa-clock"></i><h3>Recent Orders</h3></div>
+                <div class="card-header"><i class="fas fa-trophy"></i><h3>Top Selling Products</h3></div>
+                <div style="padding:0.5rem 0;">
+                    ${topProducts.length > 0 ? 
+                        topProducts.map(p => `
+                            <div style="display:flex; justify-content:space-between; padding:0.6rem 0; border-bottom:1px solid var(--border-color);">
+                                <span>${p.name}</span>
+                                <span style="color:var(--accent); font-weight:600;">${p.count} orders</span>
+                            </div>
+                        `).join('') : 
+                        '<div class="empty-message">No sales data yet</div>'
+                    }
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-header"><i class="fas fa-clock"></i><h3>Recent Orders (Latest 5)</h3></div>
                 <div class="table-container">
-                    <table><thead><tr><th>ID</th><th>Customer</th><th>Product</th><th>Amount</th><th>Status</th></tr></thead><tbody>
-                        ${orders.slice(0, 5).map(o => `<tr><td>#${o.id}</td><td>${escapeHtml(o.customerName)}</td><td>${escapeHtml(o.productName)}</td><td>₨ ${o.amount.toLocaleString()}</td><td><span class="status-${o.status}">${o.status}</span></td></tr>`).join('')}
-                        ${orders.length === 0 ? '<tr><td colspan="5" class="empty-message">No orders</td></tr>' : ''}
-                    </tbody></table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${recentOrders.map(o => `
+                                <tr>
+                                    <td>#${o.id}</td>
+                                    <td>${escapeHtml(o.customer ? o.customer.fullName : 'N/A')}</td>
+                                    <td>${escapeHtml(o.product ? o.product.name : 'N/A')}</td>
+                                    <td>₨ ${(o.product ? o.product.price : 0).toLocaleString()}</td>
+                                    <td><span class="status-${o.status}">${o.status}</span></td>
+                                </tr>
+                            `).join('')}
+                            ${recentOrders.length === 0 ? '<tr><td colspan="5" class="empty-message">No orders received yet</td></tr>' : ''}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         `;
@@ -646,12 +728,40 @@
         const orders = getOrders();
         return `
             <div class="dashboard-card">
-                <div class="card-header"><i class="fas fa-credit-card"></i><h3>All Payments</h3></div>
+                <div class="card-header"><i class="fas fa-credit-card"></i><h3>All Payments (${orders.length})</h3></div>
                 <div class="table-container">
-                    <table><thead><tr><th>ID</th><th>Customer</th><th>Product</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead><tbody>
-                        ${orders.map(o => `<tr><td>#${o.id}</td><td>${escapeHtml(o.customerName)}<br><small>${escapeHtml(o.customerEmail)}</small></td><td>${escapeHtml(o.productName)}</td><td>₨ ${o.amount.toLocaleString()}</td><td><span class="status-${o.status}">${o.status}</span></td><td><button class="btn-sm" onclick="openPaymentModal(${o.id})">Update</button></td></tr>`).join('')}
-                        ${orders.length === 0 ? '<tr><td colspan="6" class="empty-message">No payments</td></tr>' : ''}
-                    </tbody></table>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Product</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Screenshot</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${orders.map(o => `
+                                <tr class="order-row">
+                                    <td>#${o.id}</td>
+                                    <td>${escapeHtml(o.customer ? o.customer.fullName : 'N/A')}<br><small>${escapeHtml(o.customer ? o.customer.email : '')}</small></td>
+                                    <td>${escapeHtml(o.product ? o.product.name : 'N/A')}</td>
+                                    <td>₨ ${(o.product ? o.product.price : 0).toLocaleString()}</td>
+                                    <td><span class="status-${o.status}">${o.status}</span></td>
+                                    <td>
+                                        ${o.screenshotBase64 ? 
+                                            `<img src="${o.screenshotBase64}" class="screenshot-preview" onclick="showFullImage(this.src)" alt="Payment Screenshot">` : 
+                                            `<div class="no-screenshot">No screenshot</div>`
+                                        }
+                                    </td>
+                                    <td><button class="btn-sm" onclick="openPaymentModal(${o.id})">Update</button></td>
+                                </tr>
+                            `).join('')}
+                            ${orders.length === 0 ? '<tr><td colspan="7" class="empty-message">No payments received yet</td></tr>' : ''}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         `;
@@ -685,9 +795,10 @@
 
     window.openPaymentModal = function(orderId) {
         currentPaymentId = orderId;
-        const order = getOrders().find(o => o.id === orderId);
+        const orders = getOrders();
+        const order = orders.find(o => o.id === orderId);
         if (order) {
-            document.getElementById('paymentStatusSelect').value = order.status;
+            document.getElementById('paymentStatusSelect').value = order.status || "pending";
             document.getElementById('paymentModal').classList.add('active');
         }
     };
@@ -695,20 +806,23 @@
     window.filterUsers = function(letter) {
         currentFilter = letter;
         renderUsersContent();
-        document.querySelectorAll('.alpha-btn').forEach(btn => {
-            if (btn.innerText === letter) btn.classList.add('active');
-            else btn.classList.remove('active');
-        });
+    };
+
+    window.showFullImage = function(src) {
+        if (!src || src === '#') return;
+        const win = window.open('');
+        win.document.write(`<img src="${src}" style="max-width:100%; height:auto;">`);
     };
 
     function updatePaymentStatus() {
         const newStatus = document.getElementById('paymentStatusSelect').value;
-        const orders = getOrders();
+        let orders = getOrders();
         const index = orders.findIndex(o => o.id === currentPaymentId);
         if (index !== -1) {
             orders[index].status = newStatus;
             saveOrders(orders);
             document.getElementById('paymentModal').classList.remove('active');
+            
             const activeTab = document.querySelector('.nav-item.active, .bottom-nav-item.active')?.getAttribute('data-tab');
             if (activeTab === 'payments') renderPaymentsContent();
             if (activeTab === 'overview') renderOverviewContent();
@@ -788,10 +902,8 @@
         if (window.innerWidth > 768) closeSidebar();
     }
 
-    // Initialize
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('vendorNameDisplay').innerHTML = "Demo Vendor";
-        
         initTheme();
         
         document.querySelectorAll('.nav-item, .bottom-nav-item').forEach(item => {
@@ -801,22 +913,14 @@
             });
         });
         
-        const menuToggle = document.getElementById('menuToggle');
-        if (menuToggle) menuToggle.addEventListener('click', openSidebar);
-        document.getElementById('sidebarOverlay')?.addEventListener('click', closeSidebar);
+        document.getElementById('menuToggle').addEventListener('click', openSidebar);
+        document.getElementById('sidebarOverlay').addEventListener('click', closeSidebar);
         
-        document.getElementById('confirmPaymentBtn')?.addEventListener('click', updatePaymentStatus);
-        document.getElementById('cancelPaymentBtn')?.addEventListener('click', () => {
-            document.getElementById('paymentModal').classList.remove('active');
-        });
-        document.getElementById('paymentModal')?.addEventListener('click', (e) => {
-            if (e.target === document.getElementById('paymentModal')) {
-                document.getElementById('paymentModal').classList.remove('active');
-            }
-        });
+        document.getElementById('confirmPaymentBtn').addEventListener('click', updatePaymentStatus);
+        document.getElementById('cancelPaymentBtn').addEventListener('click', () => document.getElementById('paymentModal').classList.remove('active'));
         
-        document.getElementById('logoutBtn')?.addEventListener('click', logout);
-        document.getElementById('themeToggle')?.addEventListener('click', toggleTheme);
+        document.getElementById('logoutBtn').addEventListener('click', logout);
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
         
         window.addEventListener('resize', handleResize);
         

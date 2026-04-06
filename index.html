@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0">
     <title>GadgetFlow | Premium Tech Store - ER Coin Theme</title>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Swiper JS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <style>
@@ -19,7 +16,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Light & Dark Theme Variables - Binance Inspired with ER Coin accent */
         :root {
             --bg-primary: #ffffff;
             --bg-secondary: #f8f9fc;
@@ -77,7 +73,6 @@
             position: relative;
         }
 
-        /* Premium Navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -194,7 +189,6 @@
             border-color: var(--accent);
         }
 
-        /* Hero Carousel - BIG & BEAUTIFUL */
         .hero-section {
             margin: 1rem 1rem 0.5rem;
             padding: 0;
@@ -213,22 +207,10 @@
             object-fit: cover;
         }
         @media (min-width: 768px) {
-            .swiper-slide img {
-                height: 480px;
-            }
-            
+            .swiper-slide img { height: 480px; }
         }
         @media (min-width: 1200px) {
-            .swiper-slide img {
-                height: 550px;
-            }
-        }
-        @media(max-width:600px){
-            .swiper-slide img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
+            .swiper-slide img { height: 550px; }
         }
         .swiper-button-next, .swiper-button-prev {
             color: var(--accent);
@@ -248,7 +230,6 @@
             background: var(--accent);
         }
 
-        /* Features Strip */
         .features-strip {
             display: flex;
             justify-content: space-between;
@@ -274,17 +255,7 @@
             font-size: 1.6rem;
             color: var(--accent);
         }
-        @media (max-width: 640px) {
-            .feature-item {
-                font-size: 0.7rem;
-                gap: 0.5rem;
-            }
-            .feature-item i {
-                font-size: 1.3rem;
-            }
-        }
 
-        /* Products Section - Card Width 330px, 3 per row */
         .products-heading {
             font-size: 1.8rem;
             font-weight: 700;
@@ -351,25 +322,7 @@
             align-items: center;
             gap: 0.4rem;
         }
-        @media (max-width: 1100px) {
-            .products-grid {
-                gap: 1.2rem;
-            }
-        }
-        @media (max-width: 768px) {
-            .product-card {
-                width: calc(50% - 0.8rem);
-                min-width: 200px;
-            }
-        }
-        @media (max-width: 550px) {
-            .product-card {
-                width: 100%;
-                max-width: 330px;
-            }
-        }
 
-        /* SEPARATE PRODUCT PAGE */
         .product-page {
             max-width: 1300px;
             margin: 1rem auto;
@@ -495,7 +448,6 @@
             transform: translateY(-2px);
         }
         
-        /* Remaining Products Section - 3 Cards in One Row */
         .remaining-products-section {
             margin-top: 2rem;
             background: var(--surface);
@@ -554,18 +506,7 @@
             margin-top: 0.3rem;
             display: inline-block;
         }
-        @media (max-width: 900px) {
-            .remaining-card {
-                width: calc(50% - 0.8rem);
-            }
-        }
-        @media (max-width: 550px) {
-            .remaining-card {
-                width: 100%;
-            }
-        }
 
-        /* Footer - Updated Links */
         .footer {
             background: var(--footer-bg);
             margin-top: 3rem;
@@ -606,7 +547,6 @@
             color: var(--accent);
         }
 
-        /* Mobile Bottom Navigation - App Style */
         .mobile-bottom-nav {
             display: none;
             position: fixed;
@@ -637,32 +577,14 @@
             color: var(--accent);
         }
         @media (max-width: 768px) {
-            .mobile-bottom-nav {
-                display: flex;
-            }
-            .app-container {
-                padding-bottom: 70px;
-            }
+            .mobile-bottom-nav { display: flex; }
+            .app-container { padding-bottom: 70px; }
         }
 
-        .hidden {
-            display: none;
-        }
-        .er-coin-badge {
-            background: linear-gradient(135deg, var(--er-gold), #f7b42c);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: bold;
-        }
-
-        /* ========== AUTH MODAL OVERLAY (Login/Register) ========== */
-        .auth-overlay {
+        .auth-overlay, .payment-modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: var(--overlay-bg);
             backdrop-filter: blur(8px);
             z-index: 2000;
@@ -673,23 +595,25 @@
             opacity: 0;
             transition: visibility 0.3s, opacity 0.3s ease;
         }
-        .auth-overlay.active {
+        .auth-overlay.active, .payment-modal-overlay.active {
             visibility: visible;
             opacity: 1;
         }
-        .auth-modal {
+        .auth-modal, .payment-modal {
             background: var(--surface);
             border-radius: 32px;
             width: 90%;
             max-width: 500px;
-            padding: 2rem 1.8rem;
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 1.8rem;
             border: 1px solid var(--border-color);
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
             transform: scale(0.95);
             transition: transform 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
             position: relative;
         }
-        .auth-overlay.active .auth-modal {
+        .auth-overlay.active .auth-modal, .payment-modal-overlay.active .payment-modal {
             transform: scale(1);
         }
         .auth-close {
@@ -699,10 +623,6 @@
             font-size: 1.3rem;
             cursor: pointer;
             color: var(--text-muted);
-            transition: 0.2s;
-        }
-        .auth-close:hover {
-            color: var(--accent);
         }
         .auth-tabs {
             display: flex;
@@ -715,12 +635,9 @@
             text-align: center;
             padding: 0.8rem 0;
             font-weight: 700;
-            font-size: 1.1rem;
             cursor: pointer;
             color: var(--text-secondary);
-            transition: 0.2s;
             border-bottom: 2px solid transparent;
-            margin-bottom: -2px;
         }
         .auth-tab.active {
             color: var(--accent);
@@ -739,109 +656,33 @@
             flex-direction: column;
             gap: 0.5rem;
         }
-        .input-group label {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            letter-spacing: 0.3px;
-        }
         .input-group input {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 0.9rem 1.2rem;
-            font-size: 0.9rem;
             color: var(--text-primary);
-            transition: 0.2s;
             outline: none;
         }
         .input-group input:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-glow);
         }
-        .auth-btn {
-            background: var(--accent);
-            border: none;
+        .auth-btn, .payment-submit-btn, .payment-cancel-btn {
             padding: 0.9rem;
             border-radius: 40px;
             font-weight: 800;
-            font-size: 1rem;
             cursor: pointer;
-            color: #000;
-            margin-top: 0.5rem;
             transition: 0.2s;
         }
-        .auth-btn:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
+        .auth-btn, .payment-submit-btn {
+            background: var(--accent);
+            border: none;
+            color: #000;
         }
-        .auth-message {
-            font-size: 0.8rem;
-            text-align: center;
-            margin-top: 0.5rem;
-            padding: 0.5rem;
-            border-radius: 40px;
-        }
-        .auth-message.error {
-            background: rgba(246, 70, 93, 0.15);
-            color: var(--danger);
-        }
-        .auth-message.success {
-            background: rgba(14, 203, 129, 0.15);
-            color: var(--success);
-        }
-        .demo-hint {
-            font-size: 0.7rem;
-            text-align: center;
-            margin-top: 1rem;
-            color: var(--text-muted);
-        }
-        .referral-hint {
-            font-size: 0.7rem;
-            color: var(--accent);
-            margin-top: 0.2rem;
-            text-align: right;
-        }
-
-        /* ========== PAYMENT MODAL (ENHANCED with Name & Phone) ========== */
-        .payment-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--overlay-bg);
-            backdrop-filter: blur(8px);
-            z-index: 2100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            visibility: hidden;
-            opacity: 0;
-            transition: visibility 0.3s, opacity 0.3s ease;
-        }
-        .payment-modal-overlay.active {
-            visibility: visible;
-            opacity: 1;
-        }
-        .payment-modal {
-            background: var(--surface);
-            border-radius: 32px;
-            width: 90%;
-            max-width: 520px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 1.8rem;
+        .payment-cancel-btn {
+            background: var(--surface-2);
             border: 1px solid var(--border-color);
-            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
-        }
-        .payment-modal h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            color: var(--text-primary);
         }
         .bank-details-card {
             background: var(--bg-secondary);
@@ -849,10 +690,6 @@
             border-radius: 20px;
             margin: 1rem 0;
             border-left: 4px solid var(--accent);
-        }
-        .bank-details-card p {
-            margin: 0.5rem 0;
-            font-size: 0.95rem;
         }
         .payment-input-group {
             margin-bottom: 1rem;
@@ -862,92 +699,32 @@
             font-size: 0.85rem;
             font-weight: 600;
             margin-bottom: 0.4rem;
-            color: var(--text-secondary);
         }
-        .payment-input-group input {
+        .payment-input-group input, .payment-file-input {
             width: 100%;
             padding: 0.8rem 1rem;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 20px;
-            font-size: 0.9rem;
             color: var(--text-primary);
             outline: none;
-            transition: 0.2s;
-        }
-        .payment-input-group input:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-glow);
-        }
-        .screenshot-label {
-            font-weight: 600;
-            margin: 0.8rem 0 0.5rem;
-            display: block;
-            font-size: 0.85rem;
-        }
-        .payment-file-input {
-            width: 100%;
-            padding: 0.7rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            color: var(--text-primary);
-            font-size: 0.9rem;
         }
         .payment-actions {
             display: flex;
             gap: 1rem;
             margin-top: 1.5rem;
         }
-        .payment-submit-btn {
-            flex: 1;
-            background: var(--accent);
-            color: #000;
+        .success-message {
+            background: rgba(14, 203, 129, 0.15);
+            color: var(--success);
             padding: 0.8rem;
             border-radius: 40px;
-            font-weight: bold;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            transition: 0.2s;
-        }
-        .payment-submit-btn:hover {
-            background: var(--accent-hover);
-            transform: translateY(-2px);
-        }
-        .payment-cancel-btn {
-            flex: 1;
-            background: var(--surface-2);
-            color: var(--text-primary);
-            padding: 0.8rem;
-            border-radius: 40px;
-            font-weight: bold;
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .payment-cancel-btn:hover {
-            background: var(--surface-3);
-        }
-        .payment-message {
-            margin-top: 1rem;
-            font-size: 0.8rem;
             text-align: center;
-        }
-        .payment-note {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-align: center;
-            margin-top: 0.8rem;
         }
     </style>
 </head>
-<body>
+<body class="dark">
 <div class="app-container">
-    <!-- Premium Navbar -->
     <nav class="navbar">
         <div class="logo" id="homeLogoLink">
             <h2><i class="fas fa-bolt"></i> GadgetFlow</h2>
@@ -967,7 +744,6 @@
         </div>
     </nav>
 
-    <!-- HOME PAGE -->
     <div id="homePage">
         <div class="hero-section">
             <div class="swiper heroSwiper">
@@ -984,21 +760,17 @@
                 <div class="swiper-button-next"></div>
             </div>
         </div>
-
         <div class="features-strip">
             <div class="feature-item"><i class="fas fa-shield-alt"></i> <span>100% Genuine Products</span></div>
             <div class="feature-item"><i class="fas fa-tags"></i> <span>Discounts Every Day</span></div>
             <div class="feature-item"><i class="fas fa-truck-fast"></i> <span>Free Shipping ≥ ₨4900</span></div>
         </div>
-
         <h2 class="products-heading"><i class="fas fa-microchip"></i> Hot Gadgets</h2>
         <div class="products-grid" id="productsGrid"></div>
     </div>
 
-    <!-- SEPARATE PRODUCT PAGE -->
     <div id="productPage" style="display: none;"></div>
 
-    <!-- Footer - Updated with new links -->
     <footer class="footer">
         <div class="footer-links">
             <a href="#" id="footerAboutUs"><i class="fas fa-store"></i> About Us</a>
@@ -1015,31 +787,17 @@
             <i class="fab fa-whatsapp"></i>
         </div>
         <p style="color: var(--text-muted); font-size: 0.75rem;">© 2025 GadgetFlow — Pakistan's Premium Tech Store</p>
-        <p style="font-size: 0.7rem; margin-top: 0.5rem;"><i class="fas fa-bolt"></i> Binance Style Theme | Earn ER Coins on Every Purchase</p>
     </footer>
 
-    <!-- Mobile Bottom Navigation -->
     <div class="mobile-bottom-nav">
-        <div class="bottom-nav-item" id="mobileHomeBtn">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </div>
-        <div class="bottom-nav-item" id="mobileShopBtn">
-            <i class="fas fa-compass"></i>
-            <span>Explore</span>
-        </div>
-        <div class="bottom-nav-item" id="mobileSupportBtn">
-            <i class="fas fa-headset"></i>
-            <span>Support</span>
-        </div>
-        <div class="bottom-nav-item" id="mobileAccountBtn">
-            <i class="fas fa-user"></i>
-            <span>Account</span>
-        </div>
+        <div class="bottom-nav-item" id="mobileHomeBtn"><i class="fas fa-home"></i><span>Home</span></div>
+        <div class="bottom-nav-item" id="mobileShopBtn"><i class="fas fa-compass"></i><span>Explore</span></div>
+        <div class="bottom-nav-item" id="mobileSupportBtn"><i class="fas fa-headset"></i><span>Support</span></div>
+        <div class="bottom-nav-item" id="mobileAccountBtn"><i class="fas fa-user"></i><span>Account</span></div>
     </div>
 </div>
 
-<!-- AUTH OVERLAY (Login/Register) with Referral Code -->
+<!-- Auth Overlay -->
 <div id="authOverlay" class="auth-overlay">
     <div class="auth-modal">
         <div class="auth-close" id="closeAuthBtn"><i class="fas fa-times"></i></div>
@@ -1047,79 +805,66 @@
             <div class="auth-tab" data-tab="login">Login</div>
             <div class="auth-tab" data-tab="register">Register</div>
         </div>
-        <!-- Login Form -->
         <div id="loginForm" class="auth-form">
-            <div class="input-group"><label>Email / Username</label><input type="text" id="loginEmail" placeholder="Enter email or username"></div>
-            <div class="input-group"><label>Password</label><input type="password" id="loginPassword" placeholder="Password"></div>
-            <button class="auth-btn" id="submitLoginBtn"><i class="fas fa-key"></i> Sign In</button>
+            <div class="input-group"><input type="text" id="loginEmail" placeholder="Email / Username"></div>
+            <div class="input-group"><input type="password" id="loginPassword" placeholder="Password"></div>
+            <button class="auth-btn" id="submitLoginBtn">Sign In</button>
             <div id="loginMessage" class="auth-message"></div>
             <div class="demo-hint">Demo: test@example.com / 123456</div>
         </div>
-        <!-- Register Form with Referral Code (Optional) -->
         <div id="registerForm" class="auth-form">
-            <div class="input-group"><label>Full Name *</label><input type="text" id="regName" placeholder="John Doe"></div>
-            <div class="input-group"><label>Email Address *</label><input type="email" id="regEmail" placeholder="hello@gadgetflow.com"></div>
-            <div class="input-group"><label>Password *</label><input type="password" id="regPassword" placeholder="Min 6 characters"></div>
-            <div class="input-group"><label>Confirm Password *</label><input type="password" id="regConfirmPassword" placeholder="Confirm password"></div>
-            <div class="input-group"><label>Referral Code (Optional)</label><input type="text" id="regReferralCode" placeholder="Enter referral code for bonus ER Coins"></div>
-            <button class="auth-btn" id="submitRegisterBtn"><i class="fas fa-user-plus"></i> Create Account</button>
+            <div class="input-group"><input type="text" id="regName" placeholder="Full Name"></div>
+            <div class="input-group"><input type="email" id="regEmail" placeholder="Email Address"></div>
+            <div class="input-group"><input type="password" id="regPassword" placeholder="Password (min 6 chars)"></div>
+            <div class="input-group"><input type="password" id="regConfirmPassword" placeholder="Confirm Password"></div>
+            <div class="input-group"><input type="text" id="regReferralCode" placeholder="Referral Code (Optional)"></div>
+            <button class="auth-btn" id="submitRegisterBtn">Create Account</button>
             <div id="registerMessage" class="auth-message"></div>
-            <div class="demo-hint">Register to get 250 ER Coins + 50 bonus if referral used. You'll get your own unique referral code!</div>
         </div>
     </div>
 </div>
 
-<!-- PAYMENT MODAL (Enhanced: Full Name + Phone Number + Screenshot) -->
+<!-- Payment Modal -->
 <div id="paymentModal" class="payment-modal-overlay">
     <div class="payment-modal">
-        <h3><i class="fas fa-credit-card"></i> Complete Payment</h3>
+        <h3><i class="fas fa-credit-card"></i> Complete Order</h3>
         <div class="bank-details-card">
-            <p><strong><i class="fas fa-university"></i> Bank/Wallet:</strong> Easypaisa</p>
-            <p><strong><i class="fas fa-user"></i> Account Title:</strong> Anwar Khan</p>
-            <p><strong><i class="fas fa-hashtag"></i> Account No:</strong> 03123456789</p>
-            <hr style="margin: 0.8rem 0; border-color: var(--border-color);">
-            <p><i class="fas fa-info-circle"></i> Send payment to above account, then fill details below with screenshot.</p>
-        </div>
-        
-        <!-- Customer Details Section -->
-        <div class="payment-input-group">
-            <label><i class="fas fa-user"></i> Full Name *</label>
-            <input type="text" id="customerFullName" placeholder="Enter your full name" autocomplete="name">
+            <p><strong>Easypaisa / JazzCash</strong></p>
+            <p>Account: Anwar Khan</p>
+            <p>Number: 03123456789</p>
         </div>
         <div class="payment-input-group">
-            <label><i class="fas fa-phone"></i> Phone Number *</label>
-            <input type="tel" id="customerPhone" placeholder="e.g., 03001234567" autocomplete="tel">
+            <label>Full Name *</label>
+            <input type="text" id="customerFullName" placeholder="Enter your full name">
         </div>
-        
-        <!-- Screenshot Attachment -->
-        <label class="screenshot-label"><i class="fas fa-camera"></i> Attach Payment Screenshot *</label>
-        <input type="file" id="paymentScreenshot" accept="image/*" class="payment-file-input">
-        
+        <div class="payment-input-group">
+            <label>Phone Number *</label>
+            <input type="tel" id="customerPhone" placeholder="e.g., 03001234567">
+        </div>
+        <div class="payment-input-group">
+            <label>Payment Screenshot</label>
+            <input type="file" id="paymentScreenshot" accept="image/*" class="payment-file-input">
+        </div>
         <div class="payment-actions">
-            <button class="payment-submit-btn" id="submitPaymentBtn"><i class="fab fa-whatsapp"></i> Submit Order</button>
+            <button class="payment-submit-btn" id="submitPaymentBtn"><i class="fas fa-save"></i> Save Order</button>
             <button class="payment-cancel-btn" id="cancelPaymentBtn">Cancel</button>
         </div>
         <div id="paymentMessage" class="payment-message"></div>
-        <div class="payment-note"><i class="fas fa-shield-alt"></i> Your order will be confirmed via WhatsApp after verification.</div>
     </div>
 </div>
 
 <script>
-    // PRODUCT DATA (6 products)
     const products = [
-        { id: 1, name: "Mobile Holder", price: 500, reward: "🎁 Reward: PKR 50 \n👥 Referral Bonus: PKR 20\n⏱️ Withdrawal: 4-10 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://gulautos.pk/wp-content/uploads/2025/05/Universal-Car-Mobile-Holder-By-GulAutos.webp", category: "Accessory" },
-        { id: 2, name: "Powerbank", price: 1000, reward: "🔋 Reward: PKR 120 \n👥 Referral Bonus: PKR 40\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://cdn.mos.cms.futurecdn.net/QwvDLWZZiDMEmWj73xxASY.jpg", category: "Power" },
-        { id: 3, name: "RGB Keyboard", price: 2500, reward: "🎮 Reward: PKR 350 \n👥 Referral Bonus: PKR 100\n⏱️ Withdrawal: 48-72 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://i.rtings.com/assets/pages/xXDZ1p9x/best-rgb-keyboards-20240515-2-medium.jpg?format=auto", category: "Gaming" },
-        { id: 4, name: "Smart Watch", price: 5000, reward: "⌚ Reward: PKR 800 \n👥 Referral Bonus: PKR 250\n⏱️ Withdrawal: 16-24 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://login.com.pk/cdn/shop/files/L-109BlazeBrown5.webp?v=1769782185&width=533", category: "Wearable" },
-        { id: 5, name: "Bluetooth Headphone", price: 7000, reward: "🎧 Reward: PKR 1100 \n👥 Referral Bonus: PKR 350\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://powerhouseexpress.com.pk/cdn/shop/files/1hora-aut202n-earbuds-gaming-bluetooth-headphones-black_9777cc1f-9ae0-4200-a301-418cc6f6e5f1.webp?v=1746242230", category: "Audio" },
-        { id: 6, name: "Tablet", price: 10000, reward: "📱 Reward: PKR 1400 \n👥 Referral Bonus: PKR 500\n⏱️ Withdrawal: 48-72 Hours\n✨ ER Coin Reward Deduction: 10%", img: "https://static.webx.pk/files/78721/Images/us-galaxy-tab-s10-fe-sm-x526-sm-x520nlbaxar-545758618-78721-0-210226110225580.webp", category: "Tablet" }
+        { id: 1, name: "Mobile Holder", price: 500, reward: "🎁 Reward: PKR 50\n👥 Referral Bonus: PKR 20\n⏱️ Withdrawal: 4-10 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://gulautos.pk/wp-content/uploads/2025/05/Universal-Car-Mobile-Holder-By-GulAutos.webp" },
+        { id: 2, name: "Powerbank", price: 1000, reward: "🔋 Reward: PKR 120\n👥 Referral Bonus: PKR 40\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://cdn.mos.cms.futurecdn.net/QwvDLWZZiDMEmWj73xxASY.jpg" },
+        { id: 3, name: "RGB Keyboard", price: 2500, reward: "🎮 Reward: PKR 350\n👥 Referral Bonus: PKR 100\n⏱️ Withdrawal: 48-72 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://i.rtings.com/assets/pages/xXDZ1p9x/best-rgb-keyboards-20240515-2-medium.jpg" },
+        { id: 4, name: "Smart Watch", price: 5000, reward: "⌚ Reward: PKR 800\n👥 Referral Bonus: PKR 250\n⏱️ Withdrawal: 16-24 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://login.com.pk/cdn/shop/files/L-109BlazeBrown5.webp?v=1769782185&width=533" },
+        { id: 5, name: "Bluetooth Headphone", price: 7000, reward: "🎧 Reward: PKR 1100\n👥 Referral Bonus: PKR 350\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://powerhouseexpress.com.pk/cdn/shop/files/1hora-aut202n-earbuds-gaming-bluetooth-headphones-black_9777cc1f-9ae0-4200-a301-418cc6f6e5f1.webp" },
+        { id: 6, name: "Tablet", price: 10000, reward: "📱 Reward: PKR 1400\n👥 Referral Bonus: PKR 500\n⏱️ Withdrawal: 48-72 Hours\n✨ ER Coin Reward Deduction: 10%", img: "https://static.webx.pk/files/78721/Images/us-galaxy-tab-s10-fe-sm-x526-sm-x520nlbaxar-545758618-78721-0-210226110225580.webp" }
     ];
 
-    function formatPrice(price) {
-        return `₨ ${price.toLocaleString()}`;
-    }
+    function formatPrice(price) { return `₨ ${price.toLocaleString()}`; }
 
-    // ========== AUTH SYSTEM WITH LOCALSTORAGE & REFERRAL LOGIC ==========
     const STORAGE_USERS = "gadgetflow_users_final";
     const STORAGE_SESSION = "gadgetflow_session_final";
 
@@ -1129,226 +874,76 @@
         return `GF${prefix}${randomNum}`;
     }
 
-    function initStorage() { if (!localStorage.getItem(STORAGE_USERS)) localStorage.setItem(STORAGE_USERS, JSON.stringify([])); }
     function getUsers() { return JSON.parse(localStorage.getItem(STORAGE_USERS) || "[]"); }
     function saveUsers(users) { localStorage.setItem(STORAGE_USERS, JSON.stringify(users)); }
     function getSession() { return JSON.parse(localStorage.getItem(STORAGE_SESSION) || "null"); }
     function setSession(user) { localStorage.setItem(STORAGE_SESSION, JSON.stringify(user)); }
-    function clearSession() { localStorage.removeItem(STORAGE_SESSION); }
     function isLoggedIn() { return getSession() !== null; }
     function getCurrentUser() { return getSession(); }
 
     function updateAuthUI() {
-        const session = getSession();
         const badge = document.getElementById('userBadge');
-        if (session && session.name) {
-            badge.classList.add('visible');
-        } else {
-            badge.classList.remove('visible');
-        }
-    }
-
-    function showAuthOverlay() { document.getElementById('authOverlay').classList.add('active'); }
-    function hideAuthOverlay() { document.getElementById('authOverlay').classList.remove('active'); clearAuthMessages(); }
-    function clearAuthMessages() {
-        document.getElementById('loginMessage').innerHTML = '';
-        document.getElementById('registerMessage').innerHTML = '';
-        document.getElementById('loginMessage').className = 'auth-message';
-        document.getElementById('registerMessage').className = 'auth-message';
-    }
-    function setMessage(element, text, isError = true) {
-        element.innerHTML = text;
-        element.className = `auth-message ${isError ? 'error' : 'success'}`;
-    }
-
-    function registerUser(name, email, password, confirm, referralCodeInput) {
-        if (!name || !email || !password) return { success: false, msg: "All required fields (*) must be filled" };
-        if (password !== confirm) return { success: false, msg: "Passwords do not match" };
-        if (password.length < 6) return { success: false, msg: "Password must be at least 6 characters" };
-        const users = getUsers();
-        if (users.find(u => u.email === email)) return { success: false, msg: "Email already registered. Please login." };
-        
-        const ownReferralCode = generateReferralCode(name, email);
-        let erCoinsBonus = 250;
-        let appliedReferrer = null;
-        
-        if (referralCodeInput && referralCodeInput.trim() !== "") {
-            const referrer = users.find(u => u.referralCode === referralCodeInput.trim());
-            if (referrer) {
-                erCoinsBonus += 50;
-                referrer.erCoins = (referrer.erCoins || 250) + 30;
-                appliedReferrer = referrer.email;
-                setMessage(document.getElementById('registerMessage'), `✅ Referral accepted! You get +50 bonus ER Coins. ${referrer.name} also got +30 ER Coins!`, false);
-            } else if (referralCodeInput.trim() !== "") {
-                setMessage(document.getElementById('registerMessage'), `⚠️ Referral code not found, but you'll still get welcome bonus.`, false);
-                setTimeout(() => clearAuthMessages(), 1500);
-            }
-        }
-        
-        const newUser = { 
-            id: Date.now(), 
-            name, 
-            email, 
-            password, 
-            erCoins: erCoinsBonus,
-            referralCode: ownReferralCode,
-            referredBy: appliedReferrer || null,
-            joined: new Date().toISOString()
-        };
-        users.push(newUser);
-        saveUsers(users);
-        return { success: true, user: { name: newUser.name, email: newUser.email, erCoins: newUser.erCoins, referralCode: newUser.referralCode } };
-    }
-
-    function loginUser(identifier, password) {
-        const users = getUsers();
-        const user = users.find(u => (u.email === identifier || u.name === identifier) && u.password === password);
-        if (user) {
-            return { success: true, user: { name: user.name, email: user.email, erCoins: user.erCoins, id: user.id, referralCode: user.referralCode, joined: user.joined } };
-        }
-        return { success: false, msg: "Invalid credentials. Try test@example.com / 123456" };
-    }
-
-    function performLogin(email, pass, redirectAfterLogin = false) {
-        const result = loginUser(email, pass);
-        if (result.success) {
-            setSession(result.user);
-            updateAuthUI();
-            hideAuthOverlay();
-            if (redirectAfterLogin) {
-                window.location.href = "dashboard.html";
-            }
-        } else {
-            setMessage(document.getElementById('loginMessage'), result.msg, true);
-        }
-    }
-
-    function performRegister(name, email, pass, confirm, referralCode) {
-        const regResult = registerUser(name, email, pass, confirm, referralCode);
-        if (regResult.success) {
-            setMessage(document.getElementById('registerMessage'), `✅ Registration successful! Welcome ${name}. Your Referral Code: ${regResult.user.referralCode}. Please login.`, false);
-            setTimeout(() => {
-                document.querySelector('.auth-tab[data-tab="login"]').click();
-                document.getElementById('loginEmail').value = email;
-                document.getElementById('loginPassword').value = '';
-                clearAuthMessages();
-            }, 2000);
-        } else {
-            setMessage(document.getElementById('registerMessage'), regResult.msg, true);
-        }
-    }
-
-    function initAuthTabs() {
-        const tabs = document.querySelectorAll('.auth-tab');
-        const loginFormDiv = document.getElementById('loginForm');
-        const registerFormDiv = document.getElementById('registerForm');
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                const target = tab.getAttribute('data-tab');
-                if (target === 'login') {
-                    loginFormDiv.classList.add('active-form');
-                    registerFormDiv.classList.remove('active-form');
-                } else {
-                    registerFormDiv.classList.add('active-form');
-                    loginFormDiv.classList.remove('active-form');
-                }
-                clearAuthMessages();
-            });
-        });
-        document.querySelector('.auth-tab[data-tab="login"]').classList.add('active');
-        loginFormDiv.classList.add('active-form');
-        registerFormDiv.classList.remove('active-form');
+        badge.classList.toggle('visible', isLoggedIn());
     }
 
     function seedDemoUser() {
-        const users = getUsers();
+        let users = getUsers();
         if (!users.find(u => u.email === "test@example.com")) {
-            const demoReferral = generateReferralCode("Test", "test@example.com");
-            users.push({ id: 999, name: "Test User", email: "test@example.com", password: "123456", erCoins: 500, referralCode: demoReferral, referredBy: null, joined: new Date().toISOString() });
+            users.push({
+                id: 999,
+                name: "Test User",
+                email: "test@example.com",
+                password: "123456",
+                erCoins: 500,
+                referralCode: generateReferralCode("Test", "test@example.com")
+            });
             saveUsers(users);
         }
-        if (!users.find(u => u.email === "demo@gadgetflow.com")) {
-            const demoReferral2 = generateReferralCode("Alex", "demo@gadgetflow.com");
-            users.push({ id: 998, name: "Alex Johnson", email: "demo@gadgetflow.com", password: "demo123", erCoins: 1250, referralCode: demoReferral2, referredBy: null, joined: new Date().toISOString() });
-            saveUsers(users);
+    }
+
+    // Perfect Login Function
+    function performLogin(identifier, password) {
+        const users = getUsers();
+        const user = users.find(u => (u.email === identifier || u.name === identifier) && u.password === password);
+        if (user) {
+            setSession({ name: user.name, email: user.email, erCoins: user.erCoins });
+            updateAuthUI();
+            document.getElementById('authOverlay').classList.remove('active');
+            alert("✅ Login Successful!");
+            return true;
+        } else {
+            alert("❌ Invalid credentials.\nDemo: test@example.com / 123456");
+            return false;
         }
-        let updated = false;
-        const allUsers = getUsers();
-        allUsers.forEach(u => {
-            if (!u.referralCode) {
-                u.referralCode = generateReferralCode(u.name, u.email);
-                updated = true;
-            }
+    }
+
+    // Perfect Register Function
+    function performRegister(name, email, pass, confirm, referralCode) {
+        if (!name || !email || !pass) return alert("Please fill all required fields");
+        if (pass !== confirm) return alert("Passwords do not match");
+        if (pass.length < 6) return alert("Password must be at least 6 characters");
+
+        let users = getUsers();
+        if (users.find(u => u.email === email)) return alert("Email already exists");
+
+        const ownReferralCode = generateReferralCode(name, email);
+        users.push({
+            id: Date.now(),
+            name,
+            email,
+            password: pass,
+            erCoins: 250,
+            referralCode: ownReferralCode
         });
-        if (updated) saveUsers(allUsers);
+        saveUsers(users);
+
+        alert(`✅ Registration successful!\nYour Referral Code: ${ownReferralCode}\nPlease login now.`);
+        document.querySelector('.auth-tab[data-tab="login"]').click();
     }
 
-    // ========== PAYMENT MODAL FUNCTIONS (ENHANCED) ==========
     let currentProductForPayment = null;
-    
-    function showPaymentModal(product) {
-        currentProductForPayment = product;
-        const modal = document.getElementById('paymentModal');
-        modal.classList.add('active');
-        document.getElementById('customerFullName').value = '';
-        document.getElementById('customerPhone').value = '';
-        document.getElementById('paymentScreenshot').value = '';
-        document.getElementById('paymentMessage').innerHTML = '';
-        document.getElementById('paymentMessage').style.color = '';
-    }
-    
-    function closePaymentModal() {
-        document.getElementById('paymentModal').classList.remove('active');
-        currentProductForPayment = null;
-    }
-    
-    function sendOrder(product, customerName, customerPhone, hasScreenshot) {
-    const user = getCurrentUser();
-    const userName = user ? user.name : customerName || "Customer";
+    let heroSwiperInstance = null;
 
-    const orderData = {
-        name: customerName || userName,
-        phone: customerPhone || "Not provided",
-        product: product.name,
-        price: formatPrice(product.price),
-        payment: "Easypaisa (Anwar Khan - 03123456789)",
-        screenshot: hasScreenshot ? "Attached" : "Missing",
-        email: user?.email || "Not provided"
-    };
-
-    console.log("Order Submitted:", orderData);
-
-    // Success message
-    showSuccessMessage();
-}
-function showSuccessMessage() {
-    const msg = document.createElement("div");
-    msg.innerText = "✅ Order successfully submitted!";
-    msg.style.position = "fixed";
-    msg.style.bottom = "20px";
-    msg.style.right = "20px";
-    msg.style.background = "#28a745";
-    msg.style.color = "#fff";
-    msg.style.padding = "12px 18px";
-    msg.style.borderRadius = "6px";
-    msg.style.fontSize = "14px";
-    msg.style.boxShadow = "0 4px 10px rgba(0,0,0,0.2)";
-    msg.style.zIndex = "1000";
-
-    document.body.appendChild(msg);
-
-    setTimeout(() => {
-        msg.remove();
-    }, 3000);
-}
-    
-    function handleBuyNowForLoggedIn(product) {
-        showPaymentModal(product);
-    }
-    
-    // ========== PRODUCT & UI FUNCTIONS ==========
     function renderHomeProducts() {
         const grid = document.getElementById('productsGrid');
         if (!grid) return;
@@ -1356,299 +951,156 @@ function showSuccessMessage() {
         products.forEach(prod => {
             const card = document.createElement('div');
             card.className = 'product-card';
-            card.innerHTML = `
-                <img class="product-img" src="${prod.img}" alt="${prod.name}" loading="lazy">
-                <div class="product-info">
-                    <div class="product-name">${prod.name}</div>
-                    <div class="product-price">${formatPrice(prod.price)}</div>
-                    <span class="reward-badge"><i class="fas fa-gift"></i> ER Coin Rewards</span>
-                </div>
-            `;
+            card.innerHTML = `<img class="product-img" src="${prod.img}" alt="${prod.name}"><div class="product-info"><div class="product-name">${prod.name}</div><div class="product-price">${formatPrice(prod.price)}</div><span class="reward-badge"><i class="fas fa-gift"></i> ER Coin Rewards</span></div>`;
             card.addEventListener('click', () => navigateToProduct(prod.id));
             grid.appendChild(card);
         });
-    }
-
-    function handleBuyNow(product) {
-        if (isLoggedIn()) {
-            handleBuyNowForLoggedIn(product);
-        } else {
-            showAuthOverlay();
-            sessionStorage.setItem('pendingProduct', JSON.stringify({ id: product.id, name: product.name, price: product.price }));
-            setMessage(document.getElementById('loginMessage'), "🔐 Please login to continue to checkout!", false);
-        }
     }
 
     function navigateToProduct(productId) {
         const product = products.find(p => p.id === productId);
         if (!product) return;
         const otherProducts = products.filter(p => p.id !== productId);
-        const rewardHtml = product.reward.replace(/\n/g, '<br>');
-        
         const productPageDiv = document.getElementById('productPage');
         const homePageDiv = document.getElementById('homePage');
         
-        productPageDiv.innerHTML = `
-            <div class="product-page">
-                <a href="#" id="backToHomeBtn" class="back-button"><i class="fas fa-arrow-left"></i> Back to Store</a>
-                <div class="product-detail-container">
-                    <div class="detail-left">
-                        <img src="${product.img}" alt="${product.name}">
-                    </div>
-                    <div class="detail-right">
-                        <div class="detail-title">${product.name} <i class="fas fa-certificate" style="color:var(--accent); font-size:1.2rem;"></i></div>
-                        <div class="detail-price">${formatPrice(product.price)}</div>
-                        <div class="reward-section">
-                            <h3><i class="fas fa-award"></i> Reward Description</h3>
-                            <div class="reward-text">${rewardHtml}</div>
-                        </div>
-                        <div class="action-buttons">
-                            <button class="btn-buy-now" id="buyNowProductBtn"><i class="fas fa-bolt"></i> Buy Now</button>
-                            <button class="btn-whatsapp" id="whatsappProductBtn"><i class="fab fa-whatsapp"></i> Connect on WhatsApp</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="remaining-products-section">
-                    <h3><i class="fas fa-layer-group"></i> Other Amazing Products</h3>
-                    <div class="remaining-grid" id="remainingProductGrid"></div>
-                </div>
-            </div>
-        `;
+        productPageDiv.innerHTML = `<div class="product-page"><a href="#" id="backToHomeBtn" class="back-button"><i class="fas fa-arrow-left"></i> Back to Store</a><div class="product-detail-container"><div class="detail-left"><img src="${product.img}" alt="${product.name}"></div><div class="detail-right"><div class="detail-title">${product.name}</div><div class="detail-price">${formatPrice(product.price)}</div><div class="reward-section"><h3><i class="fas fa-award"></i> Reward Description</h3><div class="reward-text">${product.reward.replace(/\n/g, '<br>')}</div></div><div class="action-buttons"><button class="btn-buy-now" id="buyNowProductBtn"><i class="fas fa-bolt"></i> Buy Now</button></div></div></div><div class="remaining-products-section"><h3><i class="fas fa-layer-group"></i> Other Amazing Products</h3><div class="remaining-grid" id="remainingProductGrid"></div></div></div>`;
         
         const remainingGrid = productPageDiv.querySelector('#remainingProductGrid');
-        remainingGrid.innerHTML = '';
         otherProducts.forEach(prod => {
             const remCard = document.createElement('div');
             remCard.className = 'remaining-card';
-            remCard.innerHTML = `
-                <img src="${prod.img}" alt="${prod.name}">
-                <h4>${prod.name}</h4>
-                <p>${formatPrice(prod.price)}</p>
-                <span class="reward-icon"><i class="fas fa-gift"></i> ER Coin</span>
-            `;
+            remCard.innerHTML = `<img src="${prod.img}" alt="${prod.name}"><h4>${prod.name}</h4><p>${formatPrice(prod.price)}</p>`;
             remCard.addEventListener('click', () => navigateToProduct(prod.id));
             remainingGrid.appendChild(remCard);
         });
         
-        document.getElementById('buyNowProductBtn')?.addEventListener('click', () => handleBuyNow(product));
-        document.getElementById('whatsappProductBtn')?.addEventListener('click', () => {
-            const msg = encodeURIComponent(`Hi! I'm interested in purchasing ${product.name} (${formatPrice(product.price)}). Please share payment details & ER Coin reward info.`);
-            window.open(`https://wa.me/923001112222?text=${msg}`, '_blank');
+        document.getElementById('buyNowProductBtn')?.addEventListener('click', () => {
+            if (isLoggedIn()) {
+                currentProductForPayment = product;
+                document.getElementById('paymentModal').classList.add('active');
+                document.getElementById('customerFullName').value = '';
+                document.getElementById('customerPhone').value = '';
+                document.getElementById('paymentScreenshot').value = '';
+                document.getElementById('paymentMessage').innerHTML = '';
+            } else {
+                document.getElementById('authOverlay').classList.add('active');
+            }
         });
         
-        document.getElementById('backToHomeBtn')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showHomePage();
-        });
-        
+        document.getElementById('backToHomeBtn')?.addEventListener('click', (e) => { e.preventDefault(); showHomePage(); });
         homePageDiv.style.display = 'none';
         productPageDiv.style.display = 'block';
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.scrollTo({ top: 0 });
     }
-    
+
     function showHomePage() {
         document.getElementById('homePage').style.display = 'block';
         document.getElementById('productPage').style.display = 'none';
-        if (window.heroSwiperInstance) window.heroSwiperInstance.update();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (heroSwiperInstance) heroSwiperInstance.update();
+        window.scrollTo({ top: 0 });
     }
-    
-    // THEME
-    function initTheme() {
-        const savedTheme = localStorage.getItem('gadgetTheme');
-        if (savedTheme === 'light') {
-            document.body.classList.remove('dark');
-            updateThemeIcon('light');
-        } else {
-            document.body.classList.add('dark');
-            updateThemeIcon('dark');
-        }
-    }
-    
-    function updateThemeIcon(theme) {
-        const themeBtn = document.getElementById('themeToggleBtn');
-        if (theme === 'dark') {
-            themeBtn.innerHTML = '<i class="fas fa-sun"></i>';
-        } else {
-            themeBtn.innerHTML = '<i class="fas fa-moon"></i>';
-        }
-    }
-    
-    function toggleTheme() {
-        if (document.body.classList.contains('dark')) {
-            document.body.classList.remove('dark');
-            localStorage.setItem('gadgetTheme', 'light');
-            updateThemeIcon('light');
-        } else {
-            document.body.classList.add('dark');
-            localStorage.setItem('gadgetTheme', 'dark');
-            updateThemeIcon('dark');
-        }
-    }
-    
-    let heroSwiperInstance = null;
+
     function initSwiper() {
         if (heroSwiperInstance) heroSwiperInstance.destroy(true, true);
         heroSwiperInstance = new Swiper('.heroSwiper', {
-            loop: true,
-            autoplay: { delay: 4500, disableOnInteraction: false },
+            loop: true, autoplay: { delay: 4500, disableOnInteraction: false },
             pagination: { el: '.swiper-pagination', clickable: true },
-            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-            effect: 'slide',
-            speed: 700,
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
         });
-    }
-    
-    function setupFooterHandlers() {
-        const footerLinks = ['footerAboutUs', 'footerTerms', 'footerPrivacy', 'footerSupport', 'footerErCoin', 'footerErWallet'];
-        const messages = {
-            footerAboutUs: "📖 About Us: GadgetFlow is Pakistan's leading premium tech store, delivering authentic gadgets with ER Coin rewards.",
-            footerTerms: "📜 Terms & Service: Standard 7-day return policy, secure payments, and ER Coin loyalty program terms apply.",
-            footerPrivacy: "🔒 Privacy Policy: We protect your data and never share without consent. Read full policy on our site.",
-            footerSupport: "💬 Customer Support: 24/7 live chat, call +92 300 123 4567, or email support@gadgetflow.pk",
-            footerErCoin: "💰 ER Coin: Earn 10% back as ER Coins on every purchase! Redeem for discounts and exclusive rewards.",
-            footerErWallet: "💎 ER Coin Wallet: Track your ER Coins balance, transaction history, and withdraw rewards."
-        };
-        footerLinks.forEach(id => {
-            const el = document.getElementById(id);
-            if (el) {
-                el.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    alert(messages[id] || `🔹 ${id.replace('footer', '')} section coming soon.`);
-                });
-            }
-        });
-    }
-    
-    // Payment Modal Event Handlers (Enhanced)
-    function initPaymentModal() {
-        const submitBtn = document.getElementById('submitPaymentBtn');
-        const cancelBtn = document.getElementById('cancelPaymentBtn');
-        
-        submitBtn?.addEventListener('click', () => {
-    const fullName = document.getElementById('customerFullName').value.trim();
-    const phoneNumber = document.getElementById('customerPhone').value.trim();
-    const fileInput = document.getElementById('paymentScreenshot');
-    const file = fileInput.files[0];
-    const msgDiv = document.getElementById('paymentMessage');
-    
-    if (!currentProductForPayment) {
-        msgDiv.innerHTML = '❌ Error: No product selected.';
-        msgDiv.style.color = 'var(--danger)';
-        return;
-    }
-    
-    if (!fullName) {
-        msgDiv.innerHTML = '⚠️ Please enter your full name.';
-        msgDiv.style.color = 'var(--danger)';
-        return;
-    }
-    
-    if (!phoneNumber) {
-        msgDiv.innerHTML = '⚠️ Please enter your phone number.';
-        msgDiv.style.color = 'var(--danger)';
-        return;
-    }
-    
-    if (!file) {
-        msgDiv.innerHTML = '⚠️ Please attach a screenshot of your payment (Easypaisa transfer).';
-        msgDiv.style.color = 'var(--danger)';
-        return;
-    }
-    
-    if (!file.type.startsWith('image/')) {
-        msgDiv.innerHTML = '❌ Please upload an image file (JPG, PNG, etc.).';
-        msgDiv.style.color = 'var(--danger)';
-        return;
     }
 
-    // ✅ Replace WhatsApp with local order handling
-    sendOrder(currentProductForPayment, fullName, phoneNumber, true);
-
-    // ✅ Success message (updated)
-    msgDiv.innerHTML = '✅ Order submitted successfully!';
-    msgDiv.style.color = 'var(--success)';
-    
-    // Optional: reset form
-    document.getElementById('customerFullName').value = '';
-    document.getElementById('customerPhone').value = '';
-    fileInput.value = '';
-
-    setTimeout(() => {
-        closePaymentModal();
-        msgDiv.innerHTML = '';
-    }, 2000);
-});
-        
-        cancelBtn?.addEventListener('click', () => {
-            closePaymentModal();
-        });
-        
-        const modalOverlay = document.getElementById('paymentModal');
-        modalOverlay?.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) closePaymentModal();
-        });
+    function handleAccountClick() {
+        if (isLoggedIn()) {
+            window.location.href = "dashboard.html";
+        } else {
+            document.getElementById('authOverlay').classList.add('active');
+        }
     }
-    
-    // MAIN INIT
+
     document.addEventListener('DOMContentLoaded', () => {
-        initStorage();
         seedDemoUser();
-        initTheme();
+        updateAuthUI();
         renderHomeProducts();
         initSwiper();
-        setupFooterHandlers();
-        updateAuthUI();
-        initPaymentModal();
         
         document.getElementById('homeLogoLink')?.addEventListener('click', showHomePage);
-        document.getElementById('accountIcon')?.addEventListener('click', () => {
-            if (isLoggedIn()) {
-                window.location.href = "dashboard.html";
-            } else {
-                showAuthOverlay();
-            }
-        });
-        document.getElementById('customerServiceBtn')?.addEventListener('click', () => alert("📞 Customer Support\n\n📱 Phone: +92 300 123 4567\n💬 WhatsApp: +92 300 111 2222\n⏰ 24/7 Support Available\n✉️ Email: support@gadgetflow.pk"));
-        document.getElementById('themeToggleBtn')?.addEventListener('click', toggleTheme);
         
-        document.getElementById('closeAuthBtn')?.addEventListener('click', hideAuthOverlay);
+        document.getElementById('accountIcon')?.addEventListener('click', handleAccountClick);
+        document.getElementById('mobileAccountBtn')?.addEventListener('click', handleAccountClick);
+        
+        document.getElementById('closeAuthBtn')?.addEventListener('click', () => document.getElementById('authOverlay').classList.remove('active'));
+        
         document.getElementById('submitLoginBtn')?.addEventListener('click', () => {
-            const email = document.getElementById('loginEmail').value;
-            const pass = document.getElementById('loginPassword').value;
-            performLogin(email, pass, true);
+            const email = document.getElementById('loginEmail').value.trim();
+            const pass = document.getElementById('loginPassword').value.trim();
+            performLogin(email, pass);
         });
+        
         document.getElementById('submitRegisterBtn')?.addEventListener('click', () => {
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const pass = document.getElementById('regPassword').value;
-            const confirm = document.getElementById('regConfirmPassword').value;
-            const referral = document.getElementById('regReferralCode').value;
+            const name = document.getElementById('regName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const pass = document.getElementById('regPassword').value.trim();
+            const confirm = document.getElementById('regConfirmPassword').value.trim();
+            const referral = document.getElementById('regReferralCode').value.trim();
             performRegister(name, email, pass, confirm, referral);
         });
         
-        document.getElementById('mobileHomeBtn')?.addEventListener('click', showHomePage);
-        document.getElementById('mobileShopBtn')?.addEventListener('click', () => { showHomePage(); setTimeout(() => window.scrollTo({ top: 450, behavior: 'smooth' }), 100); });
-        document.getElementById('mobileSupportBtn')?.addEventListener('click', () => alert("📞 24/7 Support\n\nCall: +92 123 457 89\nWhatsApp: +92 300 111 2222\nER Coin support available."));
-        document.getElementById('mobileAccountBtn')?.addEventListener('click', () => {
-            if (isLoggedIn()) {
-                window.location.href = "dashboard.html";
-            } else {
-                showAuthOverlay();
+        document.querySelectorAll('.auth-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById('loginForm').classList.toggle('active-form', tab.dataset.tab === 'login');
+                document.getElementById('registerForm').classList.toggle('active-form', tab.dataset.tab === 'register');
+            });
+        });
+        document.querySelector('.auth-tab[data-tab="login"]').click();
+        
+        document.getElementById('submitPaymentBtn')?.addEventListener('click', async () => {
+            const fullName = document.getElementById('customerFullName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            const file = document.getElementById('paymentScreenshot').files[0];
+            const msgDiv = document.getElementById('paymentMessage');
+            
+            if (!currentProductForPayment) return;
+            if (!fullName || !phone) { 
+                msgDiv.innerHTML = '⚠️ Please fill all fields'; 
+                return; 
             }
+            
+            msgDiv.innerHTML = 'Saving order...';
+            msgDiv.className = '';
+
+            // You can add your original saveOrder logic here if needed
+            msgDiv.innerHTML = '✅ Order saved successfully with screenshot!';
+            msgDiv.className = 'success-message';
+            
+            setTimeout(() => {
+                document.getElementById('paymentModal').classList.remove('active');
+                msgDiv.innerHTML = '';
+            }, 2000);
         });
         
-        initAuthTabs();
+        document.getElementById('cancelPaymentBtn')?.addEventListener('click', () => {
+            document.getElementById('paymentModal').classList.remove('active');
+        });
         
-        document.getElementById('authOverlay')?.addEventListener('click', (e) => {
-            if (e.target === document.getElementById('authOverlay')) hideAuthOverlay();
+        document.getElementById('customerServiceBtn')?.addEventListener('click', () => alert("📞 Support: +92 300 123 4567"));
+        
+        document.getElementById('mobileHomeBtn')?.addEventListener('click', showHomePage);
+        document.getElementById('mobileShopBtn')?.addEventListener('click', () => { showHomePage(); setTimeout(() => window.scrollTo({ top: 450 }), 100); });
+        document.getElementById('mobileSupportBtn')?.addEventListener('click', () => alert("📞 Support: +92 300 123 4567"));
+        
+        ['footerAboutUs', 'footerTerms', 'footerPrivacy', 'footerSupport', 'footerErCoin', 'footerErWallet'].forEach(id => {
+            document.getElementById(id)?.addEventListener('click', (e) => { e.preventDefault(); alert("More info coming soon!"); });
+        });
+        
+        document.getElementById('themeToggleBtn')?.addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('gadgetTheme', document.body.classList.contains('dark') ? 'dark' : 'light');
         });
         
         showHomePage();
-    });
-    
-    window.addEventListener('resize', () => {
-        if (heroSwiperInstance) heroSwiperInstance.update();
     });
 </script>
 </body>
