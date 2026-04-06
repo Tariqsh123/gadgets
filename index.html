@@ -104,9 +104,6 @@
             gap: 0.3rem;
         }
         .logo h2 i {
-            background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
             color: var(--accent);
         }
         .nav-actions {
@@ -417,7 +414,7 @@
                 flex-direction: column;
             }
         }
-        .btn-buy-now, .btn-whatsapp {
+        .btn-buy-now {
             flex: 1;
             padding: 0.9rem;
             border-radius: 60px;
@@ -430,8 +427,6 @@
             align-items: center;
             justify-content: center;
             gap: 0.6rem;
-        }
-        .btn-buy-now {
             background: var(--accent);
             color: #000;
         }
@@ -439,15 +434,7 @@
             background: #e0a800;
             transform: translateY(-2px);
         }
-        .btn-whatsapp {
-            background: var(--whatsapp);
-            color: white;
-        }
-        .btn-whatsapp:hover {
-            background: #1da851;
-            transform: translateY(-2px);
-        }
-        
+
         .remaining-products-section {
             margin-top: 2rem;
             background: var(--surface);
@@ -499,12 +486,6 @@
             color: var(--accent);
             font-weight: bold;
             font-size: 0.9rem;
-        }
-        .remaining-card .reward-icon {
-            color: var(--accent);
-            font-size: 0.7rem;
-            margin-top: 0.3rem;
-            display: inline-block;
         }
 
         .footer {
@@ -867,6 +848,7 @@
 
     const STORAGE_USERS = "gadgetflow_users_final";
     const STORAGE_SESSION = "gadgetflow_session_final";
+    const STORAGE_ORDERS = "gadgetflow_orders";
 
     function generateReferralCode(name, email) {
         const prefix = (name.substring(0,3) + email.substring(0,3)).toUpperCase().replace(/[^A-Z]/g, '');
@@ -880,6 +862,35 @@
     function setSession(user) { localStorage.setItem(STORAGE_SESSION, JSON.stringify(user)); }
     function isLoggedIn() { return getSession() !== null; }
     function getCurrentUser() { return getSession(); }
+
+    function saveOrder(orderData, file) {
+        return new Promise((resolve) => {
+            let orders = JSON.parse(localStorage.getItem(STORAGE_ORDERS) || "[]");
+            const newOrder = { 
+                id: Date.now(), 
+                timestamp: new Date().toISOString(), 
+                ...orderData, 
+                status: "pending",
+                screenshotName: file ? file.name : null,
+                screenshotBase64: null
+            };
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    newOrder.screenshotBase64 = e.target.result;
+                    orders.push(newOrder);
+                    localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
+                    resolve(newOrder);
+                };
+                reader.readAsDataURL(file);
+            } else {
+                orders.push(newOrder);
+                localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
+                resolve(newOrder);
+            }
+        });
+    }
 
     function updateAuthUI() {
         const badge = document.getElementById('userBadge');
@@ -979,7 +990,7 @@
             if (isLoggedIn()) {
                 currentProductForPayment = product;
                 document.getElementById('paymentModal').classList.add('active');
-                document.getElementById('customerFullName').value = '';
+                document.getElementById('customerFullName').value = getCurrentUser()?.name || '';
                 document.getElementById('customerPhone').value = '';
                 document.getElementById('paymentScreenshot').value = '';
                 document.getElementById('paymentMessage').innerHTML = '';
@@ -1023,7 +1034,11 @@
         updateAuthUI();
         renderHomeProducts();
         initSwiper();
-        
+
+        // Dark theme by default
+        document.body.classList.add('dark');
+        localStorage.setItem('gadgetTheme', 'dark');
+
         document.getElementById('homeLogoLink')?.addEventListener('click', showHomePage);
         
         document.getElementById('accountIcon')?.addEventListener('click', handleAccountClick);
@@ -1056,6 +1071,7 @@
         });
         document.querySelector('.auth-tab[data-tab="login"]').click();
         
+        // Payment - Now properly saves to localStorage
         document.getElementById('submitPaymentBtn')?.addEventListener('click', async () => {
             const fullName = document.getElementById('customerFullName').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
@@ -1064,20 +1080,36 @@
             
             if (!currentProductForPayment) return;
             if (!fullName || !phone) { 
-                msgDiv.innerHTML = '⚠️ Please fill all fields'; 
+                msgDiv.innerHTML = '⚠️ Please fill Full Name and Phone Number'; 
                 return; 
             }
             
-            msgDiv.innerHTML = 'Saving order...';
+            const orderData = {
+                product: { 
+                    id: currentProductForPayment.id, 
+                    name: currentProductForPayment.name, 
+                    price: currentProductForPayment.price 
+                },
+                customer: { 
+                    fullName, 
+                    phone, 
+                    email: getCurrentUser()?.email || null 
+                },
+                submittedAt: new Date().toISOString()
+            };
+
+            msgDiv.innerHTML = 'Saving your order...';
             msgDiv.className = '';
 
-            // You can add your original saveOrder logic here if needed
+            const savedOrder = await saveOrder(orderData, file);
+            
             msgDiv.innerHTML = '✅ Order saved successfully with screenshot!';
             msgDiv.className = 'success-message';
             
             setTimeout(() => {
                 document.getElementById('paymentModal').classList.remove('active');
                 msgDiv.innerHTML = '';
+                msgDiv.className = '';
             }, 2000);
         });
         
