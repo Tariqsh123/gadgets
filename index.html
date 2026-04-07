@@ -836,12 +836,48 @@
 
 <script>
     const products = [
-        { id: 1, name: "Mobile Holder", price: 500, reward: "🎁 Reward: PKR 50\n👥 Referral Bonus: PKR 20\n⏱️ Withdrawal: 4-10 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://gulautos.pk/wp-content/uploads/2025/05/Universal-Car-Mobile-Holder-By-GulAutos.webp" },
-        { id: 2, name: "Powerbank", price: 1000, reward: "🔋 Reward: PKR 120\n👥 Referral Bonus: PKR 40\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://cdn.mos.cms.futurecdn.net/QwvDLWZZiDMEmWj73xxASY.jpg" },
-        { id: 3, name: "RGB Keyboard", price: 2500, reward: "🎮 Reward: PKR 350\n👥 Referral Bonus: PKR 100\n⏱️ Withdrawal: 48-72 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://i.rtings.com/assets/pages/xXDZ1p9x/best-rgb-keyboards-20240515-2-medium.jpg" },
-        { id: 4, name: "Smart Watch", price: 5000, reward: "⌚ Reward: PKR 800\n👥 Referral Bonus: PKR 250\n⏱️ Withdrawal: 16-24 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://login.com.pk/cdn/shop/files/L-109BlazeBrown5.webp?v=1769782185&width=533" },
-        { id: 5, name: "Bluetooth Headphone", price: 7000, reward: "🎧 Reward: PKR 1100\n👥 Referral Bonus: PKR 350\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://powerhouseexpress.com.pk/cdn/shop/files/1hora-aut202n-earbuds-gaming-bluetooth-headphones-black_9777cc1f-9ae0-4200-a301-418cc6f6e5f1.webp" },
-        { id: 6, name: "Tablet", price: 10000, reward: "📱 Reward: PKR 1400\n👥 Referral Bonus: PKR 500\n⏱️ Withdrawal: 48-72 Hours\n✨ ER Coin Reward Deduction: 10%", img: "https://static.webx.pk/files/78721/Images/us-galaxy-tab-s10-fe-sm-x526-sm-x520nlbaxar-545758618-78721-0-210226110225580.webp" }
+        { 
+            id: 1, 
+            name: "Mobile Holder", 
+            price: 500, 
+            reward: "🎁 Reward: PKR 50\n👥 Referral Bonus: PKR 20\n⏱️ Withdrawal: 4-10 hours\n✨ ER Coin Reward Deduction: 10%", 
+            img: "https://gulautos.pk/wp-content/uploads/2025/05/Universal-Car-Mobile-Holder-By-GulAutos.webp" 
+        },
+        { 
+            id: 2, 
+            name: "Powerbank", 
+            price: 1000, 
+            reward: "🔋 Reward: PKR 120\n👥 Referral Bonus: PKR 40\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", 
+            img: "https://cdn.mos.cms.futurecdn.net/QwvDLWZZiDMEmWj73xxASY.jpg" 
+        },
+        { 
+            id: 3, 
+            name: "RGB Keyboard", 
+            price: 2500, 
+            reward: "🎮 Reward: PKR 350\n👥 Referral Bonus: PKR 100\n⏱️ Withdrawal: 48-72 hours\n✨ ER Coin Reward Deduction: 10%", 
+            img: "https://i.rtings.com/assets/pages/xXDZ1p9x/best-rgb-keyboards-20240515-2-medium.jpg" 
+        },
+        { 
+            id: 4, 
+            name: "Smart Watch", 
+            price: 5000, 
+            reward: "⌚ Reward: PKR 800\n👥 Referral Bonus: PKR 250\n⏱️ Withdrawal: 16-24 hours\n✨ ER Coin Reward Deduction: 10%", 
+            img: "https://login.com.pk/cdn/shop/files/L-109BlazeBrown5.webp?v=1769782185&width=533" 
+        },
+        { 
+            id: 5, 
+            name: "Bluetooth Headphone", 
+            price: 7000, 
+            reward: "🎧 Reward: PKR 1100\n👥 Referral Bonus: PKR 350\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", 
+            img: "https://powerhouseexpress.com.pk/cdn/shop/files/1hora-aut202n-earbuds-gaming-bluetooth-headphones-black_9777cc1f-9ae0-4200-a301-418cc6f6e5f1.webp" 
+        },
+        { 
+            id: 6, 
+            name: "Tablet", 
+            price: 10000, 
+            reward: "📱 Reward: PKR 1400\n👥 Referral Bonus: PKR 500\n⏱️ Withdrawal: 48-72 Hours\n✨ ER Coin Reward Deduction: 10%", 
+            img: "https://static.webx.pk/files/78721/Images/us-galaxy-tab-s10-fe-sm-x526-sm-x520nlbaxar-545758618-78721-0-210226110225580.webp" 
+        }
     ];
 
     function formatPrice(price) { return `₨ ${price.toLocaleString()}`; }
@@ -866,13 +902,17 @@
     function saveOrder(orderData, file) {
         return new Promise((resolve) => {
             let orders = JSON.parse(localStorage.getItem(STORAGE_ORDERS) || "[]");
+            const rewardEarned = Math.round(orderData.product.price * 0.15); // 15% Purchase Reward
+
             const newOrder = { 
                 id: Date.now(), 
                 timestamp: new Date().toISOString(), 
                 ...orderData, 
                 status: "pending",
                 screenshotName: file ? file.name : null,
-                screenshotBase64: null
+                screenshotBase64: null,
+                rewardEarned: rewardEarned,
+                rewardDescription: orderData.product.reward   // ← Saved reward description for dashboard
             };
 
             if (file) {
@@ -881,15 +921,32 @@
                     newOrder.screenshotBase64 = e.target.result;
                     orders.push(newOrder);
                     localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
+                    updateUserReward(orderData.customer.email, rewardEarned);
                     resolve(newOrder);
                 };
                 reader.readAsDataURL(file);
             } else {
                 orders.push(newOrder);
                 localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
+                updateUserReward(orderData.customer.email, rewardEarned);
                 resolve(newOrder);
             }
         });
+    }
+
+    function updateUserReward(email, reward) {
+        if (!email || reward <= 0) return;
+        let users = getUsers();
+        const index = users.findIndex(u => u.email === email);
+        if (index !== -1) {
+            users[index].erCoins = (users[index].erCoins || 0) + reward;
+            saveUsers(users);
+
+            const session = getSession();
+            if (session && session.email === email) {
+                setSession({ ...session, erCoins: users[index].erCoins });
+            }
+        }
     }
 
     function updateAuthUI() {
@@ -905,19 +962,18 @@
                 name: "Test User",
                 email: "test@example.com",
                 password: "123456",
-                erCoins: 500,
+                erCoins: 0,                    // No login bonus
                 referralCode: generateReferralCode("Test", "test@example.com")
             });
             saveUsers(users);
         }
     }
 
-    // Perfect Login Function
     function performLogin(identifier, password) {
         const users = getUsers();
         const user = users.find(u => (u.email === identifier || u.name === identifier) && u.password === password);
         if (user) {
-            setSession({ name: user.name, email: user.email, erCoins: user.erCoins });
+            setSession({ name: user.name, email: user.email, erCoins: user.erCoins || 0 });
             updateAuthUI();
             document.getElementById('authOverlay').classList.remove('active');
             alert("✅ Login Successful!");
@@ -928,7 +984,6 @@
         }
     }
 
-    // Perfect Register Function
     function performRegister(name, email, pass, confirm, referralCode) {
         if (!name || !email || !pass) return alert("Please fill all required fields");
         if (pass !== confirm) return alert("Passwords do not match");
@@ -943,7 +998,7 @@
             name,
             email,
             password: pass,
-            erCoins: 250,
+            erCoins: 0,
             referralCode: ownReferralCode
         });
         saveUsers(users);
@@ -1035,10 +1090,6 @@
         renderHomeProducts();
         initSwiper();
 
-        // Dark theme by default
-        document.body.classList.add('dark');
-        localStorage.setItem('gadgetTheme', 'dark');
-
         document.getElementById('homeLogoLink')?.addEventListener('click', showHomePage);
         
         document.getElementById('accountIcon')?.addEventListener('click', handleAccountClick);
@@ -1071,7 +1122,7 @@
         });
         document.querySelector('.auth-tab[data-tab="login"]').click();
         
-        // Payment - Now properly saves to localStorage
+        // Payment Handler
         document.getElementById('submitPaymentBtn')?.addEventListener('click', async () => {
             const fullName = document.getElementById('customerFullName').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
@@ -1088,7 +1139,8 @@
                 product: { 
                     id: currentProductForPayment.id, 
                     name: currentProductForPayment.name, 
-                    price: currentProductForPayment.price 
+                    price: currentProductForPayment.price,
+                    reward: currentProductForPayment.reward   // Saved reward description
                 },
                 customer: { 
                     fullName, 
@@ -1103,14 +1155,14 @@
 
             const savedOrder = await saveOrder(orderData, file);
             
-            msgDiv.innerHTML = '✅ Order saved successfully with screenshot!';
+            msgDiv.innerHTML = `✅ Order saved successfully with screenshot!<br>🎁 You earned <strong>${savedOrder.rewardEarned} ER Coins</strong>`;
             msgDiv.className = 'success-message';
             
             setTimeout(() => {
                 document.getElementById('paymentModal').classList.remove('active');
                 msgDiv.innerHTML = '';
                 msgDiv.className = '';
-            }, 2000);
+            }, 2500);
         });
         
         document.getElementById('cancelPaymentBtn')?.addEventListener('click', () => {
