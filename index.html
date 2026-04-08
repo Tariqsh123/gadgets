@@ -824,7 +824,7 @@
             <input type="tel" id="customerPhone" placeholder="e.g., 03001234567">
         </div>
         <div class="payment-input-group">
-            <label>Payment Screenshot</label>
+            <label>Payment Screenshot (Optional)</label>
             <input type="file" id="paymentScreenshot" accept="image/*" class="payment-file-input">
         </div>
         <div class="payment-actions">
@@ -864,7 +864,7 @@
     function isLoggedIn() { return getSession() !== null; }
     function getCurrentUser() { return getSession(); }
 
-    // ==================== FIXED: No reward added on order placement ====================
+    // ==================== FIXED: Fast Order Placement ====================
     function saveOrder(orderData, file) {
         return new Promise((resolve) => {
             let orders = JSON.parse(localStorage.getItem(STORAGE_ORDERS) || "[]");
@@ -893,6 +893,7 @@
                 };
                 reader.readAsDataURL(file);
             } else {
+                // No file → save immediately (this was the main fix)
                 orders.push(newOrder);
                 localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
                 resolve(newOrder);
@@ -1081,7 +1082,7 @@
         });
         document.querySelector('.auth-tab[data-tab="login"]').click();
         
-        // Payment Handler - FIXED: No immediate reward/coin added
+        // ==================== FIXED: Fast Order Placement ====================
         document.getElementById('submitPaymentBtn')?.addEventListener('click', async () => {
             const fullName = document.getElementById('customerFullName').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
@@ -1105,18 +1106,21 @@
             };
 
             msgDiv.innerHTML = 'Processing your order...';
-            msgDiv.className = '';
+            msgDiv.style.color = '#F0B90B';
 
+            // Save order (now very fast when no file is attached)
             await saveOrder(orderData, file);
             
-            msgDiv.innerHTML = `Order Placed Successfully!`;
-            msgDiv.className = 'success-message';
+            // Show success immediately
+            msgDiv.innerHTML = `✅ Order Placed Successfully!<br><small>Your order has been saved.</small>`;
+            msgDiv.style.color = '#0ecb81';
             
+            // Close modal after short delay for better UX
             setTimeout(() => {
                 document.getElementById('paymentModal').classList.remove('active');
                 msgDiv.innerHTML = '';
-                msgDiv.className = '';
-            }, 2000);
+                currentProductForPayment = null;
+            }, 1800);
         });
         
         document.getElementById('cancelPaymentBtn')?.addEventListener('click', () => {
