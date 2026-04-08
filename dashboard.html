@@ -1018,76 +1018,73 @@
         return `<div class="referral-stats-grid"><div class="referral-stat-card"><div class="referral-stat-number">${stats.totalReferrals}</div><div>Total Referrals</div></div><div class="referral-stat-card"><div class="referral-stat-number">${stats.totalBonusEarned} ERC</div><div>Bonus Earned</div></div></div><div class="share-link"><input type="text" readonly value="${link}" id="inviteLinkInput"><button class="copy-code-btn" onclick="copyInviteLink()">Copy Link</button></div><div class="referral-box"><div>Your Referral Code</div><div class="referral-code-text">${user.referralCode}</div><button class="copy-code-btn" onclick="copyReferral()">Copy Code</button></div><div style="margin-top:1rem;"><h4 style="margin-bottom:0.8rem;">Referred Friends</h4><div class="referral-list">${refs.length === 0 ? '<div class="empty-message">No referrals yet. Share your code!</div>' : refs.map(r => `<div class="referral-entry"><div><i class="fas fa-user-friends"></i> ${escapeHtml(r.name)}<br><small>${new Date(r.date).toLocaleDateString()}</small></div><div class="referral-bonus-badge">+30 ERC</div></div>`).join('')}</div></div><div class="info-note mt-2"><i class="fas fa-gift"></i> Earn 30 ER Coins per referral!</div>`; 
     }
     
+    // ==================== FIXED: Reward and ER Coins show only after 6 hours of completion ====================
     function renderWalletPage(user) {
         const orders = JSON.parse(localStorage.getItem(STORAGE_ORDERS) || "[]")
             .filter(o => o.customer && o.customer.email === user.email);
-        
+       
         const now = Date.now();
-        const DELAY_MS = 7 * 60 * 60 * 1000; // 6-8 hours delay
-        
-        let balance = 0;           // Immediate
-        let maturedReward = 0;     // After delay
-        let maturedERBonus = 0;    // After delay (this was adding instantly before)
-        
+        const DELAY_MS = 6 * 60 * 60 * 1000; // 6 hours after completion
+       
+        let balance = 0;           // PKR Balance - shows immediately on completion
+        let maturedReward = 0;
+        let maturedERBonus = 0;
+       
         orders.forEach(order => {
-            const orderTime = new Date(order.timestamp || order.submittedAt).getTime();
+            if (order.status !== "completed") return;
+           
+            const completedTime = new Date(order.completedAt || order.timestamp || order.submittedAt).getTime();
             balance += (order.product?.price || 0);
-            
-            // Both Reward and ER Coins (10%) will only show after delay
-            if (now - orderTime > DELAY_MS) {
+           
+            // Both Reward and ER Coins mature only after 6 hours
+            if (now - completedTime >= DELAY_MS) {
                 maturedReward += (order.rewardEarned || 0);
-                maturedERBonus += Math.round((order.product?.price || 0) * 0.10);
+                maturedERBonus += (order.erCoinEarned || Math.round((order.product?.price || 0) * 0.10));
             }
         });
-        
+       
         const erCoins = (user.erCoins || 0) + maturedERBonus;
-        
-        // Total Portfolio = Only currently matured amounts (no future ER Coins)
         const totalPortfolio = balance + maturedReward + erCoins;
-        
+       
         return `
             <div class="wallet-boxes">
-                <!-- Balance - Immediate -->
                 <div class="wallet-item" style="border-left: 4px solid #10b981;">
                     <div class="wallet-title" style="color: #10b981;">
                         <i class="fas fa-balance-scale"></i>
                         <h4>Balance</h4>
                     </div>
                     <div class="wallet-amount" style="color: #10b981;">${balance.toLocaleString()} PKR</div>
-                    <div class="wallet-info"><span>Product Purchase Amount</span><span>Added instantly</span></div>
+                    <div class="wallet-info"><span>Product Purchase Amount</span><span>Added immediately on completion</span></div>
                 </div>
-                
-                <!-- Reward - Delayed -->
+               
                 <div class="wallet-item reward-wallet">
                     <div class="wallet-title reward">
                         <i class="fas fa-star"></i>
                         <h4>Reward</h4>
                     </div>
-                    <div class="wallet-amount reward-amount">${maturedReward.toLocaleString()} ERC</div>
-                    <div class="wallet-info"><span>Product Reward (6-8 hrs)</span></div>
+                    <div class="wallet-amount reward-amount">${maturedReward.toLocaleString()}</div>
+                    <div class="wallet-info"><span>Product Reward (shows after 6 hours)</span></div>
                 </div>
-                
-                <!-- ER Coins - Delayed (Fixed as per your request) -->
+               
                 <div class="wallet-item erc-wallet">
                     <div class="wallet-title erc">
                         <i class="fas fa-coins"></i>
                         <h4>ER Coins</h4>
                     </div>
                     <div class="wallet-amount erc-amount">${erCoins.toLocaleString()} ERC</div>
-                    <div class="wallet-info"><span>10% of Purchase (6-8 hrs)</span></div>
+                    <div class="wallet-info"><span>10% of Purchase (shows after 6 hours)</span></div>
                 </div>
             </div>
-            
+           
             <div class="total-section">
                 <div class="total-label">Total Portfolio (Balance + Reward + ER Coins)</div>
                 <div class="total-value">${totalPortfolio.toLocaleString()}</div>
-                <div class="total-label">Currently Available Amount</div>
             </div>
-            
+           
             <div class="withdraw-actions">
                 <div class="withdraw-btn-group">
                     <button class="withdraw-action-btn" id="withdrawRewardBtn" ${maturedReward < 100 ? 'disabled' : ''}>Withdraw Reward<small>Min 100 ERC</small></button>
-                    <button class="withdraw-action-btn outline" id="withdrawTotalBtn" ${erCoins < 100 ? 'disabled' : ''}>Withdraw Total<small>Reward + ER Coin</small></button>
+                    <button class="withdraw-action-btn outline" id="withdrawTotalBtn" ${(maturedReward + erCoins) < 100 ? 'disabled' : ''}>Withdraw Total<small>Reward + ER Coin</small></button>
                 </div>
                 <div class="info-note"><i class="fas fa-hourglass-half"></i> 34-48h processing • Collect when ready</div>
             </div>`;

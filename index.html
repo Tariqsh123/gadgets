@@ -698,7 +698,8 @@
         .success-message {
             background: rgba(14, 203, 129, 0.15);
             color: var(--success);
-            padding: 0.8rem;
+            padding: 10px 20px;
+            margin: 20px 0;
             border-radius: 40px;
             text-align: center;
         }
@@ -836,12 +837,12 @@
 
 <script>
     const products = [
-        { id: 1, name: "Mobile Holder", price: 500, reward: "🎁 Reward: PKR 50\n👥 Referral Bonus: PKR 20\n⏱️ Withdrawal: 4-10 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://gulautos.pk/wp-content/uploads/2025/05/Universal-Car-Mobile-Holder-By-GulAutos.webp" },
-        { id: 2, name: "Powerbank", price: 1000, reward: "🔋 Reward: PKR 120\n👥 Referral Bonus: PKR 40\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://cdn.mos.cms.futurecdn.net/QwvDLWZZiDMEmWj73xxASY.jpg" },
-        { id: 3, name: "RGB Keyboard", price: 2500, reward: "🎮 Reward: PKR 350\n👥 Referral Bonus: PKR 100\n⏱️ Withdrawal: 48-72 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://i.rtings.com/assets/pages/xXDZ1p9x/best-rgb-keyboards-20240515-2-medium.jpg" },
-        { id: 4, name: "Smart Watch", price: 5000, reward: "⌚ Reward: PKR 800\n👥 Referral Bonus: PKR 250\n⏱️ Withdrawal: 16-24 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://login.com.pk/cdn/shop/files/L-109BlazeBrown5.webp?v=1769782185&width=533" },
-        { id: 5, name: "Bluetooth Headphone", price: 7000, reward: "🎧 Reward: PKR 1100\n👥 Referral Bonus: PKR 350\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://powerhouseexpress.com.pk/cdn/shop/files/1hora-aut202n-earbuds-gaming-bluetooth-headphones-black_9777cc1f-9ae0-4200-a301-418cc6f6e5f1.webp" },
-        { id: 6, name: "Tablet", price: 10000, reward: "📱 Reward: PKR 1400\n👥 Referral Bonus: PKR 500\n⏱️ Withdrawal: 48-72 Hours\n✨ ER Coin Reward Deduction: 10%", img: "https://static.webx.pk/files/78721/Images/us-galaxy-tab-s10-fe-sm-x526-sm-x520nlbaxar-545758618-78721-0-210226110225580.webp" }
+        { id: 1, name: "Mobile Holder", price: 500, rewardPKR: 50, erCoinPercent: 10, reward: "🎁 Reward: PKR 50\n👥 Referral Bonus: PKR 20\n⏱️ Withdrawal: 4-10 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://gulautos.pk/wp-content/uploads/2025/05/Universal-Car-Mobile-Holder-By-GulAutos.webp" },
+        { id: 2, name: "Powerbank", price: 1000, rewardPKR: 120, erCoinPercent: 10, reward: "🔋 Reward: PKR 120\n👥 Referral Bonus: PKR 40\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://cdn.mos.cms.futurecdn.net/QwvDLWZZiDMEmWj73xxASY.jpg" },
+        { id: 3, name: "RGB Keyboard", price: 2500, rewardPKR: 350, erCoinPercent: 10, reward: "🎮 Reward: PKR 350\n👥 Referral Bonus: PKR 100\n⏱️ Withdrawal: 48-72 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://i.rtings.com/assets/pages/xXDZ1p9x/best-rgb-keyboards-20240515-2-medium.jpg" },
+        { id: 4, name: "Smart Watch", price: 5000, rewardPKR: 800, erCoinPercent: 10, reward: "⌚ Reward: PKR 800\n👥 Referral Bonus: PKR 250\n⏱️ Withdrawal: 16-24 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://login.com.pk/cdn/shop/files/L-109BlazeBrown5.webp?v=1769782185&width=533" },
+        { id: 5, name: "Bluetooth Headphone", price: 7000, rewardPKR: 1100, erCoinPercent: 10, reward: "🎧 Reward: PKR 1100\n👥 Referral Bonus: PKR 350\n⏱️ Withdrawal: 24-48 hours\n✨ ER Coin Reward Deduction: 10%", img: "https://powerhouseexpress.com.pk/cdn/shop/files/1hora-aut202n-earbuds-gaming-bluetooth-headphones-black_9777cc1f-9ae0-4200-a301-418cc6f6e5f1.webp" },
+        { id: 6, name: "Tablet", price: 10000, rewardPKR: 1400, erCoinPercent: 10, reward: "📱 Reward: PKR 1400\n👥 Referral Bonus: PKR 500\n⏱️ Withdrawal: 48-72 Hours\n✨ ER Coin Reward Deduction: 10%", img: "https://static.webx.pk/files/78721/Images/us-galaxy-tab-s10-fe-sm-x526-sm-x520nlbaxar-545758618-78721-0-210226110225580.webp" }
     ];
 
     function formatPrice(price) { return `₨ ${price.toLocaleString()}`; }
@@ -863,20 +864,23 @@
     function isLoggedIn() { return getSession() !== null; }
     function getCurrentUser() { return getSession(); }
 
+    // ==================== FIXED: No reward added on order placement ====================
     function saveOrder(orderData, file) {
         return new Promise((resolve) => {
             let orders = JSON.parse(localStorage.getItem(STORAGE_ORDERS) || "[]");
-            const rewardEarned = Math.round(orderData.product.price * 0.15);
 
+            const product = orderData.product;
             const newOrder = { 
                 id: Date.now(), 
                 timestamp: new Date().toISOString(), 
+                completedAt: null,
                 ...orderData, 
                 status: "pending",
                 screenshotName: file ? file.name : null,
                 screenshotBase64: null,
-                rewardEarned: rewardEarned,
-                rewardDescription: orderData.product.reward
+                rewardEarned: product.rewardPKR || Math.round(product.price * 0.15),
+                erCoinEarned: Math.round(product.price * (product.erCoinPercent || 10) / 100),
+                rewardDescription: product.reward
             };
 
             if (file) {
@@ -885,32 +889,15 @@
                     newOrder.screenshotBase64 = e.target.result;
                     orders.push(newOrder);
                     localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
-                    updateUserReward(orderData.customer.email, rewardEarned);
                     resolve(newOrder);
                 };
                 reader.readAsDataURL(file);
             } else {
                 orders.push(newOrder);
                 localStorage.setItem(STORAGE_ORDERS, JSON.stringify(orders));
-                updateUserReward(orderData.customer.email, rewardEarned);
                 resolve(newOrder);
             }
         });
-    }
-
-    function updateUserReward(email, reward) {
-        if (!email || reward <= 0) return;
-        let users = getUsers();
-        const index = users.findIndex(u => u.email === email);
-        if (index !== -1) {
-            users[index].erCoins = (users[index].erCoins || 0) + reward;
-            saveUsers(users);
-
-            const session = getSession();
-            if (session && session.email === email) {
-                setSession({ ...session, erCoins: users[index].erCoins });
-            }
-        }
     }
 
     function updateAuthUI() {
@@ -926,7 +913,7 @@
                 name: "Test User",
                 email: "test@example.com",
                 password: "123456",
-                erCoins: 0,                    // No welcome bonus
+                erCoins: 0,
                 referralCode: generateReferralCode("Test", "test@example.com")
             });
             saveUsers(users);
@@ -972,7 +959,7 @@
             name,
             email,
             password: pass,
-            erCoins: 0,                       // No welcome bonus
+            erCoins: 0,
             referralCode: ownReferralCode
         });
         saveUsers(users);
@@ -1094,7 +1081,7 @@
         });
         document.querySelector('.auth-tab[data-tab="login"]').click();
         
-        // Payment Handler
+        // Payment Handler - FIXED: No immediate reward/coin added
         document.getElementById('submitPaymentBtn')?.addEventListener('click', async () => {
             const fullName = document.getElementById('customerFullName').value.trim();
             const phone = document.getElementById('customerPhone').value.trim();
@@ -1108,12 +1095,7 @@
             }
             
             const orderData = {
-                product: { 
-                    id: currentProductForPayment.id, 
-                    name: currentProductForPayment.name, 
-                    price: currentProductForPayment.price,
-                    reward: currentProductForPayment.reward
-                },
+                product: currentProductForPayment,
                 customer: { 
                     fullName, 
                     phone, 
@@ -1127,7 +1109,7 @@
 
             await saveOrder(orderData, file);
             
-            msgDiv.innerHTML = `✅ Order Placed Successfully!`;
+            msgDiv.innerHTML = `Order Placed Successfully!`;
             msgDiv.className = 'success-message';
             
             setTimeout(() => {

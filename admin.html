@@ -585,7 +585,6 @@
         return [...getOrders()].sort((a, b) => b.id - a.id).slice(0, 5);
     }
 
-    // NEW: Group orders by customer so same user’s multiple purchases appear together
     function getGroupedOrders() {
         const orders = getOrders();
         const grouped = {};
@@ -813,12 +812,20 @@
         }
     };
 
+    // ==================== FIXED: Set completedAt when status becomes "completed" ====================
     function updatePaymentStatus() {
         const newStatus = document.getElementById('paymentStatusSelect').value;
         let orders = getOrders();
         const index = orders.findIndex(o => o.id === currentPaymentId);
+        
         if (index !== -1) {
             orders[index].status = newStatus;
+            
+            // IMPORTANT FIX: Set completedAt for customer dashboard
+            if (newStatus === "completed" && !orders[index].completedAt) {
+                orders[index].completedAt = new Date().toISOString();
+            }
+            
             saveOrders(orders);
             document.getElementById('paymentModal').classList.remove('active');
             loadTab(currentTab);
