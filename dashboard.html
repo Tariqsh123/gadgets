@@ -770,11 +770,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 0.2rem;
+            gap: 10px;
             color: var(--text-muted);
             cursor: pointer;
             font-size: 0.7rem;
-            padding: 0.4rem 0.8rem;
+            padding: 10px;
             border-radius: 40px;
             transition: all 0.2s;
             flex: 1;
@@ -822,7 +822,7 @@
             <div class="nav-item-sidebar active" data-tab="profile"><i class="fas fa-user"></i> <span>Profile</span></div>
             <div class="nav-item-sidebar" data-tab="wallet"><i class="fas fa-wallet"></i> <span>Wallet</span></div>
             <div class="nav-item-sidebar" data-tab="withdraw"><i class="fas fa-clock"></i> <span>Withdrawals</span></div>
-            <div class="nav-item-sidebar" data-tab="history"><i class="fas fa-history"></i> <span>History</span></div>
+            <!-- <div class="nav-item-sidebar" data-tab="history"><i class="fas fa-history"></i> <span>History</span></div> -->
             <div class="nav-item-sidebar" data-tab="referrals"><i class="fas fa-users"></i> <span>Referrals</span></div>
             <div class="nav-item-sidebar" data-tab="purchased"><i class="fas fa-shopping-bag"></i> <span>Purchased Items</span></div>
         </div>
@@ -846,7 +846,7 @@
         <div class="mobile-nav-item active" data-tab="profile"><i class="fas fa-user"></i><span>Profile</span></div>
         <div class="mobile-nav-item" data-tab="wallet"><i class="fas fa-wallet"></i><span>Wallet</span></div>
         <div class="mobile-nav-item" data-tab="withdraw"><i class="fas fa-clock"></i><span>Withdraw</span></div>
-        <div class="mobile-nav-item" data-tab="history"><i class="fas fa-list"></i><span>History</span></div>
+        <!-- <div class="mobile-nav-item" data-tab="history"><i class="fas fa-list"></i><span>History</span></div> -->
         <div class="mobile-nav-item" data-tab="referrals"><i class="fas fa-users"></i><span>Refer</span></div>
         <div class="mobile-nav-item" data-tab="purchased"><i class="fas fa-shopping-bag"></i><span>Purchased</span></div>
     </div>
@@ -1154,7 +1154,7 @@
         if(tab === 'profile') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-user"></i><h3>Profile</h3></div>${renderProfile(user, txs)}</div>`; 
         else if(tab === 'wallet') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-wallet"></i><h3>Wallet</h3></div>${renderWalletPage(user)}</div>`; 
         else if(tab === 'withdraw') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-clock"></i><h3>Pending Withdrawals</h3></div>${renderPendingWithdrawals(user)}<div class="info-note mt-2">Funds available after 34-48h</div></div>`; 
-        else if(tab === 'history') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-history"></i><h3>Transaction History</h3></div><div class="transactions-container">${renderTransactions(txs)}</div></div>`; 
+        // else if(tab === 'history') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-history"></i><h3>Transaction History</h3></div><div class="transactions-container">${renderTransactions(txs)}</div></div>`; 
         else if(tab === 'referrals') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-users"></i><h3>Referral Program</h3></div>${renderReferralsPage(user)}</div>`; 
         else if(tab === 'purchased') content = `<div class="dashboard-card"><div class="card-header"><i class="fas fa-shopping-bag"></i><h3>Purchased Items</h3></div>${renderPurchasedItems(user)}</div>`; 
         
@@ -1174,7 +1174,7 @@
         if(tab === 'profile') content = `<div class="mobile-card">${renderProfile(user, txs)}</div>`; 
         else if(tab === 'wallet') content = `<div class="mobile-card">${renderWalletPage(user)}</div>`; 
         else if(tab === 'withdraw') content = `<div class="mobile-card"><h3 style="margin-bottom:1rem;">Pending Withdrawals</h3>${renderPendingWithdrawals(user)}</div>`; 
-        else if(tab === 'history') content = `<div class="mobile-card"><h3>Transaction History</h3>${renderTransactions(txs)}</div>`; 
+        // else if(tab === 'history') content = `<div class="mobile-card"><h3>Transaction History</h3>${renderTransactions(txs)}</div>`; 
         else if(tab === 'referrals') content = `<div class="mobile-card">${renderReferralsPage(user)}</div>`; 
         else if(tab === 'purchased') content = `<div class="mobile-card"><h3 style="margin-bottom:1rem;">Purchased Items</h3>${renderPurchasedItems(user)}</div>`; 
         
